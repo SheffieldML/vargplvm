@@ -156,6 +156,9 @@ lvmVisualiseGeneral(model.comp{v}, [], 'imageMRDVisualise', 'imageMRDModify', fa
 figure
 svargplvmShowScales(model);
 
+fprintf('\n  (You should now have 3 figures openned...)\n')
+fprintf('\n# Press any key to continue to solving the correspondence problem...')
+pause
 
 %%
 
