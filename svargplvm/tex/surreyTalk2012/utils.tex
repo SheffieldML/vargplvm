@@ -1,0 +1,180 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  File: utils.tex
+%
+%  Utilities for typesetting in latex
+%
+%  
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newcommand{\X}{\ensuremath{\bfX}}
+%GP symbols
+
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+%commonly used symbols
+
+%MathBold-Font
+\newcommand{\mbf}[1]{{\ensuremath{\mathbf{#1}}}}
+
+%Real Numbers, C etc.
+\newcommand{\R}{{\sf R\hspace*{-0.9ex}\rule{0.15ex}%
+    {1.5ex}\hspace*{0.9ex}}}
+\newcommand{\N}{{\sf N\hspace*{-1.0ex}\rule{0.15ex}%
+    {1.3ex}\hspace*{1.0ex}}}
+\newcommand{\Q}{{\sf Q\hspace*{-1.1ex}\rule{0.15ex}%
+    {1.5ex}\hspace*{1.1ex}}}
+\newcommand{\C}{{\sf C\hspace*{-0.9ex}\rule{0.15ex}%
+    {1.3ex}\hspace*{0.9ex}}}
+
+
+\newcommand{\const}{{\rm const.}}
+\newcommand{\matlab}{${\rm Matlab}^{\Pisymbol{psy}{226}}$}
+
+
+% A comment
+\newcommand{\comment}[1]{}
+
+\newcommand{\TODO}[1]{{\color{red}\fbox{TODO} #1}}
+\newcommand{\CHANGE}[1]{{\color{blue} #1}}
+
+
+
+\newcommand{\indep}{\bot \hspace{-0.6em} \bot}
+\newcommand{\arrow}{\rightarrow}
+\newcommand{\given}{\,|\,}
+\newcommand{\narroweq}{\!\!=\!\!}
+
+
+
+% KL divergence
+%\newcommand{\KL}{{\rm KL}}
+%\newcommand{\KLVB}{{\rm KL}_{\text{VB}}
+%\newcommand{\KLEP}{{\rm KL}_{\text{EP}}
+
+
+\newcommand{\cip}{\mbox{$\perp\!\!\!\perp$}}
+\newcommand{\condindep}[3]{#1~\cip~#2~|~#3}
+\newcommand{\nocondindep}[3]{#1~\mbox{$\not\!\perp\!\!\!\perp$}~#2~|~#3}
+\newcommand{\dir}[2]{{\rm Dir}(#1|#2)}
+
+
+\newcommand{\btheta}{\mbox{\boldmath $\theta$}}
+\newcommand{\bdelta}{\mbox{\boldmath $\delta$}}
+\newcommand{\bTheta}{\mbox{\boldmath $\Theta$}}
+\newcommand{\bOmega}{\mbox{\boldmath $\Omega$}}
+
+\newcommand{\Bmath}[1]{\mbox{\boldmath $#1$}}
+
+\newcommand{\fastfig}[4]{
+\begin{center}
+\begin{figure}[htb!]
+\centerline{\epsfig{figure=#1,width=#2}}
+\caption[short]{#3}
+\label{#4}
+\end{figure}
+\end{center}
+}
+
+
+\newcommand{\bfa}{{\bf a}}
+\newcommand{\bfb}{{\bf b}}
+\newcommand{\bfc}{{\bf c}}
+\newcommand{\bfd}{{\bf d}}
+\newcommand{\bfe}{{\bf e}}
+\newcommand{\bff}{{\bf f}}
+\newcommand{\bfg}{{\bf g}}
+\newcommand{\bfh}{{\bf h}}
+\newcommand{\bfi}{{\bf i}}
+\newcommand{\bfk}{{\bf k}}
+\newcommand{\bfl}{{\bf l}}
+\newcommand{\bfm}{{\bf m}}
+\newcommand{\bfp}{{\bf p}}
+\newcommand{\bfr}{{\bf r}}
+\newcommand{\bfs}{{\bf s}}
+\newcommand{\bft}{{\bf t}}
+\newcommand{\bfu}{{\bf u}}
+\newcommand{\bfv}{{\bf v}}
+\newcommand{\bfw}{{\bf w}}
+\newcommand{\bfx}{{\bf x}}
+\newcommand{\bfy}{{\bf y}}
+\newcommand{\bfz}{{\bf z}}
+
+\newcommand{\bfA}{{\bf A}}
+\newcommand{\bfB}{{\bf B}}
+\newcommand{\bfC}{{\bf C}}
+\newcommand{\bfD}{{\bf D}}
+\newcommand{\bfG}{{\bf G}}
+\newcommand{\bfH}{{\bf H}}
+\newcommand{\bfI}{{\bf I}}
+\newcommand{\bfJ}{{\bf J}}
+\newcommand{\bfK}{{\bf K}}
+\newcommand{\bfL}{{\bf L}}
+\newcommand{\bfM}{{\bf M}}
+\newcommand{\bfQ}{{\bf Q}}
+\newcommand{\bfR}{{\bf R}}
+\newcommand{\bfS}{{\bf S}}
+\newcommand{\bfF}{{\bf F}}
+\newcommand{\bfT}{{\bf T}}
+\newcommand{\bfU}{{\bf U}}
+\newcommand{\bfV}{{\bf V}}
+\newcommand{\bfW}{{\bf W}}
+\newcommand{\bfX}{{\bf X}}
+\newcommand{\bfY}{{\bf Y}}
+\newcommand{\bfZ}{{\bf Z}}
+
+\newcommand{\llangle}{{\langle \hspace{-0.7mm} \langle}}
+\newcommand{\rrangle}{{\rangle \hspace{-0.7mm} \rangle}}
+\newcommand{\define}{\stackrel{\mathrm{def}}{=}}
+\newcommand{\la}{\langle}
+\newcommand{\ra}{\rangle}
+\newcommand{\La}{\left\langle}
+\newcommand{\Ra}{\right\rangle}
+\newcommand{\EXP}[1]{\left\langle #1 \right\rangle}
+\newcommand{\vectwo}[2]{\left[\begin{array}{c} #1 \\ #2 \end{array}\right]}
+\newcommand{\vecn}[1]{\left[\begin{array}{c} #1 \end{array}\right]}
+\newcommand{\half}{{\scriptstyle \frac{1}{2}}}
+\newcommand{\col}{\mathrm{vec}}
+
+
+
+\newcommand{\trans}[1]{{#1}^{\ensuremath{\mathsf{T}}}}
+\newcommand{\T}{{\rm T}}
+\newcommand{\diag}{{\rm diag}}
+\newcommand{\diff}[1]{{\,d#1}}
+\newcommand{\vgraph}[1]{
+  \newpage
+  \begin{center}
+  {\large \bf #1}
+  \end{center}
+  \vspace{2mm}
+}
+\newcommand{\high}[1]{\textcolor{blue}{\emph{#1}}}
+\newcommand{\cut}[1]{}
+\newcommand{\citeasnoun}[1]{\citeN{#1}}
+\newcommand{\citemulti}[2]{(#1, \citeyearNP{#2})}
+\newcommand{\citemultiN}[2]{#1 (\citeyearNP{#2})}
+\newcommand{\Sum}{{\displaystyle \sum}}
+%\newcommand{\sumint2}{\operatorname*{\sum \!\!\!\!\!\!\!\!\!\!\!\!
+%\int}}
+\newcommand{\msumint}{\operatorname*{\sum \!\!\!\!\!\!\!\! \int}}
+
+\newcommand{\bfmu}{\boldsymbol \mu}
+\newcommand{\bfnu}{\boldsymbol \nu}
+\newcommand{\bflambda}{\boldsymbol \lambda}
+\newcommand{\bfth}{\boldsymbol \theta}
+\newcommand{\bftheta}{\bm{\theta}}
+\newcommand{\bfzero}{\mathbf{0}}
+
+\newcommand{\bb}{\beta^{-1}}
+
+\newcommand{\vv}{\vartheta}
+\newcommand{\KL}{\text{KL}}
+\newcommand{\Tr}{\text{Tr}}
+\newcommand{\calMu}{\mathcal{M}}
+
+\newcommand{\intd}{\text{d}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

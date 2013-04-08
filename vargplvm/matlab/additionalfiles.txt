@@ -1,0 +1,34 @@
+# These are files that should be packaged for the vargplvm software
+dir: html
+~/mlprojects/vargplvm/html/index.html
+~/mlprojects/vargplvm/html/demOilVargplvm1.png
+~/mlprojects/vargplvm/html/demOilVargplvm2.png
+~/mlprojects/vargplvm/html/demOil100Vargplvm1.png
+~/mlprojects/vargplvm/html/demRobotWirelessVargplvm1.png
+~/mlprojects/vargplvm/html/demBrendanTestImag1_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag2_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag4_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag127_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag11_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag24_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag51_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag62_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag1WithMissing_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag2WithMissing_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag4WithMissing_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag127WithMissing_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag11WithMissing_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag24WithMissing_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag51WithMissing_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag62WithMissing_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag1Reconst_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag2Reconst_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag4Reconst_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag127Reconst_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag11Reconst_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag24Reconst_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag51Reconst_3.png
+~/mlprojects/vargplvm/html/demBrendanTestImag62Reconst_3.png
+~/mlprojects/vargplvm/html/missaGpdsPredFrame17.png
+~/mlprojects/vargplvm/html/dogGeneration_frame14.png
+

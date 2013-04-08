@@ -1,0 +1,444 @@
+
+%---------------------------------------------- PREDICTIONS ---------------------------------------------------------------------
+\section{Predictions with the Variational GP-LVM \label{section:predictions}} 
+
+In this section we explain how the proposed Bayesian models
+can accomplish various kinds of predictive tasks.
+Firstly, we focus on the Bayesian equivalent of the standard GP-LVM model
+(\ie when a standard normal prior is employed for the latent space) and
+then we consider the dynamical version of the model.
+The first kind of inference discussed here concerns calculating the probability density
+probability density $p(Y_* | Y)$ of some observed test data
+$Y_* \in \mathbbm{R}^D $, which is allowed to have missing
+values. The computation of this probability can allow us to use the
+model as a density estimator which, for instance, can represent the
+class conditional distribution in a generative based classification
+system.  We will exploit such a use in section \ref{sec:experiments}.
+Secondly we discuss how we can probabilistically reconstruct 
+ partially observed test data  $Y_*^{p} \in \mathbb{R}^{N_* \times D_p}$ from the whole $Y_*
+= (Y_*^{p}, Y_*^{m})$, where $p$ and $m$ are set indices indicating
+the present (\ie observed) and missing dimensions of $Y_*$
+respectively, so that $p \cup m= \{1,\ldots,D\}$.
+The missing dimensions are reconstructed by computing the
+Bayesian predictive distribution $p(Y_*^{m}| Y_*^{p}, Y)$.
+This second prediction task can also be used to 
+remove the noise of a fully observed output. 
+If the test points are known to form timeseries, then the aforementioned predictive
+tasks can be solved with the dynamical version of our model.
+In this case, the test points $Y_*$ are accompanied by their
+corresponding timestamps $\bft_*$. Further, the dynamical model also enables performing
+extrapolation, \ie computing novel outputs given only a test time vector $\bft_*$.
+The inference procedures for the dynamical model are discussed in section \ref{predictionsDynamical}.
+
+%In the case where $Y_*$ constitutes a multivariate timeseries,
+%it is additionally associated with with the corresponding timestamps
+%$\bft_* \in \mathbb{R}^{N_*}$.
+
+\subsection{Predictions with the standard Variational GP-LVM}
+
+\subsubsection{\label{predictions1} Calculating the density $p(Y_*|Y)$}
+By introducing the latent variables $X$ (corresponding to the
+training outputs $Y$) and the new test latent variables 
+$X_* \in \mathbb{R}^{N_* \times Q}$, the
+previous density of interest as the ratio of two marginal likelihoods:
+
+\begin{equation}
+\label{pyystar1}
+p(Y_*|Y) = \frac{p(Y_*,Y)}{p(Y)} = 
+	\frac{\int p(Y_*, Y | X, X_*) p(X,X_*) \intd X \intd X_*}{\int p(Y|X) p(X) \intd X}
+\end{equation}
+%
+In the denominator 
+we have the marginal likelihood of the GP-LVM for which we have already
+computed a variational lower bound.  The numerator is another 
+marginal likelihood that is obtained by augmenting the training data
+$Y$ with the test point $Y_*$ and integrating out both $X$ and the 
+newly inserted latent variable $X_*$. To approximate the density 
+ $p(Y_* |Y)$, we construct a ratio of lower bounds as follows. 
+
+The quantity $ \int p(Y | X) p(X) d X$ is approximated by the
+ lower bound $e^{\F(q(X),Y)}$ where 
+$\F(q(X),Y)$ is the variational lower bound as computed in section \ref{}
+and is given in equation \eqref{jensensSplit2}. The maximization   
+of this lower bound  specifies the variational
+distribution $q(X)$ over the latent variables in the training
+data. Then, this distribution  remains fixed during test time.     
+$\int p(Y_*,Y | X, X_*) p(X,X_*) d X d X_*$ 
+is approximated by the lower bound $e^{\F(q(X,X_*), Y_*,Y)}$ which has
+exactly analogous form to \eqref{jensensSplit2}. 
+This optimisation is fast, because due to the prior used for the standard
+GP-LVM, in equation \eqref{standardNormal}, we can write
+$q(X,X_*) = q(X) q(X_*)$. Then, $q(X)$ is held fixed during test time and we only need
+to optimise with respect to the $2 (N_* \times Q)$ parameters of the variational
+Gaussian distribution $q(X_*)=\prod_{n=1}^{N_*} q(\bfx_n) = \prod_{n=1}^{N_*} \mathcal{N}(\bfmu_*,S_{n,*})$ 
+(recall that $S_{n,*}$ is a diagonal matrix). 
+Further, since the $Psi$ statistics decompose
+across data, during test time we can re-use the already estimated $Psi$ statistics
+corresponding to the averages over $q(X)$ and only need to compute the extra average
+terms associated with $q(X_*)$.
+Note that optimization of the parameters $(\bfmu_*,S_{n,*})$ of $q(x_{n,*})$ are subject
+to local minima. However, 
+sensible initializations of $\bfmu_*$ can be employed based on the 
+mean of the variational distributions associated with the nearest
+neighbours of each test point $\bfy_{n,*}$ in the training data $Y$. 
+%
+
+%Furthermore, such optimization is fast because we can perform  
+%several precomputations in advance. In particular, 
+%due to the prior used for the standard GP-LVM, in equation \eqref{standardNormal},
+%all latent points $\bfx \in \left[ X, X_* \right] $ are uncoupled. Therefore,
+%the computation of the
+%$\Psi$ statistics decomposes across data and updating 
+%these statistics  to account for the 
+%insertion of $N_*$ test points, involves only averages over the $N_*-dimensional$ 
+%variational distribution $q(X_*)$.
+%
+Finally, the approximation 
+of $p(Y_* |Y)$ is given by 
+\begin{equation}
+p(Y_* |Y) = e^{ \F(q(X,X_*),Y,Y_*) - \F(q(X),Y)  }. 
+\label{eq:predictive1}
+\end{equation}
+
+
+
+
+
+%
+%
+%Notice that the denominator constitutes the marginal
+% likelihood of the training data (equation \eqref{marginalLikelihood}) for
+%the logarithm of which we have already computed the variational lower bound 
+%$\mathcal{F} = \mathcal{F}(q(X))$ of equation \eqref{jensensSplit} during training.
+%
+%
+%As for the numerator of equation \eqref{pyystar1}, its logarithm can be approximated by a variational lower bound
+%$\mathcal{F}^* = \mathcal{F} (q(X,X_*))$, which has exactly analogous form to \eqref{marginalLikelihood}. Indeed,
+%this quantity bounds the logarithm of the marginal likelihood of the training data augmented with the test ones, where
+%both $X$ and the newly inserted latent variables $X_*$ need to be integrated out. 
+%Therefore, this bound will now be a function of a variational distribution $q(X,X_*)$
+%which needs to be optimised so that its marginal $q(X_*)$ approximates the true posterior $p(X_* | Y_*,Y)$.
+%After this procedure, we will be able to
+%replace the numerator of \eqref{pyystar1} with $e^{\mathcal{F} (q(X,X_*))}$ and the denominator with $e^{\mathcal{F} (q(X))}$,
+%which is treated as a constant in the test phase. We will then be able to approximate the quantity of interest with the equation
+%\begin{equation}
+%\label{pyystar2}
+%p(Y_*|Y) \approx q(Y_*|Y) = e^{\mathcal{F} (q(X,X_*)) - \mathcal{F} (q(X))}.
+%\end{equation}
+%
+%\noindent What now remains is to define the variational distribution 
+%\begin{equation}
+%\label{qxxstar}
+%q(X,X_*) = q(X) q(X_*|X) .
+%\end{equation}
+%At this step, the inference procedure
+%differs depending on the type of prior used for the latent space $X$. The prior \eqref{qXstatic} leaves all the latent points
+%uncoupled, whereas the dynamical prior \eqref{priorXgivenT} couples the test latent points $\bfx_{n,*}$ with each other as well as with the
+%training latent points stored in $X$. In the first case, equation \eqref{qxxstar} can be written as 
+%$q(X,X_*) = \prod_{n=1}^N q(\bfx_n) \prod_{n=1}^{N_*} q(\bfx_{n,*})$, 
+%where $q(\bfx_{n,*}) = \mathcal{N}(\bfx_{n,*} | \bfmu_{n,*}, S_{n,*})$. 
+% This means that we only need to optimise with respect to the $2 (N_* \times Q)$ parameters of $q(X_*)$ 
+% (recall that $S_{n,*}$ is a diagonal matrix). 
+% The rest of the parameters
+%on which the variational bound $\mathcal{F}(q(X,X_*))$ depend, are held fixed to the values learned during training.
+%We can perform several precomputations to improve efficiency. In particular, notice that the computation
+%of the $\Psi$ quantities decomposes across data (as can be seen in the supplementary material and in \cite{BayesianGPLVM})
+%% \highlight{TODO:(equations for Psis)} 
+%and therefore, 
+%%because they only appear in the  ..... . Therefore,
+%updating
+%these statistics to account for the insertion of the test point
+%involves only averages over the factorised variational distribution $q(X_*)$.
+%
+%\par On the other hand, performing inference in the dynamical model is more challenging, since $q(X,X_*)$ is fully
+%coupled across $X$ and $X_*$. Therefore, if we wish to maintain the correlation of the inputs depending on their times,
+%we should select this distribution to only factorise across features: 
+%$q(X,X_*) = \prod_{q=1}^Q  \mathcal{N} (\bfx_{q,*} | \bfmu_{q,*} ,S_{q,*})$,
+% where $S_{q,n}$ are full $(N+N_*) \times (N+N_*)$ matrices which can, however, be reparametrised with $N+N_*$
+%parameters as discussed in section \ref{optimisation}.
+%Consequently, the already learned parameters of $q(X)$ cannot be reused. Instead, we must optimise over the whole set of
+%the $2 \left( Q \times (N + N_*) \right)$ parameters involved in $q(X,X_*)$. A much faster but less
+%accurate method would be to decouple the test from the training latent variables by imposing the factorisation
+%$q(X,X_*) = q(X)q(X_*)$, thus assuming that all training and test points are correlated with points only within their own set.
+%This is not used, however, in our current implementation.
+
+%The variational optimisation will now seek
+%to optimise the parameters $\bfmu_{q,*}, S_{q,*}$
+
+
+
+%---------------------------------------------- PREDICTIONS given partially observed otuputs -------------------------------------
+\subsubsection{\label{predictions2} Predictions Given Partially Observed Outputs}
+
+We now discuss the second prediction problem where a set of partially 
+observed test points $Y_* = (Y_*^p,Y_*^m)$ are given and 
+we wish to reconstruct the missing part $Y_*^m$.
+To approximate the predictive density 
+we will need to introduce the underlying latent function
+values $F_* \in \mathbb{R}^{N_* \times D}$ (the noisy-free version of $Y_*$)
+and the latent variables $X_*$. We can then write the predictive density as
+
+\todo{maybe should put $p(X_* , X | Y, Y_*^p)$ instead of $p(X_*| Y, Y_*^p) $}
+
+\begin{equation}
+\label{eq:predictive2}
+p(Y_*^m | Y, Y_*^p) =  \int p(Y_*^m | F_*^m)  p(F_*^m | X_*, Y, Y_*^p) p(X_*| Y, Y_*^p) \intd  F_*^m \intd  X_* .
+\end{equation}
+The term $p(F_*^m | X_*, Y, Y_*^p)$ is found by marginalising out the latent function values
+corresponding to the inducing points $\tilde{X}$ in the augmented probability model. Therefore,
+this term is approximated by the variational distribution
+\begin{eqnarray}
+\label{eq:qFstarXstar}
+q(F_*^m |X_*) & = & \int \prod_{d \in D} p(\bff_{*,d}^m | \bfu_d, X_*)  q(\bfu_d) d \bfu_d 
+	    = \prod_{d \in D} q(\bff_{*,d}^m | X_*)  ,
+\end{eqnarray}
+where $q(\bff_{*,d}^m | X_*)$ is a Gaussian that can be computed analytically,
+since in our variational framework the optimal setting for $q(\bfu_d)$ is also found 
+to be a Gaussian (eq. \eqref{}).
+Specifically, $q(\bff_{*,d}^m | X_*)$
+is a factorized Gaussian distribution
+where each factor takes the form of the projected process predictive 
+distribution \citep{Csato:sparse02,Seeger:fast03,Rasmussen:book06}.
+As for the term $p(X_*| Y, Y_*^p)$ of eq. (\ref{eq:predictive2}), it constitutes a
+posterior distribution and, thus, can be approximated by a Gaussian variational distribution $q(X,X_*)$.
+Following the discussion in section \ref{sec:boundSummary}, we can obtain $q(X,X_*)$
+by maximising the variational lower bound on the marginal likelihood:
+\begin{align}
+p(Y_*^p, Y) ={}&  \int p(Y_*^p, Y|X_*, X) p(X_*, X) \intd  X_* \intd  X \nonumber \\
+={}&  \int p(Y^m | X) p(Y_*^p, Y^p|X_*, X) p(X_*, X) \intd  X_* \intd  X.  \label{eq:marginalPredictions2}
+\end{align}
+We follow the same strategy as in section \ref{predictions1} and approximate the above
+quantity with a variational bound. However, now we also have to take into account the information
+in $Y_*^p$. Therefore, the marginal likelihood \eqref{eq:marginalPredictions2} is bounded by:
+\begin{equation}
+\label{eq:predictiveMissing1a}
+p(Y_*^p, Y) \geq \int q(X_*, X) \log \frac{ p(Y^m | X) 
+    p(Y_*^p, Y^p|X_*, X) p(X_*,X)}{ q(X_*, X)} \intd  X_* \intd  X 
+\end{equation}
+Since the distributions $q(X,X_*)$ and $p(X,X_*)$ are fully factorised for the standard Variational GP-LVM model,
+we can write the above equation as:
+\begin{align}
+p(Y_*^p, Y) & \geq  \int q(X) \log p(Y^m | X) \intd  X 
+    +  \int q(X_*,X) \log p(Y_*^p, Y^p|X_*, X) \intd  X_* \intd  X  \nonumber \\
+& - \KL{q(X)}{p(X)} - \KL{q(X_*)}{p(X_*)}. \label{eq:predictiveMissing1b}
+\end{align}  
+%which has exactly analogous form to the bound \eqref{jensensSplit} computed for the training phase.
+Following the discussion in section \ref{sec:boundSummary}, we can rewrite the above bound as
+a sum of the following terms:
+\begin{equation}
+\label{eq:predictiveMissing2}
+p(Y_*^p, Y) \geq \hat{\F}\left( q(X),Y^m \right) + \hat{\F}\left(q(X_*,X),Y^p, Y^p_* \right)
+- \KL{q(X)}{p(X)} - \KL{q(X_*)}{p(X_*)}
+\end{equation}
+Notice that the first and third term of the above equation are
+already estimated during the training phase and, therefore, can be held fixed
+during test time. As for the second and fourth term, they can be optimised exactly
+as the bound \eqref{jensensSplit} computing for the training phase. The only difference
+is that now the data are augmented with test observations and only the observed
+dimensions are accounted for.
+
+We now return to equation \eqref{eq:predictive2} and replace the approximations
+discussed so far, to obtain:
+\begin{align}
+p(Y_*^m | Y, Y_*^p) & \geq \int p(Y_*^m | F_*^m)  \Big( \int q(F_*^m |X_*) q(X_*,X) \intd X \intd X_* \Big) \intd F_*^m  \label{eq:predictive3a} \\
+		    & = \int p(Y_*^m | F_*^m)  q(F_*^m) \intd F_*^m  \label{eq:predictive3b}
+\end{align}
+%where $q(F_*^m) = \int q(F_*^m |X_*) q(X_*,X) \intd X \intd X_*$. 
+The marginalization of $X_*$
+couples all dimensions of $q(F_*^m)$ and produces a non-Gaussian fully dependent
+multivariate density.
+For squared exponential kernels 
+all moments of the density $q(F_*^m$ are analytically tractable. 
+In practice, we will typically need only the mean and covariance 
+of $q(F_*^m)$ which can easily found as:
+\begin{align}
+ \mathbb{E}(F_*) ={}&  B^\T \Psi_1^* \label{meanFstar} \\
+ \text{Cov}(F_*) ={}& B^\T \left( \Psi_2^* - \Psi_1^* (\Psi_1^*)^\T \right) B + \Psi_0^* I - \text{tr} \left[ \left( K_{MM}^{-1} - \left( K_{MM} + \beta \Psi_2 \right)^{-1} \right) \Psi_2^* \right] I, \label{covFstar}
+\end{align}
+%
+where $B = \beta \left( K_{MM} + \beta \Psi_2 \right)^{-1} \Psi_1^\T
+Y$, $\Psi_0^* = \la k_f(X_*, X_*) \ra$, $\Psi_1^* = \la K_{M*} \ra$
+and $\Psi_2^* = \la K_{M*} K_{*M} \ra$. All expectations are taken
+w.r.t. $q(X_*)$ and can be calculated analytically, while $K_{M*}$
+denotes the cross-covariance matrix between the training inducing
+inputs $\tilde{X}$ and $X_*$. 
+
+Finally, since $Y_*$ is just a noisy version of
+$F_*$, the mean and covariance of \eqref{eq:predictive3a} is just
+computed as: 
+\begin{equation}
+ \label{eq:predictive4}
+\mathbb{E}(Y_*) = \mathbb{E}(F_*) \; \; \; \text{and} \; \; \; \text{Cov}(Y_*) = \text{Cov}(F_*) + \beta^{-1} I_{N_*}.
+\end{equation}
+
+%Therefore, similarly to equation \eqref{eq:predictive2}, the left hand side can be approximated with the quantity
+%\begin{equation}
+%  \label{eq:predictive3}
+%  p(Y_*^m | Y, Y_*^p) \approx  \int p(Y_*^m | F_*^m) \la q(F_*^m | X_*) \ra_{q(X_*)} \intd F_*^m .
+%\end{equation}
+%
+%Although the above is calculated with the equations \eqref{meanFstar} and \eqref{covFstar} of section \ref{predictions2},
+%the quantity $q(X,X_*)$ which we first have to find is computed differently than there.
+%
+%More precisely, instead of finding the variational distribution on the test latent points analytically, we now have to
+%optimise it (like in section \ref{predictions1}), so that the information in $Y_*^p$ can be taken into account.
+%This is done by maximising the variational lower bound on the marginal likelihood:
+%\begin{align}
+%p(Y_*^p, Y) ={}&  \int p(Y_*^p, Y|X_*, X) p(X_*, X) \intd  X_* \intd  X \nonumber \\
+%={}&  \int p(Y^m | X) p(Y_*^p, Y^p|X_*, X) p(X_*, X) \intd  X_* \intd  X.  \nonumber
+%\end{align}
+%This quantity is bounded by:
+%\begin{eqnarray}
+%& & \int q(X_*, X) \log \frac{ p(Y^m | X) 
+%p(Y_*^p, Y^p|X_*, X) p(X_*,X)}{ q(X_*, X)} \intd  X_* \intd  X \nonumber \\ 
+%& = & \int q(X) \log p(Y^m | X) \intd  X 
+%+  \int q(X_*,X) \log p(Y_*^p, Y^p|X_*, X) \intd  X_* \intd  X  \nonumber \\
+%& - & \text{KL}[q(X_*,X) || p(X_*, X)] \label{partialPredLowerBound}
+%\end{eqnarray}  
+%which has exactly analogous form to the bound \eqref{jensensSplit} computed for the training phase
+%(for simplicity, here we present the form obtained after marginalising $F$). Now, $q(X,X_*)$ is
+%found exactly with the methods discussed in section \ref{predictions1}, which are also applicable
+%when $Y_*$ is not fully observed. 
+
+
+
+%---------------------------------------------- PREDICTIONS given only the test time points ----------------------------------------
+
+\subsection{\label{predictionsDynamical} Predictions in the dynamical model}
+
+
+For the dynamical variational GP-LVM, 
+we can still consider the predictive tasks that were discussed in sections \ref{predictions1} and \ref{predictions2}
+for the standard variational GP-LVM. However, for the dynamical case we need to refine
+the inference procedure in order to account for the fact that the training
+and test data now form timeseries, \ie they come in pairs $\{\bfy_n, t_n\}_{n=1}^N$ and
+$\{\bfy_{n,*}, t_{n,*}\}_{n=1}^{N_*}$ respectively.
+To be consistent with our so far notation and to highlight the similarities with the
+inference procedures for the standard variational GP-LVM we will not include the temporal
+information $\bft$ and $\bft_*$ in all conditioning sets.
+
+To start with, the predictive task of finding the density $p(Y_*|Y)$ can be solved by using the same arguments
+and derivations as in section \ref{predictions1} and summarized in equation \eqref{eq:predictive1}
+which is rewritten here for completion:
+\begin{equation}
+p(Y_* |Y) = e^{ \F(q(X,X_*),Y,Y_*) - \F(q(X),Y)  }. 
+\label{eq:predictiveDyn1}
+\end{equation}
+ The difference
+is that, now, all outputs $\bfy$ and inputs $\bfx_n$ belonging to the augmented sets
+$(Y,Y_*)$ and $(X,X_*)$ respectively are fully correlated. Therefore, optimising the
+variational bound $\F(q(X,X_*),Y,Y_*)$ of equation \eqref{predictiveDyn1} appears
+more computationally challenging since $q(X,X_*)$ is no longer factorised and has to
+be optimised with respect to its $2(N+N_*)Q$ parameters. Indeed, in order to predict
+the location of a test latent point we have to take into account the locations of all other
+test points as well as training points, since together they all form a timeseries.
+Similarly, the $\Psi$ statistics have to also be recomputed for all points.
+
+
+The inference procedure for reconstructing missing output dimensions in the dynamical setting
+also follows closely the derivations of section \ref{predictions2}.
+The resulting predictive distribution is exactly as in equations \eqref{eq:predictive3a} and \eqref{eq:predictive3b}
+but, again, the difference is in the way in which $q(X,X_*)$ is optimised. Specifically,
+$q(X,X_*)$ is still optimised by maximising the variational lower bound of equation \eqref{eq:predictiveMissing1a}
+but, since the variational distribution is now fully correlated, we cannot break the integral as in
+equation \eqref{eq:predictiveMissing1b}. Instead, the bound will now take the form
+\begin{equation}
+ \label{eq:predictiveDyn2}
+ p(Y_*^p,Y) \geq \hat{\F}(q(X,X_*), Y^m) + \hat{\F}(q(X_*,X), Y^p, Y_*^p)
+	- \KL{q(X,X_*)}{p(X,X_*)} .
+\end{equation}
+In contrast to the non-dynamical case, here no terms are already computed during training and, instead,
+all of the above quantities have to be optimised with respect to $q(X,X_*)$.
+
+
+Finally, we discuss a predictive task which can only be achieved with the dynamical version of our model.
+Specifically, the dynamical variational GP-LVM is able to model the temporal evolultion of a dynamical system.
+Therefore, it is also able to interpolate or extrapolate new system states.
+The predictive density for this problem, $p(Y_* | Y)$ (omitting the dependence on time for simplicity), has the
+same form as the one for the task discussed in the previous paragraph but here the outputs are totally
+unobserved and need to be generated given only their corresponding timestamps.  
+Therefore, similarly to equations \eqref{eq:predictive3a} \eqref{eq:predictive3b}, we can write the predictive density as:
+
+\begin{align}
+p(Y_* | Y) & \geq \int p(Y_* | F_*)  \Big( \int q(F_* |X_*) q(X_*,X) \intd X \intd X_* \Big) \intd F_*
+		     = \int p(Y_* | F_*)  q(F_*) \intd F_*  \label{eq:predictiveDyn3}
+\end{align}
+The inference procedure then follows exactly as before, by making
+use of equations \eqref{meanFstar}, \eqref{covFstar} and \eqref{eq:predictive4}.
+The only difference is that $q(X,X_*)$ is now a approximating a posterior $p(X, X_*| Y, Y_*)$ for which $Y_*$
+is also unobserved. Therefore, it has to be predicted from the GP prior rather than being optimised.
+In more detail, $q(X,X_*)$ is the following Gaussian distribution
+ \begin{align}
+  q(X,X_*) = %\prod_{q=1}^Q q(\bfx_{*,q}) = 
+ \prod_{q=1}^Q   \int  p(\bfx_{*,q} | \bfx_q) q(\bfx_q) \intd \bfx_q = \prod_{q=1}^Q \la  p(\bfx_{*,q} | \bfx_q) \ra_{q(\bfx_q)} ,\label{qxstar}
+ \end{align}
+ %
+ where $p(\bfx_{*,q} | \bfx_q)$ is a Gaussian found from the conditional GP prior
+ (see \cite{rasmussen-williams}). Since $q(X)$ is also Gaussian, we can work out analytically the mean and variance 
+ for \eqref{qxstar}, which turn out to be:
+ \begin{align}
+  \mu_{x_{*,q}} = {}& K_{*N} \bar{\mu}_q \\
+   \text{var}(x_{*,q}) = {}& K_{**} - K_{*N} (K_t + \Lambda_q^{-1})^{-1} K_{N*}
+ \end{align}
+ where $K_{*N} = k_x(\bft_*, \bft)$, $K_{*N} = K_{*N}^\T$ and $K_{**} = k_x(\bft_*, \bft_*)$. Notice that these equations have
+ exactly the same form as found in standard GP regression problems.
+
+
+
+% \par In more detail, to approximate the predictive density, we will need to introduce the underlying latent function
+% values $F_* \in \mathbb{R}^{N_* \times D}$ (the noisy-free version of $Y_*$) and the latent variables $X_* \in \mathbb{R}^{N_* \times Q}$. We  write the predictive density as
+% \begin{eqnarray}
+% p(Y_* | Y) & = & \int p(Y_*, F_*, X_*| Y) \intd  F_* \intd  X_* =  \int p(Y_* | F_*)  p(F_*|X_*, Y) p(X_*|  Y) \intd  F_* \intd  X_* .
+% \label{eq:predictive1}
+% \end{eqnarray}
+% The term $p(F_* |X_*, Y)$ is approximated by the variational distribution
+% \begin{eqnarray}
+% q(F_*|X_*) & = & \int \prod_{d \in D} p(\bff_{*,d} | \bfu_d, X_*)  q(\bfu_d) d \bfu_d 
+% 	    = \prod_{d \in D} q(\bff_{*,d} | X_*)  ,
+% \end{eqnarray}
+% where $q(\bff_{*,d} | X_*)$ is a Gaussian that can be computed analytically,
+% since in our variational framework the optimal setting for $q(\bfu_d)$ is also found to be a Gaussian (see suppl. material for complete forms).
+% %
+% As for the term $p(X_*| Y)$ in eq. (\ref{eq:predictive1}), it is approximated by
+% a Gaussian variational distribution $q(X_*)$,
+% %
+% \begin{align}
+%  q(X_*) = \prod_{q=1}^Q q(\bfx_{*,q}) = 
+% \prod_{q=1}^Q   \int  p(\bfx_{*,q} | \bfx_q) q(\bfx_q) \intd \bfx_q = \prod_{q=1}^Q \la  p(\bfx_{*,q} | \bfx_q) \ra_{q(\bfx_q)} ,\label{qxstar}
+% \end{align}
+% %
+% where $p(\bfx_{*,q} | \bfx_q)$ is a Gaussian found from the conditional GP prior
+% (see \cite{rasmussen-williams}) and $q(X)$ is also Gaussian. We can, thus, work out analytically the mean and variance 
+% for \eqref{qxstar}, which turn out to be:
+% \begin{align}
+%  \mu_{x_{*,q}} = {}& K_{*N} \bar{\mu}_q \\
+%   \text{var}(x_{*,q}) = {}& K_{**} - K_{*N} (K_t + \Lambda_q^{-1})^{-1} K_{N*}
+% \end{align}
+% where $K_{*N} = k_x(\bft_*, \bft)$, $K_{*N} = K_{*N}^\T$ and $K_{**} = k_x(\bft_*, \bft_*)$. Notice that these equations have
+% exactly the same form as found in standard GP regression problems.
+% %
+% Once we have analytic forms for the posteriors in \eqref{eq:predictive1}, the predictive density is approximated as
+% %
+% \begin{align} 
+% p(Y_*| Y) {}& \approx  \int p(Y_*| F_*)  q(F_*|X_*) q(X_*) \intd F_* \intd X_* = \int p(Y_* | F_*) \la q(F_* | X_*) \ra_{q(X_*)} \intd F_* , \label{eq:predictive2}
+% \end{align}
+%
+%which is a non-Gaussian integral that cannot be computed analytically. However, following the same argument as in
+%\cite{rasmussen-williams, Girard03gaussianprocess}, we can
+%calculate analytically its mean and covariance:
+%%Although the expectation appearing in the above integral is not a Gaussian, its moments can be found analytically \cite{rasmussen-williams, Girard03gaussianprocess},
+%%
+%\begin{align}
+% \mathbb{E}(F_*) ={}&  B^\T \Psi_1^* \label{meanFstar} \\
+% \text{Cov}(F_*) ={}& B^\T \left( \Psi_2^* - \Psi_1^* (\Psi_1^*)^\T \right) B + \Psi_0^* I - \text{tr} \left[ \left( K_{MM}^{-1} - \left( K_{MM} + \beta \Psi_2 \right)^{-1} \right) \Psi_2^* \right] I, \label{covFstar}
+%\end{align}
+%%
+%where $B = \beta \left( K_{MM} + \beta \Psi_2 \right)^{-1} \Psi_1^\T
+%Y$, $\Psi_0^* = \la k_f(X_*, X_*) \ra$, $\Psi_1^* = \la K_{M*} \ra$
+%and $\Psi_2^* = \la K_{M*} K_{*M} \ra$. All expectations are taken
+%w.r.t. $q(X_*)$ and can be calculated analytically, while $K_{M*}$
+%denotes the cross-covariance matrix between the training inducing
+%inputs $\tilde{X}$ and $X_*$. The $\Psi$ quantities are calculated analytically (see suppl. material). Finally, since $Y_*$ is just a noisy version of
+%$F_*$, the mean and covariance of \eqref{eq:predictive2} is just
+%computed as: $\mathbb{E}(Y_*) = \mathbb{E}(F_*)$ and $\text{Cov}(Y_*)
+%= \text{Cov}(F_*) + \beta^{-1} I_{N_*}$.

@@ -1,0 +1,26 @@
+\section{Conclusions \label{conclusions}}
+Many applications in computer vision and related fields are concerned
+with modelling in scenarios where multiple streams of information of
+the same underlying phenomenon are available. Further, the data is
+often very high dimensional with
+enormous redundancies. Such a representation often means that the data
+is distributed on or close to a manifold through the observed
+parametrization.  In this paper we have presented a new latent
+variable model ideally suited for such a scenario which we refer to as
+\emph{Manifold Relevance Determination}. The model learns a single
+latent representation of several different observation spaces. The
+relevance of each subspace on the manifold with respect to the
+different observation spaces is automatically determined. This results
+in a factorization of the data by aligning the common variance in the
+observation spaces and separating the remaining private information.
+We exploited this for the application of human pose estimation where
+the factorization separates the variance in the pose space that can be
+determined from the image observations from the one that is
+ambiguous. Further, we also showed how dynamical priors could be
+incorporated when learning the model to disambiguate the
+estimate. The model is very efficient and capable of learning
+from very high-dimensional data. By applying the model to images of
+several different persons under the same lighting conditions the model
+correctly finds the generating low-dimensional parameters of the
+data. From the resulting model we showed how images of faces from
+novel lighting directions could be synthesized.

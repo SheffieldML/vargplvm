@@ -1,0 +1,944 @@
+\documentclass{beamer}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{epsfig}
+
+\usepackage{beamerthemeJuanLesPins}  % quite good
+%\usepackage{ beamerthemeMadrid}   % reasonable
+%\usepackage{beamerthemeRochester} % very good, rectugularized
+%\usepackage{beamerthemeSingapore} % very smooth and gives good space
+%\usepackage{beamerthemeWarsaw} % excellent only the bottom problematic 
+%\usepackage{}
+
+\include{utils3e}
+
+\title{Bayesian Gaussian Process Latent Variable Model}
+
+\author{{\bf Michalis K. Titsias and  Neil D. Lawrence}\\ 
+School of Computer \\
+Science University of Manchester}
+\date{}
+
+
+\begin{document}
+
+\frame{\titlepage}
+
+
+%\section[Outline]{}
+%\frame{\tableofcontents}
+
+
+
+\frame
+{
+\frametitle{Motivation}
+
+
+\begin{itemize}
+
+\item Learn Gaussian process (or kernel)  models
+      when inputs are random variables (uncertain/missing)  
+
+\item Learn the Gaussian process latent variable mdoel (Lawrence, 2005) 
+      by marginalizing out (not optimizing) the latent variables 
+
+\item Invlove intractable Bayeian computations:
+
+\begin{itemize}
+
+    \item  Can we apply variational Bayesina inference? 
+
+\end{itemize}
+
+
+\item Possible Benefits: 
+
+      Avoid overfitting, model selection 
+      of latent space, combine with unsuperived generative models etc      
+      
+\end{itemize}
+
+\item Variational Bayes for GPs with random inputs 
+
+\begin{itemize}
+
+     \item The role of inducing variables  
+
+     \item The variational lower bound 
+  
+     \item Squared exponential and linear kernels 
+
+     \item Prediction 
+
+\end{itemize} 
+
+\item Experiments with GP-LVM
+
+\item Summary 
+ 
+\end{itemize} 
+
+}
+
+
+
+
+\frame
+{
+\frametitle{Outline}
+
+\begin{itemize}
+
+\item Motivation: 
+
+\begin{itemize}
+
+\item Learn Gaussian process (or kernel models) 
+      when inputs are random variables (uncertain)  
+
+\item Learn the GP-LVM (Lawrence, 2005) 
+      by marginalizing out (not optimizing) the latent variables 
+
+\item Benefits: avoid overfitting, model selection 
+      of latent space, combine with unsuperived generative models etc      
+      
+\end{itemize}
+
+\item Variational Bayes for GPs with random inputs 
+
+\begin{itemize}
+
+     \item The role of inducing variables  
+
+     \item The variational lower bound 
+  
+     \item Squared exponential and linear kernels 
+
+     \item Prediction 
+
+\end{itemize} 
+
+\item Experiments with GP-LVM
+
+\item Summary 
+ 
+\end{itemize} 
+
+}
+
+
+
+
+\frame
+{
+\frametitle{Latent variables models}
+
+\begin{itemize} 
+
+\item General form (with Gaussian noise): 
+
+$$
+\bfy  = \bff(\bfx)  + \bfepsilon 
+$$
+where $\bfy \in \mathbbm{R}^D$ observed variable, 
+$\bfx \in \mathbbm{R}^Q$ latent variable ( $Q \ll D$), 
+$\bff : \mathbbm{R}^Q \rightarrow \mathbbm{R}^D$ 
+(mapping)
+
+\item Linear mapping (PPCA, Factor Analysis, PMF etc)
+
+$$
+\bff(\bfx) = W \bfx, \ \ \ W \in \mathbbm{R}^{D \times Q}   
+$$
+
+$$
+\bfy  = W \bfx  + \bfepsilon 
+$$
+
+\item Generative probabilistic model 
+
+$$
+p(\bfy,\bfx|\bff) = p(\bfy|bfx, \bff(\cdot)) p(\bfx)  
+$$
+where $p(\bfx)=\mathcal{N}(\bfzero, I)$ and we have not been fully 
+Bayesian about the mapping
+
+  
+
+Data: $Y \in \mathbbm{R}^{N \times D}$ where $N$ is
+the number of data and $D$ the dimensionality of each data
+
+\item Latent variables $X \in \mathbbm{R}^{N \times Q}$ where, $Q \ll D$  
+
+
+\item Probabilstic PCA 
+
+\end{itemize}
+
+}
+
+
+
+\frame
+{
+\frametitle{Latent variables models}
+
+Learning from data:  $Y \in \mathbbm{R}^{N \times D}$
+
+\begin{itemize} 
+
+\item Maximum likelihood w.r.t.\ the mapping 
+
+$$
+p(Y|\bff) = \prod_{n=1}^N \int p(\bfy_n| bfx_n, \bff_n) p(\bfx_n) d \bfx_n   
+$$
+this the standard appraoch  models 
+where $\bff_n = W \bfx_n $ and we learn $W$ 
+using e.g EM algorithm 
+
+\item Maximum likelihood wr.t. latent variables $X \in \mathbbm{R}^{N
+    \times Q}$
+$$
+p(Y|X) = \prod_{d=1}^D p(\bfy_d|X),
+$$
+
+\end{itemize}
+
+}
+
+
+
+\frame
+{
+\frametitle{Latent variables models}
+
+
+Bayesian Learning: marginalize out both the latent variables $X$ 
+and the mapping 
+
+\begin{itemize} 
+
+\item inear models  
+
+$$
+p(Y,X,W) =  \left(\prod_{n=1}^N \int p(\bfy_n| bfx_n, W) p(\bfx_n) d
+  \bfx_n \right) p(W)   
+$$
+posterio $p(W,X|Y)$ is intractiable, but variational methods are
+straighforward 
+
+\item GP-LVM 
+
+  
+\end{itemize}
+
+}
+
+
+\frame
+{
+\frametitle{Latent variables models}
+
+
+Bayesian Learning: marginalize out both the latent variables $X$ 
+and the mapping 
+
+\begin{itemize} 
+
+\item  
+
+$$
+p(Y,X,W) =  \left(\prod_{n=1}^N \int p(\bfy_n| bfx_n, W) p(\bfx_n) d
+  \bfx_n \right) p(W)   
+$$
+posterio $p(W,X|Y)$ is intractiable, but variational methods are
+straighforward 
+
+\item GP-LVM 
+
+  
+\end{itemize}
+
+}
+
+
+
+\frame
+{
+
+\frametitle{Gene regulation with multiple TFs} 
+
+\textcolor{red}{Multiple TF (dynamic) model
+  for gene regulation} 
+
+\begin{itemize}
+
+\item Let $y_j (t)$ be the time-continuous \textcolor{blue}{gene
+    expression (mRNA) function}  
+
+\item \textcolor{blue}{Dynamical model} for $y_j(t)$
+
+$$
+\frac{d y_j (t)} {d t} =
+B_j + S_j g(f_1(t),\ldots,f_I(t); \bfw_j) - D_j y_j(t)
+$$
+
+\begin{itemize} 
+
+\item $f_i (t)$ positive function representing \textcolor{blue}{protein 
+      concentration} (TF)  
+
+\item $g(\cdot )$ a positive \textcolor{blue}{sigmoidal activation} function 
+
+\item $\bfw_j$ \textcolor{blue}{interaction} weights between the $j$th
+  gene and the set of $I$ TFs 
+    
+\item $(B_j,S_j,D_j)$ kinetic parameters
+
+\end{itemize}
+
+\end{itemize}
+
+}
+
+
+\frame
+{
+
+\frametitle{Gene regulation with multiple TFs} 
+
+$$
+\frac{d y_j (t)} {d t} =
+B_j + S_j g(f_1(t),\ldots,f_I(t); \bfw_j) - D_j y_j(t),
+$$
+
+\begin{itemize}
+\item $g(\cdot)$ is assumed to 
+     be a \textcolor{blue}{multiple-TF hill function}:
+$$
+g(f_1(t),\ldots,f_I(t); \bfw_j)
+= \frac{\prod_{i=1}^I f_i(t)^{w_{ji}}}
+{\gamma_j^{\sum_{i=1}^I w_{ji}} + \prod_{i=1}^I f_i(t)^{w_{ji}}} 
+$$
+where $w_{ji}$ can be both positive and negative 
+
+\item The above can also be written as the \textcolor{blue}{sigmoid function}: 
+
+$$
+g(f_1(t),\ldots,f_I(t); \bfw_j)
+= \frac{1}{1 + e^{-w_{j0}  - \sum_{i=1}^I w_{ji} \log f_i(t)}}
+$$
+where we defined  $w_{j0} = - \sum_{i=1}^I w_{ji} \log \gamma_j$ 
+as new parameter 
+
+\end{itemize}
+
+}
+
+\frame
+{
+
+\frametitle{Gene regulation with Multiple TFs} 
+
+
+$$
+\frac{d y_j (t)} {d t} =
+B_j + S_j g(f_1(t),\ldots,f_I(t); \bfw_j) - D_j y_j(t)
+$$
+$\Rightarrow$ 
+$$
+y_j(t) = \frac{B_j}{D_j} +  \left(A_j - \frac{B_j}{D_j}\right) e^{-D_j t} +
+S_j \int_{0}^t g(f_i(u),\ldots,f_I(u); \bfw_j) e^{-D_j(t- u)} du
+$$
+where $A_j$ arises from the initial condition 
+\begin{itemize}
+
+\item We can use a finite set of \textcolor{blue}{noisy observations
+    of the mRNA} functions  $y_j(t)$ 
+      ($j=1,\ldots, N$) to \textcolor{blue}{learn the model}  
+       
+\item Noisy observations of the \textcolor{blue}{TF mRNAs} are often available 
+      and can greatly facilitate  inference over the TFs  
+
+\end{itemize} 
+
+
+}
+
+
+\frame
+{
+
+\frametitle{Gene regulation with multiple TFs} 
+
+
+\textcolor{red}{TF mRNA dynamic model (following Gao, et. al., 2008)}   
+
+\begin{itemize} 
+
+\item A dynamic model for the \textcolor{blue}{production of the protein} 
+      $f_i(t)$ from \textcolor{blue}{its mRNA function} $m^f_i (t)$ can take the form 
+ 
+$$
+\frac{d f_i(t)} {d t}
+=  m^f_i (t) - d_i f_i(t)
+$$
+$\Rightarrow$
+$$
+f_i (t) = \int_0^t 
+m^f_i (t) e^{- d_i (t-u)} d u 
+$$
+
+\item This can be thought as a \textcolor{blue}{parametrized model 
+      for the unknown protein} $f_i (t)$. To estimate  
+      $f_i (t)$, we need to estimate $m^f_i (t)$ and the \textcolor{blue}{decay} $d_i$ 
+
+\item The above allows the use of noisy observations 
+      of the TF mRNA functions
+
+\end{itemize}
+
+
+}
+
+
+\frame
+{
+\frametitle{Outline}
+
+
+
+\begin{itemize}
+  \item Gene regulation with multiple TFs
+
+  \item \textcolor{red}{Bayesian inference from mRNA data}
+
+\begin{itemize}
+
+\item Experiments in Drosophila data
+
+\end{itemize}
+
+   \item Genome-wide gene ranking/identification 
+
+\begin{itemize} 
+
+\item Experiments in toy data
+
+\end{itemize}
+
+\item Conclusions    
+
+\end{itemize}
+
+
+}
+
+
+\frame
+{
+
+\frametitle{Bayesian inference from mRNA data} 
+
+\begin{itemize}
+
+
+\item Summary of model: 
+
+\end{itemize}
+
+
+$$
+y_j(t) = \frac{B_j}{D_j} +  \left(A_j - \frac{B_j}{D_j}\right) e^{-D_j t} +
+S_j \int_{0}^t g(f_i(u),\ldots,f_I(u); \bfw_j) e^{-D_j(t- u)} du. 
+$$
+
+$$
+f_i (t) = \int_0^t m^f_i (t) e^{- d_i (t-u)} d u 
+$$
+
+\begin{itemize}
+
+\item Observations for target genes and TF mRNAs:
+
+$$
+\widetilde{y}_{jn} = y_j(t_n) + \epsilon, \ \ \, j=,\ldots,N,  
+$$
+
+$$
+\widetilde{m}^f_{in} = m_i^f(t_n) + \epsilon, \ \ \, i=1,\ldots,I   
+$$
+where $n=1,\ldots,T$ (time points)
+\item This defines \textcolor{blue}{two likelihoods} $p(\widetilde{Y}|Y)$
+      and $p(\widetilde{M}^f|M^f)$. 
+
+\end{itemize}
+
+
+}
+
+
+\frame
+{
+
+\frametitle{Bayesian inference from mRNA data} 
+
+
+$$
+y_j(t) = \frac{B_j}{D_j} +  \left(A_j - \frac{B_j}{D_j}\right) e^{-D_j t} +
+S_j \int_{0}^t g(f_i(u),\ldots,f_I(u); \bfw_j) e^{-D_j(t- u)} du 
+$$
+
+$$
+f_i (t) = \int_0^t m^f_i (t) e^{- d_i (t-u)} d u
+$$
+
+\begin{itemize}
+
+\item We place priors on: 
+
+    \begin{itemize}
+   
+    \item \textcolor{blue}{Kinetics:} $\Theta = \{A_j,B_j,D_j,S_j\}_{j=1}^N$ (uniform or
+          log normal) 
+        
+     \item \textcolor{blue}{Decays} of TF mRNA: $\{d_i\}$, (uniform or log normal)   
+
+     \item \textcolor{blue}{Interaction} weights: $\{\bfw_j\}$, 
+           (Gaussian priors with optionally positivity constraints
+           and/or spike and slab sparse priors) 
+
+     \item \textcolor{blue}{mRNA functions} $m_i^f(t)$: \textcolor{red}{Gaussian processes}
+           (through a transformation that ensures positivity of $m_i^f(t)$) 
+
+     \item \textcolor{blue}{Lengthscales} of Gaussian processes (uniform or gamma) and 
+            \textcolor{blue}{noise variances} in the likelihoods (gamma)  
+
+\end{itemize}
+
+\end{itemize}
+
+}
+
+
+
+\frame
+{
+
+\frametitle{Bayesian inference from mRNA data} 
+
+\textcolor{red}{Inference based on MCMC}
+
+
+$$
+\text{joint} 
+= p(\widetilde{Y}|Y) p(\widetilde{M}^f|M^f) p(\bar{M}_i^f) p(\Theta) 
+ p(W) p(\{d_i\}_{i=1}^I) p(\{\sigma_j^2\}) p(\{\ell^2\}_{i=1}^I)
+$$
+
+
+\begin{itemize}
+
+\item \textcolor{blue}{Many Metropolis-Hastings} steps involving sampling Gaussian process
+      functions, kinetic parameters, interaction weights, etc.  
+
+
+\item We can afford training the model using MCMC 
+      in \textcolor{blue}{moderate-sized} networks,
+      e.g.\ with 100 genes and 5 TFs and 3 replicas, 
+      \textcolor{blue}{but not genome-wide} (too slow for that)  
+
+
+\item But once the model in trained, \textcolor{blue}{we can do 
+      genome-wide} prediction (e.g.\ gene \textcolor{blue}{target identification})
+      and this is fast 
+
+\end{itemize}
+ 
+
+}
+
+
+\frame
+{
+\frametitle{Outline}
+
+
+\begin{itemize}
+  \item Gene regulation with multiple TFs
+
+  \item Bayesian inference from mRNA data
+
+\begin{itemize}
+
+\item \textcolor{red}{Experiments in Drosophila data}
+
+\end{itemize}
+
+   \item Genome-wide gene ranking/identification 
+
+\begin{itemize} 
+
+\item Experiments  toy data
+
+\end{itemize}
+
+\item Conclusions    
+
+\end{itemize}
+
+}
+
+\frame
+{
+
+\frametitle{Experiments in Drosophila data} 
+
+
+
+\begin{itemize}
+
+\item Microarray dataset containing three replicas of $12$ time points collected hourly throughout
+Drosophila embryogenesis in wild-type embryos 
+
+\item \textcolor{blue}{$92$ target genes} 
+
+\item  \textcolor{blue}{$5$ TFs} (including 
+        \textcolor{blue}{Twist and Mef2} which regulate mesoderm and muscle development)
+
+
+\item ChiP information is used to define the (deterministic) sparse
+  prior one interaction between TFs and target genes  
+
+
+\end{itemize}
+
+
+
+}
+
+
+
+%\frame
+%{
+%
+%\frametitle{Experiments in Drosophila data} 
+%
+%
+%\begin{figure}
+%\includegraphics[width=100mm,height=70mm]{DrosTrain925TfsProfiles.pdf}
+%\end{figure}
+%
+%
+%}
+
+
+
+
+
+\frame
+{
+\frametitle{Genome-wide gene ranking/identification}
+
+\begin{itemize}
+
+\item Assume that we have trained our model in a carefully chosen 
+  set of genes. This gives the \textcolor{blue}{posterior distribution of TF profiles} 
+
+
+ \item Given a test (unknown gene), called $*$, can we use the trained
+   model to make (probabilistic) \textcolor{blue}{statements about if a certain 
+   TF  regulates $*$?}  
+
+  
+ \item We need to compute \textcolor{blue}{Bayesian prediction probabilities}  
+
+\end{itemize}
+
+
+}
+
+
+
+\frame
+{
+\frametitle{Genome-wide gene ranking/identification}
+
+
+\begin{itemize}
+
+\item Let $\bar{\bfy}_*$ be a finite set of noisy observations of the 
+      test gene mRNA function $y_*(t)$ where
+
+\end{itemize}
+   
+$$
+y_*(t) = \frac{B_*}{D_*} +  \left(A_* - \frac{B_*}{D_*}\right) e^{-D_* t} +
+S_* \int_{0}^t g(f_i(u),\ldots,f_I(u); \bfw_*) e^{-D_*(t- u)} du, 
+$$
+
+
+
+
+where now the  \textcolor{blue}{new prior} over TFs (function
+$f_i(\cdot),\ldots,f_I(\cdot)$) is the \textcolor{blue}{Bayesian posterior} 
+$p(f_i(\cdot),\ldots,f_I(\cdot)| \widetilde{Y}, \widetilde{M}^f)$
+obtained previously. 
+
+
+\begin{itemize}
+
+ 
+\item We wish to compute the posterior probability of the event
+      \textcolor{red}{"$i$th  TF regulates gene *"}
+    
+
+
+
+\item We can similarly define events involving more that two TFs 
+
+\end{itemize}
+
+
+}
+
+
+
+
+
+
+
+
+
+
+\frame
+{
+
+\frametitle{Genome-wide gene ranking/identification}
+
+
+\begin{itemize}
+
+\item "$i$th TF regulates gene *" \textcolor{blue}{$\Longleftrightarrow$} 
+   ``the interaction $w_{*i}$ is zero or not'' 
+
+\item We need to search over all possible models where some interactions are
+set to zero. Two ways:  
+
+\begin{enumerate}
+
+\item Define all models $\mathcal{M}_1, \mathcal{M}_2, \ldots$ 
+      obtained by \textcolor{blue}{switching on/off TFs}. For $I$ 
+      TFs we have $2^I$ possible models 
+
+
+\item Use a single large model with a \textcolor{blue}{sparse prior} over the 
+      \textcolor{blue}{interaction} weights $\bfw_*$ 
+       
+
+
+\end{enumerate}
+
+\end{itemize}
+
+\textcolor{red}{\bf Remark:}\textcolor{red}{ 
+1) is more convenient when $I$ is small (say less than $5$), while 2) more
+tractable for larger $I$} 
+ 
+
+}
+
+
+
+
+\frame
+{
+
+\frametitle{Genome-wide gene ranking/identification}
+
+
+$$
+p(i \text{TF present}|\bfy_*, Y,  \widetilde{M}^f)
+\propto \sum_{\mathcal{M}_k : w_{*i} \neq 0 } p(\bfy_*| \bar{Y},
+  \widetilde{M}^f, \mathcal{M}_k) p(\mathcal{M}_k)
+$$
+
+This requires computing the \textcolor{blue}{predictive density} for each 
+model $\mathcal{M}_k$ 
+
+\begin{multline}
+p(\bfy_*| \bar{Y},
+\widetilde{M}^f, \mathcal{M}_k) = \\ 
+\int_{\bfw_*,\bftheta_*,\{f_i\}} p(\bfy_* | \bfw_*,\bftheta_*,\{f_i\}_{i=1}^I, \mathcal{M}_k) 
+p(\bfw_*) p(\bftheta_*) p(\{f_i\}_{i=1}^I | \bar{Y},
+  \widetilde{M}^f) \nonumber 
+\end{multline}
+where $\bftheta_* = (B_*,D_*,S_*,A_*)$ and the posterior  
+$p(\{f_i\}_{i=1}^I | \bar{Y}, \widetilde{M}^f)$ over TFs has been 
+obtained in the training phase.  
+
+
+}
+
+
+
+
+\frame
+{
+
+\frametitle{Genome-wide gene ranking/identification}
+
+
+Using the samples drawn from the posterior $p(\{f_i\}_{i=1}^I |
+\bar{Y}, \bar{M}^f)$:
+\begin{multline}
+p(\bfy_*| \bar{Y},
+\widetilde{M}^f, \mathcal{M}_k) \approx \\ 
+ \int_{\bfw_*,\bftheta_*} \left(
+\frac{1}{T}\sum_{t=1}^T  p(\bfy_* |
+\bfw_*,\bftheta_*,\{f^{(t)}_i\}_{i=1}^I, \mathcal{M}_k) 
+\right) p(\bfw_*) p(\bftheta_*) \nonumber 
+\end{multline}
+We approximate this predictive 
+density  by drawing samples 
+from $p(\bfw_*,\bftheta_*|\bfy_*,\bar{Y},\bar{M}^f)$
+and then using Chib's (1995) approximation to a marginal likelihood:
+
+$$
+p(\bfy_*) = \frac{q(\bfy_* | \bfw_*^s, \bftheta_*^s ) p(\bfw_*^s)
+  p(\bftheta_*^s)}{q(\bfw_*^s,\bftheta^s_*|\bfy_*)} 
+$$
+where $(\bfw_*^s,\bftheta^s_*)$ are certain values, 
+and $q(\bfw_*^s,\bftheta^s_*|\bfy_*)$ is a density estimator of the true 
+posterior  $p(\bfw_*^s,\bftheta^s_*|\bfy_*)$
+
+
+
+}
+
+
+
+\frame
+{
+
+\frametitle{Genome-wide gene ranking/identification}
+
+
+\begin{itemize}
+
+\item The above procedure is \textcolor{blue}{very fast}: it takes 1/2 mins for each gene.  
+
+
+\item The key to achieve such speed to is to use the \textcolor{blue}{data augmentation principle} 
+when sampling $p(\bfw_*,\bftheta_*|\bfy_*,\bar{Y},\bar{M}^f)$  using
+MCMC (i.e.\ sample also the TFs $\{f_i\}$ from the ``cached'' samples)
+
+\end{itemize}
+
+\textcolor{red}{\bf Remark}: \textcolor{red}{Speed is important because we
+  need to repeat such a procedure for any test gene in order to do genome-wide target identification}
+
+}
+
+
+
+\frame
+{
+\frametitle{Outline}
+
+
+\begin{itemize}
+  \item Gene regulation with multiple TFs
+
+  \item Bayesian inference from mRNA data
+
+\begin{itemize}
+
+\item Experiments in Drosophila data
+
+\end{itemize}
+
+\item  Genome-wide gene ranking/identification 
+
+\begin{itemize} 
+
+\item \textcolor{red}{Experiments in toy data}
+
+\end{itemize}
+
+\item Conclusions    
+
+\end{itemize}
+
+}
+
+
+\frame
+{
+
+\frametitle{Experiments in toy data} 
+
+\begin{itemize}
+
+\item We generated $1000$ artificial genes that are somehow
+      similar to the Drosophila data. In particular, the $5$-TF dynamical 
+      model learned there is now used to generate genes.   
+
+\item Each gene data is generated by randomly choosing
+      a subset of the TFs to be regulators. Interactions values
+      are chosen randomly from a standard normal.   
+
+\item We consider $20$ genes for training a model \textcolor{blue}{with 2 TFs}
+      (Twist and Mef2). This gives us somehow a realistic problem where
+      the \textcolor{blue}{other $3$ TFs are un-modelled factors}      
+      in the system (as someone expect such factor to exist in real data)       
+
+\item Once the model is trained, we do gene target identification for
+      the 2 TFs  in the remaining $980$ test genes. Ground truth is known.        
+
+\end{itemize}
+
+}
+
+
+
+
+
+
+\frame
+{
+
+\frametitle{Conclusions}
+
+
+\begin{itemize}
+
+\item We presented a Bayesian framework for learning a dynamical model
+      for gene regulation with multiple TFs 
+
+\item It can be trained from data associated with a moderated-sized   
+      network 
+
+\item Once the model is trained, genome-wide Bayesian predictions are
+      possible  
+ 
+\item We need more work on the evaluation of our method for 
+      genome-wide target identification  
+     
+\end{itemize}
+
+ 
+}
+   
+
+
+
+
+
+
+
+\end{document}

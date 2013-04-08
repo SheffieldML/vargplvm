@@ -1,0 +1,87 @@
+%% Observations in Computer Vision are often extremely
+%% high-dimensional. However, the dimensionality of the representation typically
+%% does not reflect the intrinsic dimensionality of the data but is rather an effect of
+%% the system that has acquired it. A central problem is finding
+%% a new more efficient representation in order to circumvent
+%% the \emph{curse of dimensionality} \cite{bellman1957dynamic}. Given a
+%% set of data, a large range of dimensionality reduction approaches have
+%% been suggested ranging from spectral methods, often based on
+%% Multi-Dimensional Scaling \cite{Cox:2008uv}, to generative methods such
+%% as GTM \cite{Bishop:1998fl}. The generative approaches build models
+%% of the data and are in general founded on more sound principles, making
+%% less restrictive assumptions about the data \cite{Ek:2009vv}. The
+%% benefit of spectral methods is that they are 
+%% convex and can be more efficient at handling large datasets.
+%generally more efficient 
+%in
+%capable of
+% handling large amounts of data in high dimensions.
+
+Multiview learning is characterised by data which contain
+observations from several different modalities: for example depth
+cameras provide colour and depth images from the same scene, or a
+meeting might be represented by both an audio and a video feed. This
+motivates latent variable models which align the different views by
+assuming that a portion of the data variance is shared between the
+modalities, whilst explaining the remaining variance with latent
+spaces that are private to each modality.  This model structure allows
+inference when only a subset of the modalities is available and,
+because the observation spaces have been aligned, it is possible to
+transfer information between modalities by conditioning the model
+through the underlying concept.
+
+Several approaches that combine multiple views have been suggested.
+One line of work aims to find a low-dimensional representation of the
+observations by seeking a transformation of each view. Different
+approaches exploit different characteristics of the data such as,
+correlation \cite{Kuss:2003wp,Ham:2005vs}, or mutual information
+\cite{Memisevic:2011tq}. However, these methods only aim to encode the
+shared variance and do not provide a probabilistic model. To address
+these shortcomings different generative models have been suggested.
+In particular, approaches formulated as Gaussian Processes Latent
+Variable Models (GP-LVMs) \cite{Lawrence:2005vk} have been especially
+successful \cite{Shon:2006wr,Ek:2007uo}. However, these models assume
+that a single latent variable is capable of representing each
+modality, implying that the modalities can be fully aligned.  To
+overcome this, the idea of a factorized latent space was presented in
+\cite{Ek:2008up} where each view is associated with an additional
+\emph{private} space, representing the variance which cannot be
+aligned, in addition to the shared space \cite{Ek:2009vv}, an idea
+independently suggested by \citet{Klami06mlsp}.  The main challenge for the
+applicability of the proposed models is that the factorization of the
+latent variable is a structural and essentially discrete property of
+the model, making it very challenging to
+learn. \citet{Salzmann:2010vh} introduced a set of regularizers
+allowing the dimensionality of the factorization to be learned.
+However, the regularizers were motivated out of necessity rather than
+principle and introduced several additional parameters to the model.
+
+We present a new principled approach to learning a factorized latent
+variable representation of multiple observation spaces. We introduce a
+relaxation of the structural factorization of the model from the
+original \emph{hard} discrete representation, where each latent
+variable is either associated with a private space or a shared space,
+to a smooth continuous representation, where a latent variable may be
+more important to the shared space than the private space. In contrast
+to previous approaches the model is fully Bayesian, allowing
+estimation of both the dimensionality and the structure of the latent
+representation to be done automatically. Further, it provides an approximation to the full posterior of the latent points given the data.% distribution.
+ We describe the model and the
+variational approximation in the next section. The model is capable of
+handling extremely high dimensional data. We illustrate this by
+modelling image data directly in the pixel space in section
+\ref{experiments}. We also demonstrate the model's ability to reconstruct pose from silhouette in a human motion example and, finally, by considering class labels to be a second `view' of a dataset we show how the model can be used to improve classification performance in a well known visualization benchmark: the ``oil data''.
+
+% The remainder of the paper is structured as follows: section
+% \ref{model} details the proposed model and section 
+% describes experiments conducted on high dimensional image data, on a
+% multi-modal human pose dataset and on a classification task. Based on
+% the results and the analysis performed there, we present our final
+% conclusions in section
+% \ref{conclusions}.
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../svargplvmICML2012"
+%%% End: 

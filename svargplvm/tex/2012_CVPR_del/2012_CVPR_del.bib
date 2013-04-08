@@ -1,0 +1,2466 @@
+%% Created using Papers on Sat, 19 Nov 2011.
+%% http://mekentosj.com/papers/
+
+@ARTICLE{Agarwal:pose06,
+  author = {Ankur Agarwal and Bill Triggs},
+  title = {Recovering 3{D} Human Pose from Monocular Images},
+  journal = PAMI,
+  year = {2006},
+  volume = {28},
+  number = {1},
+  abstract = {We describe a learning-based method for recovering 3D human body pose
+	from single images and monocular image sequences. Our approach requires
+	neither an explicit body model nor prior labeling of body parts in
+	the image. Instead, it recovers pose by direct nonlinear regression
+	against shape descriptor vectors extracted automatically from image
+	silhouettes. For robustness against local silhouette segmentation
+	errors, silhouette shape is encoded by histogram-of-shape-contexts
+	descriptors. We evaluate several different regression methods: ridge
+	regression, Relevance Vector Machine (RVM) regression, and Support
+	Vector Machine (SVM) regression over both linear and kernel bases.
+	The RVMs provide much sparser regressors without compromising performance,
+	and kernel bases give a small but worthwhile improvement in performance.
+	The loss of depth and limb labeling information often makes the recovery
+	of 3D pose from single silhouettes ambiguous. To handle this, the
+	method is embedded in a novel regressive tracking framework, using
+	dynamics from the previous state estimate together with a learned
+	regression value to disambiguate the pose. We show that the resulting
+	system tracks long sequences stably. For realism and good generalization
+	over a wide range of viewpoints, we train the regressors on images
+	resynthesized from real human motion capture data. The method is
+	demonstrated for several representations of full body pose, both
+	quantitatively on independent but similar test data and qualitatively
+	on real image sequences. Mean angular errors of 4-6 degrees are obtained
+	for a variety of walking motions.},
+  doi = {10.1109/TPAMI.2006.21},
+  file = {Agarwal-pami05.pdf:http\://lear.inrialpes.fr/pubs/2006/AT06a/Agarwal-pami05.pdf:PDF},
+  group = {human motion}
+}
+
+ @Article{YaleFaces1,
+  author =  "Georghiades, A.S. and Belhumeur, P.N. and Kriegman, D.J.",
+  title =   "From Few to Many: Illumination Cone Models for Face Recognition under
+               Variable Lighting and Pose",
+  journal = "IEEE Trans. Pattern Anal. Mach. Intelligence",
+  year =  2001,
+  volume = 23,
+  number = 6,
+  pages= "643-660"} 
+
+ @Article{YaleFaces2,
+  author =  "K.C. Lee and J. Ho and D. Kriegman",
+  title =   "Acquiring Linear Subspaces for Face Recognition under Variable Lighting ",
+  journal = "IEEE Trans. Pattern Anal. Mach. Intelligence",
+  year =  2005,
+  volume = 27,
+  number = 5,
+  pages= "684-698"} 
+
+
+
+
+@PROCEEDINGS{Bartlett:nips11,
+  title = nips,
+  year = {2012},
+  editor = {Peter Bartlett and Fernando Peirrera and Chris Williams and John Lafferty},
+  volume = {24},
+  address = {Cambridge, MA},
+  publisher = mit,
+  booktitle = nips
+}
+
+@InProceedings{Damianou:vgpds11,
+  author = 	 {Andreas Damianou and Michalis K. Titsias and Neil D. Lawrence},
+  title = 	 {Variational Gaussian Process Dynamical Systems},
+  OPTcrossref =  {Bartlett:nips11},
+  OPTkey = 	 {},
+  booktitle = {NIPS},
+  OPTpages = 	 {},
+  year = 	 {2011},
+  OPTeditor = 	 {},
+  OPTvolume = 	 {},
+  OPTnumber = 	 {},
+  OPTseries = 	 {},
+  OPTaddress = 	 {},
+  OPTmonth = 	 {},
+  OPTorganization = {},
+  OPTpublisher = {},
+  note =	 {To appear},
+  OPTannote = 	 {},
+  OPTpubmedid =  {},
+  OPTdoi = 	 {},
+  linkpdf =	 shefftp # {VGPDS_Nips11.pdf},
+  label1 = {Supplementary Videos},
+  link1 = {http://staffwww.dcs.shef.ac.uk/people/A.Damianou/varFiles/VGPDS/index.html},
+  OPTlinkps = 	 {},
+  OPTlinkpsgz =  {},
+  linksoftware = softwarehttp # {vargplvm},
+  abstract =	 {High dimensional time series are endemic in applications
+                 of machine learning such as robotics (sensor data),
+                 computational biology (gene expression data), vision
+                 (video sequences) and graphics (motion capture
+                 data). Practical nonlinear probabilistic approaches
+                 to this data are required. In this paper we introduce
+                 the variational Gaussian process dynamical
+                 system. Our work builds on recent variational
+                 approximations for Gaussian process latent variable
+                 models to allow for nonlinear dimensionality
+                 reduction simultaneously with learning a dynamical
+                 prior in the latent space. The approach also allows
+                 for the appropriate dimensionality of the latent
+                 space to be automatically determined. We demonstrate
+                 the model on a human motion capture data set and a
+                 series of high resolution video sequences.},
+  OPTgroup = 	 {}
+}
+
+
+@inproceedings{Titsias:bayesGPLVM10,
+author = {Titsias, Michalis and Lawrence, Neil},
+title = {{Bayesian Gaussian Process Latent Variable Model}},
+booktitle = {International Conference on Artificial Intelligence and Statistics},
+year = {2010}
+}
+
+
+@BOOK{Rasmussen:book06,
+  title = {Gaussian Processes for Machine Learning},
+  publisher = mit,
+  year = {2006},
+  author = {Carl Edward Rasmussen and Christopher K. I. Williams},
+  address = {Cambridge, MA},
+  abstract = {Gaussian Processes (GPs) provide a principled, practical, probabilistic
+	approach to learning in kernel machines. GPs have received increased
+	attention in the machine-learning community over the past decase,
+	and this book provides a long-needed systematic and unified treatment
+	of theoretical and practical aspects of GPs in machine learning.
+	The treatment is comprehensive and self-contained, targetd at researchers
+	and students in machine learning and applied statistics.\\\\
+	
+	 The book deals with the supervised-learning problem for both regression
+	and classification, and includes detailed algorithms. A wide variety
+	of covariance (kernel) functions are presented and their properties
+	discussed. Model selection is discussed both from a Bayesian and
+	a classical perspective. Many connections to other well known techniques
+	from machine learning and statistics are discussed, including support-vector
+	machines, neural networks, splines, regularization networks, relevance
+	vector machines, and others. Theoretical issues including learning
+	curves and the PAC-Bayesian framework are treated, and several approximation
+	methods for learning with large datasets are discussed. The book
+	contains illustrative examples and exercises, and code and datasets
+	are available on the Web. Appendixes provide mathematical background
+	and a discussion of Gaussian Markov processes.},
+  group = {gp},
+  isbn = {0-262-18253-X},
+  label1 = {Website},
+  link1 = {http://www.GaussianProcess.org/gpml}
+}
+
+@PROCEEDINGS{Ghahramani:icml07,
+  title = icml,
+  year = {2007},
+  editor = {Zoubin Ghahramani},
+  volume = {24},
+  publisher = {Omnipress},
+  booktitle = icml,
+  isbn = {1-59593-793-3}
+}
+
+@InProceedings{Lawrence:hgplvm07,
+  author =	 {Neil D. Lawrence and Andrew J. Moore},
+  title =	 {Hierarchical {G}aussian Process Latent Variable
+                  Models},
+  booktitle = {ICML},
+  year = {2007},
+  abstract =	 {The Gaussian process latent variable model (GP-LVM)
+                  is a powerful approach for probabilistic modelling
+                  of high dimensional data through dimensional
+                  reduction. In this paper we extend the GP-LVM
+                  through hierarchies. A hierarchical model (such as a
+                  tree) allows us to express conditional
+                  independencies in the data as well as the manifold
+                  structure. We first introduce Gaussian process
+                  hierarchies through a simple dynamical model, we
+                  then extend the approach to a more complex hierarchy
+                  which is applied to the visualisation of human
+                  motion data sets.},
+  year =	 2007,
+  linkpdf =	 shefftp # {hgplvm.pdf},
+  linksoftware = softwarehttp # {hgplvm/},
+  group =	 {manml,gp,gplvm,dimensional reduction}
+}
+
+%%%%%%%%%%%%%%%%
+
+@article{boykov01pami,
+title = {{Fast Approximate Energy Minimization via Graph Cuts}},
+journal = {IEEE Trans. Pattern Anal. Mach. Intell.},
+year = {2001}
+}
+
+@article{Csurka:2004ud,
+author = {Csurka, G and Dance, C and Fan, L},
+title = {{Visual categorization with bags of keypoints}},
+journal = {Workshop on Statistical Learning in Computer Vision (ECCV)},
+year = {2004}
+}
+
+@book{cristianini2006introduction,
+title = {{An introduction to support Vector Machines: and other kernel-based learning methods}},
+publisher = {Cambridge university press},
+year = {2006}
+}
+
+@misc{pascal-voc-2010,
+title = {{The PASCAL Visual Object Classes Challenge 2010 (VOC2010)}}
+}
+
+@inproceedings{Rusu:2009wz,
+author = {Rusu, RB and Holzbach, A and Blodow, N and Beetz, Michael},
+title = {{Fast geometric point labeling using conditional random fields}},
+booktitle = {IEEE/RSJ International Conference on Intelligent Robots and Systems},
+year = {2009}
+}
+
+@inproceedings{Ham:2005vs,
+author = {Ham, J and Lee, D and Saul, Lawrence K},
+title = {{Semisupervised alignment of manifolds}},
+booktitle = {Annual Conference on Uncertainty in Artificial Intelligence},
+year = {2005}
+}
+
+@inproceedings{Duchenne:2011uj,
+author = {Duchenne, Olivier and Joulin, Armand and Ponce, Jean},
+title = {{A Graph-Matching Kernel for Object Categorization}},
+booktitle = {International Conference on Computer Vision},
+year = {2011}
+}
+
+@inproceedings{Vogel:2006by,
+author = {Vogel, Julia and Schwaninger, Adrian and Wallraven, Christian and B{\"u}lthoff, Heinrich H},
+title = {{Categorization of natural scenes: local vs. global information}},
+booktitle = {Applied perception in graphics and visualization},
+year = {2006}
+}
+
+@inproceedings{Malisiewicz:2011tc,
+author = {Malisiewicz, Tomasz and Gupta, Abhinav and Efros, Alexei A.},
+title = {{Ensemble of Exemplar-SVMs for Object Detection and Beyond}},
+booktitle = {International Conference on Computer Vision},
+year = {2011}
+}
+
+@article{Latash:2005ty,
+author = {Latash, Mark L and Krishnamoorthy, Vijaya and Scholz, John P and Zatsiorsky, Vladimir M},
+title = {{Postural synergies and their development}},
+journal = {NEURAL PLASTICITY},
+year = {2005}
+}
+
+@article{Comaniciu:2002us,
+author = {Comaniciu, Dorin and Meer, Peter},
+title = {{Mean Shift: A Robust Approach Toward Feature Space Analysis}},
+journal = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+year = {2002}
+}
+
+@inproceedings{Bergstrom:2011vk,
+author = {Bergstr{\"o}m, Niklas and Bj{\"o}rkman, M{\aa}rten and Kragic, Danica},
+title = {{Generating Object Hypotheses in Natural Scenes through Human-Robot Interaction}},
+booktitle = {International Conference on Robotic Systems},
+year = {2011}
+}
+
+@article{Anonymous:2001vz,
+title = {{10.1.1.94.4140}},
+year = {2001}
+}
+
+@article{Mu:0wehT-bZ,
+author = {Mu, Tingting and Goulermas, John Y and Tsujii, Jum'ichi and Ananiadou, Sophia},
+title = {{Proximity-based Frameworks for Generating Embeddings from Multi-Output Data}}
+}
+
+@inproceedings{Bjorkman:2010di,
+author = {Bj{\"o}rkman, M and Kragic, D},
+title = {{Active 3D Segmentation through Fixation of Previously Unseen Objects}},
+booktitle = {British Machine Vision Conference},
+year = {2010}
+}
+
+@article{Bishop:1998fl,
+author = {Bishop, Christopher M and Svens{\'e}n, Markus and Williams, Christopher K I},
+title = {{GTM: The Generative Topographic Mapping}},
+journal = {Neural Computation},
+year = {1998}
+}
+
+@webpage{Anonymous:H8emCQF0,
+title = {{Sethu Vijayakumar - Google Scholar}}
+}
+
+@article{Globerson:2003vq,
+author = {Globerson, A},
+title = {{Sufficient dimensionality reduction}},
+journal = {The Journal of Machine Learning Research},
+year = {2003}
+}
+
+@inproceedings{Ciocarlie:2007ud,
+author = {Ciocarlie, M. and Goldfeder, C and Allen, P.},
+title = {{Dimensionality reduction for hand-independent dexterous robotic grasping}},
+booktitle = {IEEE/RSJ International Conference on Intelligent Robots and Systems},
+year = {2007}
+}
+
+@inproceedings{Rusu09ICRA,
+title = {{Fast Point Feature Histograms (FPFH) for 3D Registration}},
+booktitle = {IEEE International conference on robotics and automation},
+year = {2009}
+}
+
+@article{lowe2004distinctive,
+author = {Lowe, David G.},
+title = {{Distinctive image features from scale-invariant keypoints}},
+journal = {International journal of computer vision},
+year = {2004}
+}
+
+@inproceedings{Domingos:2007wo,
+author = {Domingos, P},
+title = {{Structured machine learning: Ten problems for the next ten years}},
+booktitle = {Proceedings of 17th International {\ldots}},
+year = {2007}
+}
+
+@inproceedings{Globerson:2006ut,
+author = {Globerson, A and Roweis, Sam},
+title = {{Metric learning by collapsing classes}},
+booktitle = {Advances in Neural Information Processing},
+year = {2006}
+}
+
+@article{McFee:2011vt,
+author = {McFee, Brian and Lanckriet, Gert},
+title = {{Learning Multi-modal Similarity}},
+journal = {Journal of Machine Learning Research},
+year = {2011}
+}
+
+@article{Geiger:bc,
+title = {{Rank priors for continuous non-linear dimensionality reduction}}
+}
+
+@inproceedings{Leen:2006ve,
+author = {Leen, Gayle and Fyfe, C},
+title = {{A Gaussian process latent variable model formulation of canonical correlation analysis}},
+booktitle = {European Symposium on Artificial Neural Networks},
+year = {2006}
+}
+
+@inproceedings{Ham:2006ij,
+author = {Ham, Jihun and Ahn, Ikkjin and Lee, Daniel},
+title = {{Learning a manifold-constrained map between image sets: applications to matching and pose estimation}},
+booktitle = {IEEE Computer Society Conference on Computer Vision and Pattern Recognition},
+year = {2006}
+}
+
+@incollection{Olivia:2006kt,
+author = {Olivia, Aude and Torralba, Antonio},
+title = {{Building the gist of a scene: The role of Global Image Features in Recognition}},
+booktitle = {Progress in Brain Research},
+year = {2006}
+}
+
+@article{Aggarwal:2001tg,
+author = {Aggarwal, C and Hinneburg, A and Keim, Daniel A},
+title = {{On the surprising behavior of distance metrics in high dimensional space}},
+journal = {Database Theory---ICDT 2001},
+year = {2001}
+}
+
+@article{Dietterich:2008vn,
+author = {Dietterich, TG and Domingos, P and Getoor, L and Meggleton, Stephen and Tadepalli, Prasad},
+title = {{Structured machine learning: the next ten years}},
+journal = {Machine learning},
+year = {2008}
+}
+
+@inproceedings{Schultz:2003tf,
+author = {Schultz, Matthew and Joachims, Thorsten},
+title = {{Learning a Distance Metric from Relative Comparisons}},
+booktitle = {Advances in Neural Information Processing},
+year = {2003}
+}
+
+@inproceedings{Parikh:2011vt,
+author = {Parikh, Devi},
+title = {{Recognizing Jumbled Images: The Role of Local and Global Information in Image Classification}},
+booktitle = {International Conference on Computer Vision},
+year = {2011}
+}
+
+@inproceedings{Parikh:2010ch,
+author = {Parikh, D and Zitnick, C.L},
+title = {{The role of features, algorithms and data in visual recognition}},
+booktitle = {Computer Vision and Pattern Recognition (CVPR), 2010 IEEE Conference on},
+year = {2010}
+}
+
+@article{Ek:2011wu,
+author = {Ek, Carl Henrik and Kragic, Danica},
+title = {{The importance of structure}},
+journal = {International Symposium on Robotic Research},
+year = {2011}
+}
+
+@inproceedings{Hamm:2008jm,
+author = {Hamm, Jihun and Lee, Daniel D},
+title = {{Grassmann discriminant analysis: a unifying view on subspace-based learning}},
+booktitle = {International Conference on Machine Learning},
+year = {2008}
+}
+
+@article{Teh:2007wf,
+author = {Teh, Y},
+title = {{Dirichlet Process}},
+journal = {Encyclopedia of Machine Learning},
+year = {2007}
+}
+
+@article{Bengio:2009ui,
+author = {Bengio, Y and Louradour, J and Collobert, R},
+title = {{Curriculum learning}},
+journal = {{\ldots} on Machine Learning},
+year = {2009}
+}
+
+@inproceedings{Adams:2009vh,
+author = {Adams, R and Wallach, H and Ghahramani, Z},
+title = {{Learning the Structure of Deep Sparse Graphical Models}},
+booktitle = {International Conference on Artificial Intelligence and Statistics},
+year = {2010}
+}
+
+@article{Ek:2009tn,
+author = {Ek, Carl Henrik and Jaeckel, P and Campbell, Neill},
+title = {{Shared Gaussian Process Latent Variable Models for Handling Ambiguous Facial Expressions}},
+journal = {American Institute of {\ldots}},
+year = {2009}
+}
+
+@article{Salzmann:2010vh,
+author = {Salzmann, Mathieu and Ek, Carl Henrik and Urtasun, Raquel and Darrell, Trevor},
+title = {{Factorized Orthogonal Latent Spaces}},
+journal = {International Conference on Artificial Intelligence and Statistics},
+year = {2010}
+}
+
+@article{Heckerman:2008ta,
+author = {Heckerman, D},
+title = {{A tutorial on learning with Bayesian networks}},
+journal = {Innovations in Bayesian Networks},
+year = {2008}
+}
+
+@article{Steck:2008tb,
+author = {Steck, H},
+title = {{Learning the bayesian network structure: Dirichlet prior versus data}},
+journal = {Proceedings of UAI},
+year = {2008}
+}
+
+@article{Murphy:2007wb,
+author = {Murphy, K},
+title = {{An introduction to graphical models}},
+journal = {en.scientificcommons.org},
+year = {2007}
+}
+
+@article{Cheeseman:1996ud,
+author = {Cheeseman, P and Stutz, J},
+title = {{Bayesian classification (AutoClass): Theory and results}},
+journal = {Advances in knowledge discovery and data mining},
+year = {1996}
+}
+
+@article{Cheeseman:1996uda,
+author = {Cheeseman, P and Stutz, J},
+title = {{Bayesian classification (AutoClass): Theory and results}},
+journal = {Advances in knowledge discovery and data mining},
+year = {1996}
+}
+
+@article{Bengio:2009wi,
+author = {Bengio, Y},
+title = {{Learning deep architectures for AI}},
+year = {2009}
+}
+
+@article{Taylor:uo,
+author = {Taylor, GW and Sigal, L and Fleet, DJ and Hinton, GE},
+title = {{Dynamical Binary Latent Variable Models for 3D Human Pose Tracking}}
+}
+
+@article{Orbanz:2010ve,
+author = {Orbanz, P and Teh, Y},
+title = {{Bayesian Nonparametric Models}},
+journal = {Citeseer},
+year = {2010}
+}
+
+@article{Teh:2009to,
+author = {Teh, Y and Jordan, MI},
+title = {{Hierarchical Bayesian nonparametric models with applications}},
+journal = {Bayesian Nonparametrics},
+year = {2009}
+}
+
+@article{Woodford:2006vi,
+author = {Woodford, Oliver},
+title = {{Notes on Contrastive Divergence}},
+year = {2006}
+}
+
+@article{Hinton:2006wk,
+author = {Hinton, GE and Salakhutdinov, RR},
+title = {{Reducing the dimensionality of data with neural networks}},
+journal = {Science},
+year = {2006}
+}
+
+@article{Hinton:2006ut,
+author = {Hinton, GE and Salakhutdinov, RR},
+title = {{Reducing the Dimensionality of Data with Neural Networks - Suplementary Material}},
+journal = {Science},
+year = {2006}
+}
+
+@article{Ek:2008up,
+author = {Ek, Carl Henrik and Rihan, J and Torr, Phil and Rogez, G and Lawrence, Neil},
+title = {{Ambiguity modeling in latent spaces}},
+journal = {Machine Learning and Multimodal Interaction},
+year = {2008}
+}
+
+@article{Ijspeert:2002to,
+author = {Ijspeert, AJ and Nakanishi, J and Schaal, Stefan},
+title = {{Movement imitation with nonlinear dynamical systems in humanoid robots}},
+journal = {Proceedings- IEEE International Conference on Robotics and Automation},
+year = {2002}
+}
+
+@article{Ijspeert:2001uu,
+author = {Ijspeert, AJ and Nakanishi, J and Shibata, T and Schaal, Stefan},
+title = {{Nonlinear dynamical systems for imitation with humanoid robots}},
+journal = {Proceedings of the IEEE International Conference on Humanoid Robots},
+year = {2001}
+}
+
+@article{Ijspeert:2001ub,
+author = {Ijspeert, AJ and Nakanishi, J and Schaal, Stefan},
+title = {{Trajectory formation for imitation with nonlinear dynamical systems}},
+journal = {Proceedings of the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS2001)},
+year = {2001}
+}
+
+@article{Hazan:2010p2910,
+author = {Hazan, T and Urtasun, Raquel},
+title = {{Approximated Structured Prediction for Learning Large Scale Graphical Models}},
+journal = {Arxiv preprint arXiv:1006.2899},
+year = {2010}
+}
+
+@article{Geiger:2009we,
+author = {Geiger, Andreas and Urtasun, Raquel and Darrell, Trevor},
+title = {{Rank priors for continuous non-linear dimensionality reduction}},
+year = {2009}
+}
+
+@article{Ek:2009vv,
+author = {Ek, Carl Henrik},
+title = {{Shared Gaussian Process Latent Variable Models}},
+journal = {PhD Thesis},
+year = {2009}
+}
+
+@article{Mardia:1979vm,
+author = {Mardia, K and Kent, J and Bibby, J},
+title = {{Multivariate analysis}},
+journal = {adsabs.harvard.edu},
+year = {1979}
+}
+
+@article{Cox:2008uv,
+author = {Cox, M and Cox, T},
+title = {{Multidimensional scaling}},
+journal = {Handbook of data visualization},
+year = {2008}
+}
+
+@article{Ramamoorthy:2008vk,
+author = {Ramamoorthy, S and Kuipers, B},
+title = {{Trajectory generation for dynamic bipedal walking through qualitative model based manifold learning}},
+journal = {IEEE International Conference on {\ldots}},
+year = {2008}
+}
+
+@article{Havoutis:wv,
+author = {Havoutis, I and Ramamoorthy, S},
+title = {{Constrained geodesic trajectory generation on learnt skill manifolds}},
+journal = {homepages.inf.ed.ac.uk}
+}
+
+@article{Havoutis:2009ts,
+author = {Havoutis, I and Ramamoorthy, S},
+title = {{Geodesic trajectory generation on learnt skill manifolds}},
+journal = {homepages.inf.ed.ac.uk},
+year = {2009}
+}
+
+@article{Bitzer:2008wo,
+author = {Bitzer, S and Havoutis, I and Vijayakumar, Sethu},
+title = {{Synthesising novel movements through latent space modulation of scalable control policies}},
+journal = {From Animals to Animats 10},
+year = {2008}
+}
+
+@article{Steffen:2009uh,
+author = {Steffen, J and Pardowitz, M and Ritter, H},
+title = {{A Manifold Representation as Common Basis for Action Production and Recognition}},
+journal = {KI 2009: Advances in Artificial {\ldots}},
+year = {2009}
+}
+
+@article{QuinoneroCandela:2005wp,
+author = {Qui{\~n}onero-Candela, J and Rasmussen, CE},
+title = {{A unifying view of sparse approximate Gaussian process regression}},
+journal = {The Journal of Machine {\ldots}},
+year = {2005}
+}
+
+@article{Titsias:2009ua,
+author = {Titsias, Michalis and Lawrence, Neil and Rattray, M},
+title = {{Efficient sampling for Gaussian process inference using control variables}},
+journal = {Advances in Neural Information Processing Systems},
+year = {2009}
+}
+
+@article{Alvarez:2008tw,
+author = {Alvarez, Mauricio and Luengo-Garcia, David and Lawrence, Neil},
+title = {{Latent force models}},
+year = {2008}
+}
+
+@inproceedings{Titsias:2010tb,
+author = {Titsias, Michalis and Lawrence, Neil},
+title = {{Bayesian Gaussian Process Latent Variable Model}},
+booktitle = {International Conference on Artificial Intelligence and Statistics},
+year = {2010}
+}
+
+@article{Alvarez:2010vs,
+author = {Alvarez, Mauricio and Luengo-Garcia, David and Titsias, Michalis and Lawrence, Neil},
+title = {{Efficient Multioutput Gaussian Processes through Variational Inducing Kernels}},
+journal = {Unpublished manuscript},
+year = {2010}
+}
+
+@inproceedings{Weinberger:2004hg,
+author = {Weinberger, Kilian Q. and Sha, Fei and Saul, Lawrence K},
+title = {{Learning a kernel matrix for nonlinear dimensionality reduction}},
+booktitle = {International Conference on Machine Learning},
+year = {2004}
+}
+
+@article{Titsias:2009vf,
+author = {Titsias, Michalis},
+title = {{Variational learning of inducing variables in sparse Gaussian processes}},
+year = {2009}
+}
+
+@article{Yang:2007uo,
+author = {Yang, Changjiang and Guo, Yanlin and Sawhney, Harpreet and Kumar, Rakesh},
+title = {{Learning Actions Using Robust String Kernels}},
+journal = {LNCS},
+year = {2007}
+}
+
+@article{Pastor:2009tw,
+author = {Pastor, P and Hoffmann, H and Asfour, T and Schaal, Stefan},
+title = {{Learning and generalization of motor skills by learning from demonstration}},
+journal = {ICRA, Japan, May},
+year = {2009}
+}
+
+@article{Mohajerian:2007vr,
+author = {Mohajerian, Peyman},
+title = {{CVX - Canvas{\texttrademark} : SFN2007-TargetSwitch.cvx}},
+year = {2007}
+}
+
+@article{Schaal:2003ur,
+author = {Schaal, Stefan and Ijspeert, AJ and Billard, A},
+title = {{Computational approaches to motor learning by imitation}},
+journal = {Philosophical Transactions of the Royal Society of London. Series B: Biological Sciences},
+year = {2003}
+}
+
+@article{Peters:2003ue,
+author = {Peters, J and Vijayakumar, Sethu and Schaal, Stefan},
+title = {{Reinforcement learning for humanoid robotics}},
+journal = {Proceedings of the third IEEE-RAS international conference on humanoid robots},
+year = {2003}
+}
+
+@article{Sternad:2003ub,
+author = {Sternad, D and William, Dean J and Schaal, Stefan},
+title = {{Interaction of rythmic and discrete pattern generators in single-joint movements}},
+journal = {Human Movement Science},
+year = {2003}
+}
+
+@article{Billard:tg,
+author = {Billard, A and Epars, Y and CHENG, G and Schaal, Stefan},
+title = {{Discovering imitation strategies through categorization of multi-dimensional data}},
+journal = {learning}
+}
+
+@article{Schaal:2005vy,
+author = {Schaal, Stefan and Peters, J and Nakanishi, J and Ijspeert, AJ},
+title = {{Learning movement primitives}},
+journal = {Robotics Research},
+year = {2005}
+}
+
+@article{Schaal:2003wo,
+author = {Schaal, Stefan and Peters, J and Nakanishi, J and Ijspeert, AJ},
+title = {{Control, Planning, Learning and Imitation with Dynamic Movement Primitives}},
+journal = {IROS},
+year = {2003}
+}
+
+@article{Schaal:2007wa,
+author = {Schaal, Stefan and Mohajerian, Peyman and Ijspeert, AJ},
+title = {{Dynamics systems vs. optimal control--a unifying view}},
+journal = {Progress in brain research},
+year = {2007}
+}
+
+@article{Nakanishi:2004wi,
+author = {Nakanishi, J and Morimoto, J and Endo, Gen and CHENG, G and Schaal, Stefan and Kawato, M},
+title = {{A framework for learning biped locomotion with dynamical movement primitives}},
+journal = {2004 4th IEEE-RAS International Conference on Humanoid Robots},
+year = {2004}
+}
+
+@article{Schaal:2001wd,
+author = {Schaal, Stefan and Vijayakumar, Sethu and D Souza, A and Ijspeert, AJ and Nakanishi, J},
+title = {{Real-time statistical learning for robotics and human augmentation}},
+journal = {International Symposium on Robotics Research},
+year = {2001}
+}
+
+@article{Schaal:1997wp,
+author = {Schaal, Stefan},
+title = {{Learning from demonstration}},
+journal = {Advances in Neural Information Processing Systems},
+year = {1997}
+}
+
+@article{Schaal:2003up,
+author = {Schaal, Stefan},
+title = {{Movement planning and imitation by shaping nonlinear attractors}},
+journal = {12th Yale Workshop On Adaptive And Learning Systems},
+year = {2003}
+}
+
+@article{Schaal:2004tc,
+author = {Schaal, Stefan and Sternad, D and Osu, R and Kawato, M},
+title = {{Rhythmic arm movement is not discrete}},
+journal = {Nature Neuroscience},
+year = {2004}
+}
+
+@article{Ijspeert:2002wl,
+author = {Ijspeert, AJ and Nakanishi, J and Schaal, Stefan},
+title = {{Learning rhythmic movements by demonstration using nonlinear oscillators}},
+journal = {Proceedings of the IEEE/RSJ Int. Conference on Intelligent Robots and Systems (IROS2002)},
+year = {2002}
+}
+
+@article{Schaal:1996tw,
+author = {Schaal, Stefan and Sternad, D and Atkeson, CG},
+title = {{One-handed juggling: A dynamical approach to a rhythmic movement task}},
+journal = {Journal of Motor Behavior},
+year = {1996}
+}
+
+@article{Ijspeert:2003up,
+author = {Ijspeert, AJ and Nakanishi, J and Schaal, Stefan},
+title = {{Learning attractor landscapes for learning motor primitives}},
+journal = {Advances in Neural Information Processing Systems},
+year = {2003}
+}
+
+@article{Schaal:2006uu,
+author = {Schaal, Stefan},
+title = {{Dynamic movement primitives-a framework for motor control in humans and humanoid robotics}},
+journal = {Adaptive Motion of Animals and Machines},
+year = {2006}
+}
+
+@article{Nakanishi:2004tn,
+author = {Nakanishi, J and Morimoto, J and Endo, Gen and CHENG, G and Schaal, Stefan and Kawato, M},
+title = {{Learning from demonstration and adaptation of biped locomotion}},
+journal = {Robotics and Autonomous Systems},
+year = {2004}
+}
+
+@article{Schaal:1998tb,
+author = {Schaal, Stefan and Sternad, D},
+title = {{Programmable pattern generators}},
+journal = {3rd International Conference on Computational Intelligence in Neuroscience},
+year = {1998}
+}
+
+@article{ErdalAksoy:2010wy,
+author = {Erdal Aksoy, Eren and Alexey, Abramov and D{\"o}rr, Johannes and Ning, Kejun and Dellen, Babette and W{\"o}rg{\"o}tter, Florentin},
+title = {{Learning the semantics of object-action relations by observation}},
+journal = {The International Journal of Robotics Research},
+year = {2010}
+}
+
+@inproceedings{:2008up,
+author = {Lawrence, Neil D},
+title = {{Ambiguity Modeling in Latent Spaces}},
+booktitle = {ftp.dcs.shef.ac.uk},
+year = {2008}
+}
+
+@article{Schaal:1998ue,
+author = {Schaal, Stefan and Atkeson, CG},
+title = {{Constructive incremental learning from only local information}},
+journal = {Neural Computation},
+year = {1998}
+}
+
+@inproceedings{Aksoy:2010vs,
+author = {Aksoy, EE and Abramov, A and W{\"o}rg{\"o}tter, Florentin and Dellen, Babette},
+title = {{Categorizing Object-Action Relations from Semantic Scene Graphs}},
+booktitle = {IEEE International conference on robotics and automation},
+year = {2010}
+}
+
+@article{Ek:2010wk,
+author = {Ek, Carl Henrik and Song, Dan and Huebner, Kai and Kragic, Danica},
+title = {{Exploring Affordances in Robot Grasping through Latent Structure Representation}},
+journal = {Vision for Cognitive Systems, ECCV 2010},
+year = {2010}
+}
+
+@article{Bitzer:2009tq,
+author = {Bitzer, S and Vijayakumar, Sethu},
+title = {{Latent Spaces for Dynamic Movement Primitives}},
+journal = {International Conference on Humanoid Robots},
+year = {2009}
+}
+
+@article{Bitzer:2010th,
+author = {Bitzer, S and Howard, M and Vijayakumar, Sethu},
+title = {{Using Dimensionality Reduction to Exploit Constraints in Reinforcement Learning}},
+journal = {International Conference on Inteligent Robotics and Systems},
+year = {2010}
+}
+
+@article{Grollman:2010ur,
+author = {Grollman, DH and Jenkins, Odest Chadwicke},
+title = {{Incremental Learning of Subtasks from Unsegmented Demonstration}},
+journal = {International Conference on Inteligent Robotics and Systems},
+year = {2010}
+}
+
+@article{Grollman:tz,
+author = {Grollman, DH and Jenkins, Odest Chadwicke},
+title = {{Multimap Regression for Perceptual Aliasing in Learning Finite State Machine Robot Controllers from Interactive Demonstration}},
+journal = {cs.brown.edu}
+}
+
+@article{Hyvarinen:2002wg,
+author = {Hyv{\"a}rinen, A and Raju, K},
+title = {{Imposing sparsity on the mixing matrix in independent component analysis}},
+journal = {Neurocomputing},
+year = {2002}
+}
+
+@article{Tipping:2004vp,
+author = {Tipping, ME},
+title = {{Bayesian inference: An introduction to principles and practice in machine learning}},
+journal = {Advanced lectures on machine Learning},
+year = {2004}
+}
+
+@article{Hurley:2008wo,
+author = {Hurley, Niall and Rickard, Scott},
+title = {{Comparing measures of sparsity}},
+journal = {IEEE Workshop on Machine Learning for Signal Processing. MLSP},
+year = {2008}
+}
+
+@article{Rickard:2006uo,
+author = {Rickard, Scott},
+title = {{Sparse sources are separated sources}},
+journal = {European Signal Processing Conference},
+year = {2006}
+}
+
+@article{Petersen:2006up,
+author = {Petersen, KB and Pedersen, MS},
+title = {{The matrix cookbook}},
+journal = {Technical University of Denmark},
+year = {2006}
+}
+
+@article{Quattoni:2009tl,
+author = {Quattoni, A and Carreras, X and Collins, M and Darrell, Trevor},
+title = {{An efficient projection for l 1,∞ regularization}},
+journal = {International Conference on Machine Learning},
+year = {2009}
+}
+
+@article{Duchi:2008vv,
+author = {Duchi, J and Shalev-Shwartz, S and Singer, Y and Chandra, T},
+title = {{Efficient projections onto the l 1-ball for learning in high dimensions}},
+journal = {International Conference on Machine Learning},
+year = {2008}
+}
+
+@article{Turlach:2005wv,
+author = {Turlach, BA and Venables, WN and Wright, SJ},
+title = {{Simultaneous variable selection}},
+journal = {Technometrics},
+year = {2005}
+}
+
+@article{Schmidt:2008to,
+author = {Schmidt, M and Murphy, K and Fung, G and Rosales, R},
+title = {{Structure learning in random fields for heart motion abnormality detection}},
+journal = {Computer Vision and Pattern Recognition},
+year = {2008}
+}
+
+@article{Schmidt:2009ur,
+author = {Schmidt, M and van den Berg, E and Friedlander, M and Murphy, K},
+title = {{Optimizing costly functions with simple constraints: A limited-memory projected quasi-newton algorithm}},
+journal = {AI {\&} Statistics},
+year = {2009}
+}
+
+@article{Schmidt:2005uj,
+author = {Schmidt, M},
+title = {{Least Squares Optimization with L1-Norm Regularization}},
+journal = {Project Report, University of British Columbia},
+year = {2005}
+}
+
+@article{Archambeau:2008va,
+author = {Archambeau, C and Bach, Francis R},
+title = {{Sparse probabilistic projections}},
+journal = {Advances in Neural Information Processing Systems},
+year = {2008}
+}
+
+@article{Hamers:2002ul,
+author = {Hamers, B and Suykens, J and de Moor, B},
+title = {{Compactly supported rbf kernels for sparsifying the gram matrix in LS-SVM regression models}},
+journal = {International Conference on Artificial Neural Networks},
+year = {2002}
+}
+
+@article{Ranganathan:2008wa,
+author = {Ranganathan, A and Yang, MH},
+title = {{Online sparse matrix Gaussian process regression and vision applications}},
+journal = {European Conference on Computer Vision},
+year = {2008}
+}
+
+@article{Zhang:2004wr,
+author = {Zhang, HH and Genton, MG and Liu, P},
+title = {{Compactly supported radial basis function kernels}},
+year = {2004}
+}
+
+@article{Kim:2007uo,
+author = {Kim, Hyun-Chul and Lee, Jaewook},
+title = {{Clustering based on gaussian processes}},
+journal = {Neural Computation},
+year = {2007}
+}
+
+@article{Kim:2007dj,
+author = {Kim, Hyun-Chul and Lee, Jaewook},
+title = {{Clustering based on gaussian processes}},
+journal = {Neural Computation},
+year = {2007}
+}
+
+@article{Lee:2009eo,
+author = {Lee, Daewon and Jung, Kyu-Hwan and Lee, Jaewook},
+title = {{Constructing sparse kernel machines using attractors}},
+journal = {IEEE transactions on neural networks / a publication of the IEEE Neural Networks Council},
+year = {2009}
+}
+
+@article{Sigg:2008um,
+author = {Sigg, C and Buhmann, J},
+title = {{Expectation-maximization for sparse and non-negative PCA}},
+journal = {International Conference on Machine Learning},
+year = {2008}
+}
+
+@article{Griffin:2007wj,
+author = {Griffin, J and Brown, P},
+title = {{Bayesian adaptive lassos with non-convex penalization}},
+journal = {Department of Statistics, University of Warwick},
+year = {2007}
+}
+
+@article{Caron:2008uk,
+author = {Caron, F and Doucet, A},
+title = {{Sparse bayesian nonparametric regression}},
+journal = {International Conference on Machine Learning},
+year = {2008}
+}
+
+@article{AndrewT:2004wr,
+author = {Andrew T, Miller and Peter K, Allen},
+title = {{GraspIt! A Versatile Simulator for Robotic Grasping}},
+journal = {IEEE Robotics and Automation Magazine},
+year = {2004}
+}
+
+@article{Huebner:2008ve,
+author = {Huebner, Kai and Ruthotto, S and Kragic, Danica},
+title = {{Minimum volume bounding box decomposition for shape approximation in robot grasping}},
+journal = {IEEE International conference on robotics and automation},
+year = {2008}
+}
+
+@article{Song:2010tu,
+author = {Song, Dan and Huebner, Kai and Kyrki, Valle and Kragic, Danica},
+title = {{Learning Task Constraints for Robot Grasping using Graphical Models }},
+journal = {International Conference on Intelligent Robots and Systems},
+year = {2010}
+}
+
+@inproceedings{Lawrence:2011va,
+author = {Lawrence, Neil D},
+title = {{A Unifying Probabilistic Perspective on Spectral Approaches to Dimensionality Reduction}},
+booktitle = {Invited Talk at AAAI Symposium },
+year = {2011}
+}
+
+@article{Urtasun:2007vx,
+author = {Urtasun, Raquel and Darrell, Trevor},
+title = {{Discriminative Gaussian process latent variable model for classification}},
+journal = {International Conference on Machine Learning},
+year = {2007}
+}
+
+@article{Jensen:xtELQmqB,
+author = {Jensen, Finn Verner},
+title = {{Introduction to Bayesian Networks}},
+year = {1996}
+}
+
+@article{Tibshirani:1996wb,
+author = {Tibshirani, Robert},
+title = {{Regression shrinkage and selection via the lasso}},
+journal = {Journal of the Royal Statistical Society},
+year = {1996}
+}
+
+@article{Wenjiang:1998ur,
+author = {Wenjiang, Fu J},
+title = {{Penalized Regression: The Bridge Versus the Lasso}},
+journal = {Journal of Computational and Graphical Statistics},
+year = {1998}
+}
+
+@article{Hui:2004wy,
+author = {Hui, Zou and Hastie, Trevor},
+title = {{Regularization and Variable Selection via the Elastic Net}},
+year = {2004}
+}
+
+@article{Yan:2009wj,
+author = {Yan, F and Qi, Yuan},
+title = {{Sparse Gaussian Process Regression via l1 Penalization}},
+journal = {International Conference on Machine Learning},
+year = {2009}
+}
+
+@article{Qi:2010wd,
+author = {Qi, Yuan and Abdel-Gawad, Ahmed H and Minka, Thomas P},
+title = {{Sparse-posterior Gaussian Processes for General likelihoods}},
+journal = {Uncertainty in Artificial Intelligence},
+year = {2010}
+}
+
+@article{Rasmussen:2005te,
+author = {Rasmussen, CE and Williams, CKI},
+title = {{Gaussian Processes for Machine Learning (Adaptive Computation and Machine Learning)}},
+year = {2005}
+}
+
+@article{Bellman:1952uq,
+author = {Bellman, R},
+title = {{The theory of dynamic programming}},
+journal = {Proceedings of the National Academy of Sciences of {\ldots}},
+year = {1952}
+}
+
+@article{Bohg:2009tu,
+author = {Bohg, J and Barck-Holst, C and Huebner, Kai and Ralph, M and Rasolzadeh, B and Song, Dan and Kragic, Danica},
+title = {{Towards Grasp-Oriented Visual Perception for Humanoid Robots}},
+year = {2009}
+}
+
+@article{Ek:2007uo,
+author = {Ek, Carl Henrik and Torr, Phil and Lawrence, Neil},
+title = {{Gaussian process latent variable models for human pose estimation}},
+journal = {Proceedings of the 4th international conference on Machine learning for multimodal interaction},
+year = {2007}
+}
+
+@inproceedings{Ek:2010tp,
+author = {Ek, Carl Henrik and Song, Dan and Huebner, Kai and Kragic, Danica},
+title = {{Task Modeling in Imitation Learning using Latent Variable Models}},
+booktitle = {International Conference on Humanoid Robotics},
+year = {2010}
+}
+
+@article{Figueiredo:2007uh,
+author = {Figueiredo, MAT and Nowak, RD and Wright, SJ},
+title = {{Gradient projection for sparse reconstruction: Application to compressed sensing and other inverse problems}},
+journal = {IEEE Journal on selected topics in Signal Processing},
+year = {2007}
+}
+
+@article{Anonymous:VMGA0UdX,
+title = {{http://www.lsi.upc.edu/~aquattoni/AllMyPapers/icml{\_}09.pdf}}
+}
+
+@article{Duchi:2009wb,
+author = {Duchi, J and Singer, Y},
+title = {{Efficient online and batch learning using forward backward splitting}},
+journal = {The Journal of Machine Learning Research},
+year = {2009}
+}
+
+@article{Kokiopoulou:2005uf,
+author = {Kokiopoulou, E and Saad, Y},
+title = {{Orthogonal neighborhood preserving projections}},
+journal = {Fifth IEEE International Conference {\ldots}},
+year = {2005}
+}
+
+@article{Urtasun:uw,
+author = {Urtasun, Raquel and Fleet, DJ and Geiger, Andreas and Popovic, Jovan and Darrell, Trevor and Lawrence, Neil},
+title = {{Topologically-Constrained Latent Variable Models}},
+journal = {International Conference on Machine Learning}
+}
+
+@article{Rudovic:2010wv,
+author = {Rudovic, O and Patras, I and Pantic, M},
+title = {{Coupled Gaussian Process Regression for Pose-Invariant Facial Expression Recognition}},
+journal = {European Conference on Computer Vision (ECCV)},
+year = {2010}
+}
+
+@article{Rudovic:2010vj,
+author = {Rudovic, O and Patras, I and Pantic, M},
+title = {{Facial expression invariant head pose normalization using Gaussian Process Regression}},
+journal = {Computer Vision and Pattern Recognition Workshops (CVPRW), 2010 IEEE Computer Society Conference on},
+year = {2010}
+}
+
+@article{Romero:2010vn,
+author = {Romero, Javier and Kjellstr{\"o}m, Hedvig and Kragic, Danica},
+title = {{Hands in action: Real-time 3D reconstruction of hands in interaction with objects}},
+journal = {IEEE International conference on robotics and automation (ICRA)},
+year = {2010}
+}
+
+@inproceedings{Kulis:2010wv,
+author = {Kulis, Brian},
+title = {{Metric Learning}},
+booktitle = {International Conference on Machine Learning},
+year = {2010}
+}
+
+@inproceedings{Kulis:2010wva,
+author = {Kulis, Brian},
+title = {{Metric Learning}},
+booktitle = {European Conference on Computer Vision},
+year = {2010}
+}
+
+@inproceedings{Song:2010uc,
+author = {Song, Dan and Ek, Carl Henrik and Huebner, Kai and Kragic, Danica},
+title = {{Multivariate Discretization for Bayesian Network Structure Learning in Robot Grasping}},
+booktitle = {International Conference on Robotics and Automation},
+year = {2011}
+}
+
+@article{Shi:2009to,
+author = {Shi, F and Pei, Y and Zha, H},
+title = {{Interactive modeling of 3D facial expressions with hierarchical Gaussian process latent variable models}},
+journal = {IEEE international conference on Image processing},
+year = {2009}
+}
+
+@article{MurphyChutorian:2009tj,
+author = {Murphy-Chutorian, Erik and Trivedi, Mohan Manubhai},
+title = {{Head pose estimation in computer vision: A survey}},
+journal = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+year = {2009}
+}
+
+@article{Fox:2009wt,
+author = {Fox, Emily B and Sudderth, EB and Jordan, MI and Willsky, AS},
+title = {{The sticky HDP-HMM: Bayesian nonparametric hidden Markov models with persistent states}},
+journal = {Arxiv preprint arXiv:0905.2592},
+year = {2009}
+}
+
+@article{Fox:2008vk,
+author = {Fox, Emily B and Sudderth, EB and Jordan, MI and Willsky, AS},
+title = {{An HDP-HMM for systems with state persistence}},
+journal = {Proceedings of the 25th international conference on Machine learning},
+year = {2008}
+}
+
+@article{Teh:2006wl,
+author = {Teh, Y and Jordan, MI and Beal, M and Blei, D},
+title = {{Hierarchical dirichlet processes}},
+journal = {Journal of the American Statistical {\ldots}},
+year = {2006}
+}
+
+@proceedings{Titsias:2008voa,
+title = {{Variational Model Selection for Sparse Gaussian Process Regression}},
+year = {2008}
+}
+
+@article{Jaakkola:2000tn,
+author = {Jaakkola, Tommi S},
+title = {{Tutorial on variational approximation methods}},
+journal = {Advanced mean field methods: theory and practice},
+year = {2000}
+}
+
+@article{Jaakkola:2000tna,
+author = {Jaakkola, Tommi S},
+title = {{Tutorial on Variational Approximation Methods}},
+year = {2000}
+}
+
+@article{Nakamura:2010tc,
+author = {Nakamura, Tomoaki and Nagai, Takayuki},
+title = {{Object Concept Modeling Based on the Relationship among Appearance, Usage and Functions}},
+journal = {International Conference of Inteligent Robots and Systems},
+year = {2010}
+}
+
+@article{Duvenaud:2010we,
+author = {Duvenaud, D and Eaton, D and Murphy, K and Schmidt, M},
+title = {{Causal learning without DAGs}},
+journal = {J. Mach. Learn. Res. Workshop Conf. Proc. 6},
+year = {2010}
+}
+
+@inproceedings{Brown:2007tl,
+author = {Brown, Christopher Y and Asada, H Harry},
+title = {{Inter-Finger Coordination and Postural Synergies in Robot Hands via Mechanical Implementation of Principal Components Analysis}},
+booktitle = {IEEERSJ International Conference on Intelligent Robots and Systems},
+year = {2007}
+}
+
+@article{deCampos:2006tv,
+author = {de Campos, TE and Murray, DW},
+title = {{Regression-based hand pose estimation from multiple cameras}},
+year = {2006}
+}
+
+@article{Steck:2003ug,
+author = {Steck, H and Jaakkola, Tommi S},
+title = {{On the Dirichlet prior and Bayesian regularization}},
+journal = {Advances in Neural Information Processing Systems},
+year = {2003}
+}
+
+@article{Grollman:2010ura,
+author = {Grollman, DH and Jenkins, Odest Chadwicke},
+title = {{Incremental Learning of Subtasks from Unsegmented Demonstration}},
+journal = {International Conference of Inteligent Robots and Systems},
+year = {2010}
+}
+
+@article{Zhao:2009wy,
+author = {Zhao, X and Ning, H and Liu, Y},
+title = {{Discriminative estimation of 3D human pose using gaussian processes}},
+journal = {Pattern Recognition},
+year = {2009}
+}
+
+@article{Arbelaez:2010uv,
+author = {Arbelaez, P and Maire, M and Fowlkes, C and Malik, J},
+title = {{Contour Detection and Hierarchical Image Segmentation}},
+journal = {Transactions on Pattern Analysis and Machine Intelligence},
+year = {2010}
+}
+
+@article{Romero:2010uy,
+author = {Romero, Javier and Feix, T and Kjellstr{\"o}m, Hedvig and Kragic, Danica},
+title = {{Spatio-Temporal Modeling of Grasping Actions}},
+journal = {International Conference of Inteligent Robots and Systems},
+year = {2010}
+}
+
+@article{Forstner:1999vf,
+author = {F{\"o}rstner, W and Moonen, B},
+title = {{A metric for covariance matrices}},
+journal = {Quo vadis geodesia},
+year = {1999}
+}
+
+@article{Salzmann:2010wc,
+author = {Salzmann, Mathieu and Urtasun, Raquel},
+title = {{Implicitly Constrained Gaussian Process Regression for Monocular Non-Rigid Pose Estimation}},
+journal = {ttic.uchicago.edu},
+year = {2010}
+}
+
+@article{Titsias:2008vob,
+author = {Titsias, Michalis},
+title = {{Variational Model Selection for Sparse Gaussian Process Regression}},
+year = {2008}
+}
+
+@article{Salzmann:2010wd,
+author = {Salzmann, Mathieu and Ek, Carl Henrik and Urtasun, Raquel and Darrell, Trevor},
+title = {{FOLS Factorized Orthogonal Latent Spaces}},
+journal = {Snowbird Learning Workshop},
+year = {2010}
+}
+
+@article{Ek:2008vr,
+author = {Ek, Carl Henrik and Torr, Phil and Lawrence, Neil},
+title = {{GP-LVM for Data Consolidation}},
+journal = {NIPS Workshop on Learning from multiple sources},
+year = {2008}
+}
+
+@article{Melkumyan:2009vk,
+author = {Melkumyan, A and Ramos, F},
+title = {{A sparse covariance function for exact Gaussian process inference in large datasets}},
+journal = {Proceedings of the 21st international jont conference on Artifical intelligence},
+year = {2009}
+}
+
+@article{Pokorny:2010wv,
+author = {Pokorny, Florian T},
+title = {{The Bergman Kernel on Toric K{\"a}hler Manifolds}},
+year = {2010}
+}
+
+@article{Lawrence:2009wr,
+author = {Lawrence, Neil and Urtasun, Raquel},
+title = {{Non-linear matrix factorization with gaussian processes}},
+journal = {Proceedings of the 26th Annual International Conference on Machine Learning},
+year = {2009}
+}
+
+@article{Lawrence:2005vk,
+author = {Lawrence, Neil},
+title = {{Probabilistic non-linear principal component analysis with Gaussian process latent variable models}},
+journal = {The Journal of Machine Learning Research},
+year = {2005}
+}
+
+@article{Theis:2005tw,
+author = {Theis, FJ},
+title = {{Gradients on Matrix Manifolds and their Chain Rule}},
+journal = {Neural Information Processing-Letters and Reviews},
+year = {2005}
+}
+
+@article{Lawrence:2010vp,
+author = {Lawrence, Neil},
+title = {{Probabilistic Spectral Dimensionality Reduction}},
+journal = {Neural Information Processing Systems},
+year = {2010}
+}
+
+@article{Lawrence:2010vk,
+author = {Lawrence, Neil},
+title = {{A Unifying Probabilistic Perspective for Spectral Dimensionality Reduction}},
+journal = {Arxiv preprint arXiv:1010.4830},
+year = {2010}
+}
+
+@article{Toth:2010vu,
+author = {T{\'o}th, G and Szepesv{\'a}ry, P},
+title = {{A diagonal measure and a local distance matrix to display relations between objects and variables}},
+journal = {Journal of Chemometrics},
+year = {2010}
+}
+
+@article{Bergstrom:2010um,
+author = {Bergstr{\"o}m, Niklas and Bj{\"o}rkman, M{\aa}rten and Kragic, Danica},
+title = {{Online Multi-Object Segmentation and Disambiguation}},
+year = {2010}
+}
+
+@article{Gould:2009vg,
+author = {Gould, S and Fulton, R and Koller, D},
+title = {{Decomposing a scene into geometric and semantically consistent regions}},
+journal = {International Conference on Computer Vision},
+year = {2009}
+}
+
+@article{Gould:2009wy,
+author = {Gould, S and Gao, T and Koller, D},
+title = {{Region-based segmentation and object detection}},
+journal = {Neural Information Processing Systems},
+year = {2009}
+}
+
+@article{Jia:2010tu,
+author = {Jia, Y and Salzmann, Mathieu and Darrell, Trevor},
+title = {{Factorized Latent Spaces with Structured Sparsity}},
+journal = {Neural Information Processing Systems},
+year = {2010}
+}
+
+@article{Wallach:2010tt,
+author = {Wallach, HM and Jensen, ST and Dicker, L and Heller, KA},
+title = {{An Alternative Prior Process for Nonparametric Bayesian Clustering}},
+journal = {International Conference on Artificial Intelligence and Statistics},
+year = {2010}
+}
+
+@article{Popescu:2004in,
+author = {Popescu, Otilia and Rose, Christopher and Popescu, Dimitrie C},
+title = {{Maximizing the determinant for a special class of block-partitioned matrices}},
+journal = {Mathematical Problems in Engineering},
+year = {2004}
+}
+
+@article{Snelson:2006vi,
+author = {Snelson, E and Ghahramani, Z},
+title = {{Sparse Gaussian processes using pseudo-inputs}},
+journal = {Advances in Neural Information Processing Systems},
+year = {2006}
+}
+
+@article{Vandenberghe:2004uz,
+author = {Vandenberghe, L and Boyd, S},
+title = {{Convex Optimization}},
+year = {2004}
+}
+
+@article{Boyd:2010uz,
+author = {Boyd, S and Vandenberghe, L},
+title = {{Convex Optimization}},
+year = {2010}
+}
+
+@article{Hindi:2005tw,
+author = {Hindi, H},
+title = {{A tutorial on convex optimization}},
+journal = {American Control Conference, 2004. Proceedings of the 2004},
+year = {2005}
+}
+
+@article{Anonymous:zpY8a4pW,
+title = {{http://www.cs.man.ac.uk/~pekalska/papers/bicego{\_}et{\_}al{\_}pr09.pdf}}
+}
+
+@article{Borchers:2009uf,
+author = {Borchers, B},
+title = {{CSDP User's Guide}},
+year = {2009}
+}
+
+@article{Strum:2011wn,
+author = {Strum, Jos F},
+title = {{Using Sedumi 1.02, A Matlab Toolbox for Optimization over Symmetric Cones}},
+year = {2011}
+}
+
+@article{Polik:2005wt,
+author = {Polik, I},
+title = {{Addendum to the SeDuMi user guide version 1.1}},
+journal = {Advanced Optimization Laboratory, McMaster University, Ontario},
+year = {2005}
+}
+
+@article{Andoni:VK8wxk7h,
+author = {Andoni, A and Indyk, P},
+title = {{Locality-sensitive hashing using stable distributions}}
+}
+
+@article{Andoni:2009ug,
+author = {Andoni, A},
+title = {{Nearest neighbor search: the old, the new, and the impossible}},
+year = {2009}
+}
+
+@article{Indyk:tx,
+author = {Indyk, P},
+title = {{Hashing, sketching, and other approximate algorithms for high-dimensional data}}
+}
+
+@article{Shakhnarovich:2005vr,
+author = {Shakhnarovich, G and Darrell, Trevor and Indyk, P},
+title = {{Nearest-neighbor methods in learning and vision: theory and practice}},
+year = {2005}
+}
+
+@article{Fradkin:2003vw,
+author = {Fradkin, D and Madigan, D},
+title = {{Experiments with random projections for machine learning}},
+journal = {Proceedings of the ninth ACM SIGKDD international conference on Knowledge discovery and data mining},
+year = {2003}
+}
+
+@article{Meeds:2006vv,
+author = {Meeds, Edward and Osindero, Simon},
+title = {{An Alternative Infinite Mixture Of Gaussian Process Experts}},
+journal = {Neural Information Processing Systems},
+year = {2006}
+}
+
+@article{Silva:2010tj,
+author = {Silva, R and Gramacy, RB},
+title = {{Gaussian Process Structural Equation Models with Latent Variables}},
+journal = {Arxiv preprint arXiv:1002.4802},
+year = {2010}
+}
+
+@article{Jordan:1999ti,
+author = {Jordan, MI and Ghahramani, Z and Jaakkola, TS and Saul, LK},
+title = {{An introduction to variational methods for graphical models}},
+journal = {Machine learning},
+year = {1999}
+}
+
+@article{Paisley:2010tn,
+author = {Paisley, J},
+title = {{Two Useful Bounds for Variational Inference}},
+year = {2010}
+}
+
+@article{Lodhi:2002ts,
+author = {Lodhi, H and Saunders, C and Shawe-Taylor, J and Cristianini, N and Watkins, C},
+title = {{Text classification using string kernels}},
+journal = {The Journal of Machine Learning Research},
+year = {2002}
+}
+
+@article{Roweis:1999wn,
+author = {Roweis, Sam},
+title = {{Gaussian Indentities}},
+year = {1999}
+}
+
+@article{Wang:2009tf,
+author = {Wang, Robert Y and Popovic, Jovan},
+title = {{Real-time hand-tracking with a color glove}},
+journal = {Siggraph},
+year = {2009}
+}
+
+@article{Athitsos:2003uy,
+author = {Athitsos, Vassilis and Sclaroff, Stan},
+title = {{Estimating 3D hand pose from a cluttered image}},
+journal = {Computer Vision and Pattern Recognition},
+year = {2003}
+}
+
+@article{Stenger:2006uu,
+author = {Stenger, B and Thayananthan, A and Torr, Phil and Cipolla, Roberto},
+title = {{Model-Based Hand Tracking Using a Hierarchical Bayesian Filter}},
+journal = {TPAMI},
+year = {2006}
+}
+
+@article{Weinberger:2009to,
+author = {Weinberger, KQ and Saul, LK},
+title = {{Distance metric learning for large margin nearest neighbor classification}},
+journal = {The Journal of Machine Learning Research},
+year = {2009}
+}
+
+@article{Jain:2008ty,
+author = {Jain, Prateek and Kulis, Brian and Dhillon, Inderjit S and Grauman, Kirsten},
+title = {{Online Metric Learning and Fast Similarity Search}},
+journal = {Neural Information Processing Systems},
+year = {2008}
+}
+
+@article{Saunders:2002um,
+author = {Saunders, C and Tschach, H},
+title = {{Syllables and other String Kernel Extensions}},
+journal = {International Conference on Machine Learning},
+year = {2002}
+}
+
+@article{Jeong:2007wd,
+author = {Jeong, B and Lee, D and Cho, H and Kulvatunyou, B},
+title = {{A kernel method for measuring structural similarity between xml documents}},
+journal = {Proceedings of the 20th international conference on Industrial, engineering, and other applications of applied intelligent systems},
+year = {2007}
+}
+
+@article{Romero:tc,
+author = {Romero, Javier and Kjellstr{\"o}m, Hedvig and Kragic, Danica},
+title = {{Monocular Real-Time 3D Articulated Hand Pose Estimation}},
+journal = {International Conference on Humanoid Robots}
+}
+
+@article{Kuss:2003wp,
+author = {Kuss, Malte and Graepel, Thore},
+title = {{The Geometry Of Kernel Canonical Correlation Analysis}},
+year = {2003}
+}
+
+@article{Leray:tk,
+author = {Leray, Philippe and Francois, Olivier},
+title = {{Bnt structure learning package: documentation and experiments}},
+journal = {bnt.googlecode.com}
+}
+
+@article{Friedman:Em3ZPqdA,
+author = {Friedman, Nir and Nachman, Iftach and Pe'er, Dana},
+title = {{Learning Bayesian Network Structure from Massive Datasets: The ``Sparse Candidate'' Algorithm}}
+}
+
+@article{Kootstra:2010ve,
+author = {Kootstra, Gert and Bergstr{\"o}m, Niklas and Kragic, Danica},
+title = {{Fast and Automatic Detection and Segmentation of Unknown Objects}},
+journal = {International Conference on Humanoid Robots},
+year = {2010}
+}
+
+@article{Kohli:2008tm,
+author = {Kohli, Pushmeet and Rihan, J and Bray, M},
+title = {{Simultaneous segmentation and pose estimation of humans using dynamic graph cuts}},
+journal = {International Journal of Computer {\ldots}},
+year = {2008}
+}
+
+@article{Bray:2006we,
+author = {Bray, M and Kohli, Pushmeet},
+title = {{Posecut: Simultaneous segmentation and 3d pose estimation of humans using dynamic graph-cuts}},
+journal = {European Conference on Computer Vision},
+year = {2006}
+}
+
+@article{Bjorkman:2010tg,
+author = {Bj{\"o}rkman, M{\aa}rten and Kragic, D},
+title = {{Active 3D scene segmentation and detection of unknown objects}},
+journal = {Robotics and Automation (ICRA), 2010 IEEE International Conference on},
+year = {2010}
+}
+
+@article{Gehrig:2010uf,
+author = {Gehrig, D and Stein, T and Fischer, A and Schwameder, H},
+title = {{Towards Semantic Segmentation of Human Motion Sequences}},
+journal = {KI 2010: Advances in {\ldots}},
+year = {2010}
+}
+
+@article{Kumar:2007wb,
+author = {Kumar, MP and Torr, PHS and Zisserman, A},
+title = {{An invariant large margin nearest neighbour classifier}},
+journal = {International Conference on Computer Vision},
+year = {2007}
+}
+
+@article{Weinberger:2010us,
+author = {Weinberger, KQ and Sha, F and Saul, LK},
+title = {{Convex Optimizations for Distance Metric Learning and Pattern Classification [Applications Corner]}},
+journal = {Signal Processing Magazine, IEEE},
+year = {2010}
+}
+
+@article{Lanckriet:2004vv,
+author = {Lanckriet, GRG and Cristianini, N and Bartlett, P and Ghaoui, LE and Jordan, MI},
+title = {{Learning the kernel matrix with semidefinite programming}},
+journal = {The Journal of Machine Learning Research},
+year = {2004}
+}
+
+@article{Anonymous:k11yrDeI,
+author = {Parrilo, Pablo and Lall, Sanjay},
+title = {{Semidefinite Programming Relaxations and Algebraic Optimization in Control 1}},
+year = {2003}
+}
+
+@article{Anonymous:250wWe2b,
+title = {{Semidefinite Programming Relaxations and Algebraic Optimization in Control 2}},
+year = {2003}
+}
+
+@article{Anonymous:hVBILf9d,
+title = {{Semidefinite Programming Relaxations and Algebraic Optimization in Control 3}},
+year = {2003}
+}
+
+@article{Anonymous:zgWvxEv0,
+title = {{Semidefinite Programming Relaxations and Algebraic Optimization in Control}},
+year = {2003}
+}
+
+@article{Anonymous:+4PvakaC,
+title = {{Semidefinite Programming Relaxations and Algebraic Optimization in Control 5}},
+year = {2003}
+}
+
+@article{Anonymous:wLnVrU0i,
+title = {{Semidefinite Programming Relaxations and Algebraic Optimization in Control 6}},
+year = {2003}
+}
+
+@article{Anonymous:Q/bF17P5,
+title = {{Semidefinite Programming Relaxations and Algebraic Optimization in Control 7}},
+year = {2003}
+}
+
+@article{Jain:2009va,
+author = {Jain, Prateek and Kapoor, A},
+title = {{Active learning for large multi-class problems}},
+journal = {Computer Vision and Pattern Recognition, 2009. CVPR 2009. IEEE Conference on},
+year = {2009}
+}
+
+@article{Jain:2008wy,
+author = {Jain, Prateek and Kulis, Brian and Grauman, K},
+title = {{Fast image search for learned metrics}},
+year = {2008}
+}
+
+@article{Leen:2008uv,
+author = {Leen, Gayle and Fyfe, C},
+title = {{Dirichlet process mixture models for finding shared structure between two related data sets}},
+journal = {Proceedings of the 7th WSEAS International Conference on Artificial intelligence, knowledge engineering and data bases},
+year = {2008}
+}
+
+@article{Milgram:2006vu,
+author = {Milgram, J and Cheriet, M and Sabourin, R},
+title = {{``One Against One'' or ``One Against All'': Which One is Better for Handwriting Recognition with SVMs?}},
+year = {2006}
+}
+
+@article{ShipengYu:ca,
+author = {Shipeng Yu and Kai Yu and Tresp, V and Kriegel, H.-P},
+title = {{Multi-Output Regularized Feature Projection}},
+journal = {IEEE Transactions on Knowledge and Data Engineering}
+}
+
+@article{Ciocarlie:2009tn,
+author = {Ciocarlie, Matei T and Allen, Peter K},
+title = {{Hand Posture Subspaces for Dexterous Robotic Grasping}},
+journal = {The International Journal of Robotics Research},
+year = {2009}
+}
+
+@article{deGranville:2009wq,
+author = {de Granville, Charles and Di Wang and Southerland, Joshua and Platt, Robert and Fagg, Andrew H},
+title = {{Vision to Hand Action}},
+journal = {The Path to {\ldots}},
+year = {2009}
+}
+
+@inproceedings{Shotton:ud,
+author = {Shotton, Jamie and Fitzgibbon, Andrew and Cook, Mat and Sharp, Toby and Finocci, Mark and Moore, Richard and Kipman, Alex and Blake, Andrew},
+title = {{Real-Time Human Pose Recognition in Parts from Single Depth Images}},
+booktitle = {Computer Vision and Pattern Recognition}
+}
+
+@article{Fox:2011hh,
+author = {Fox, Jonathan Ko Dieter},
+title = {{Learning GP-BayesFilters via Gaussian process latent variable models}},
+journal = {Auton Robot},
+year = {2011}
+}
+
+@inproceedings{Anonymous:2010tu,
+author = {Jia, Yangqing and Salzmann, Mathieu and Darrell, Trevor},
+title = {{Factorized Latent Spaces with Structured Sparsity}},
+booktitle = {Neural Information Processing Systems},
+year = {2010}
+}
+
+@article{Wang:2008ia,
+author = {Wang, J M and Fleet, D J and Hertzmann, A},
+title = {{Gaussian Process Dynamical Models for Human Motion}},
+journal = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+year = {2008}
+}
+
+@article{NguyyenTuong:uy,
+author = {Nguyyen-Tuong, Duy and Peters, Jan},
+title = {{Model Learning for Robot Control: A Survey}},
+journal = {Cognitive Science}
+}
+
+@inproceedings{Song:2011wu,
+author = {Song, Dan and Ek, Carl Henrik and Huebner, Kai and Kragic, Danica},
+title = {{Embodiment-Specific Representation of Robot Grasping using Graphical Models and Latent-Space Discretization}},
+booktitle = {International Conference on Robotic Systems},
+year = {2011}
+}
+
+@article{Rother:2004ek,
+author = {Rother, Carsten and Kolmogorov, Vladimir and Blake, Andrew and Rother, Carsten and Kolmogorov, Vladimir and Blake, Andrew},
+title = {{GrabCut: interactive foreground extraction using iterated graph cuts}},
+journal = {ACM Transactions on Graphics (TOG)},
+year = {2004}
+}
+
+@inproceedings{Blanz:1999vl,
+author = {Blanz, Volker and Vetter, Thomas},
+title = {{A morphable model for the synthesis of 3D faces}},
+booktitle = {Proceedings of the 26th annual conference on {\ldots}},
+year = {1999}
+}
+
+@inproceedings{Kwok:2003up,
+author = {Kwok, James T and Tsang, Ivor W},
+title = {{Learning with Idealized Kernels}},
+booktitle = {International Conference on Machine Learning},
+year = {2003}
+}
+
+@inproceedings{Goldberger:2004vo,
+author = {Goldberger, J and Roweis, S and Hinton, G},
+title = {{Neighbourhood components analysis}},
+booktitle = {Advances in Neural Information Processing},
+year = {2004}
+}
+
+@article{Frome:2007ju,
+author = {Frome, A and Singer, Y and Sha, F and Malik, Jitendra},
+title = {{Learning globally-consistent local distance functions for shape-based image retrieval and classification}},
+journal = {International Conference on Computer Vision},
+year = {2007}
+}
+
+@article{Katz:uj,
+author = {Katz, Dov and Brock, Oliver},
+title = {{Interactive Segmentation of Articulated Objects in 3D}},
+journal = {dubikatz.com}
+}
+
+@inproceedings{Prasad:2010ek,
+author = {Prasad, Mukta and Fitzgibbon, Andrew and Zisserman, Andrew and Van Gool, Luc},
+title = {{Finding Nemo: Deformable Object Class Modelling using Curve Matching}},
+booktitle = {2010 IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+year = {2010}
+}
+
+@inproceedings{Morariu:2008tf,
+author = {Morariu, Vlad I and Srinivasan, Balaji V and Raykar, Vikas C and Duraiswami, Ramani and Davis, Larry S},
+title = {{Automatic online tuning for fast Gaussian summation}},
+booktitle = {Advances in Neural Information Processing},
+year = {2008}
+}
+
+@inproceedings{Ek:2011wn,
+author = {Ek, Carl Henrik and Song, Dan and Kragic, Danica},
+title = {{Learning Conditional Structures in Graphical Models from a Large Set of Observation Streams through efficient Discretisation}},
+booktitle = {International Conference on Robotics and Automation, Workshop on Manipulation under Uncertainty},
+year = {2011}
+}
+
+@techreport{Cody:tf,
+author = {Cody, Mac A.},
+title = {{The Fast Wavelet Transform}}
+}
+
+@inproceedings{Bergstrom:2011wl,
+author = {Bergstr{\"o}m, Niklas and Ek, Carl Henrik and Bj{\"o}rkman, M{\aa}rten and Kragic, Danica},
+title = {{Scene Understanding through Interactive Perception}},
+booktitle = {International Conference on Vision Systems},
+year = {2011}
+}
+
+@article{Agarwal:2006hh,
+author = {Agarwal, A and Triggs, B},
+title = {{Recovering 3D human pose from monocular images}},
+journal = {Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+year = {2006}
+}
+
+@techreport{Anonymous:zbHTuMPt,
+title = {{Mercer Kernels}}
+}
+
+@techreport{Damianou:vb,
+author = {Damianou, Andreas and Lawrence, Neil D and Titsias, Michalis K},
+title = {{Variational Gaussian Process Dynamical Systems}},
+institution = {Department of Computer Science University of Sheffield}
+}
+
+@article{Carlsson:2009vh,
+author = {Carlsson, G},
+title = {{Topology and data}},
+journal = {American Mathematical Society},
+year = {2009}
+}
+
+@inproceedings{Boiman:2008be,
+author = {Boiman, O and Shechtman, E and Irani, M},
+title = {{In defense of Nearest-Neighbor based image classification}},
+booktitle = {Computer Vision and Pattern Recognition},
+year = {2008}
+}
+
+@inproceedings{Shakhnarovich:2003ki,
+author = {Shakhnarovich, G and Viola, P and Darrell, T.},
+title = {{Fast pose estimation with parameter-sensitive hashing}},
+booktitle = {International Conference on Computer Vision},
+year = {2003}
+}
+
+@article{Shi:2000gf,
+author = {Shi, Jianbo and Malik, J},
+title = {{Normalized cuts and image segmentation}},
+journal = {Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+year = {2000}
+}
+
+@article{KCLee05,
+author = {Lee, Kuang-Chih and Ho, Jeffrey and Kriegman, David},
+title = {{Acquiring Linear Subspaces for Face Recognition under Variable Lighting}},
+journal = {IEEE Transactions on Pattern Analisys Machine Intelligence},
+year = {2005}
+}
+
+@article{Memisevic:2011tq,
+author = {Memisevic, Roland and Sigal, Leonid and Fleet, David J},
+title = {{Shared Kernel Information Embedding for Discriminative Inference}},
+journal = {Transactions on Pattern Analysis and Machine Intelligence},
+year = {2011}
+}
+
+@article{Hall:2000en,
+author = {Hall, P and Marshall, D and Martin, R},
+title = {{Merging and splitting eigenspace models}},
+journal = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+year = {2000}
+}
+
+@webpage{Nandakumaro:2011tl,
+author = {Nandakumaro, Chetan and Torralba, Antonio and Malik, Jitendra},
+title = {{How little do we need for 3-D shape perception?}},
+year = {2011}
+}
+
+@inproceedings{Parikh:2011ck,
+author = {Parikh, Devi and Zitnick, C. Lawrence},
+title = {{Finding the weakest link in person detectors}},
+booktitle = {IEEE Conference on Computer Vision and Pattern Recognition },
+year = {2011}
+}
+
+@article{Torralba:2008bk,
+author = {Torralba, A and Fergus, R and Freeman, W.T},
+title = {{80 Million Tiny Images: A Large Data Set for Nonparametric Object and Scene Recognition}},
+journal = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+year = {2008}
+}
+
+@inproceedings{UniversityofMaryland:2011vw,
+author = {{University of Maryland}},
+title = {{Visual Segmentation of ``Simple'' Objects for Robots}},
+booktitle = {Robotics Science and Systems},
+year = {2011}
+}
+
+@article{Mori:2005ha,
+author = {Mori, G and Belongie, S and Malik, J},
+title = {{Efficient shape matching using shape contexts}},
+journal = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+year = {2005}
+}
+
+@article{Kruger:2007wr,
+author = {Kruger, V and Kragic, D and Ude, A},
+title = {{The meaning of action: a review on action recognition and mapping}},
+journal = {Advanced Robotics},
+year = {2007}
+}
+
+@inproceedings{Leen:2008vc,
+author = {Leen, Gayle and Fyfe, C},
+title = {{Learning shared and separate features from two related data sets using GPLVM's}},
+booktitle = {Learning from Multiple Sources Workshop, Neural Information Processing},
+year = {2008}
+}
+
+@inproceedings{Dalal:2005gq,
+author = {Dalal, N and Triggs, B},
+title = {{Histograms of oriented gradients for human detection}},
+booktitle = {IEEE Computer Society Conference on Computer Vision and Pattern Recognition},
+year = {2005}
+}
+
+@inproceedings{Shon:2006wr,
+author = {Shon, A and Grochow, K and Hertzmann, A},
+title = {{Learning shared latent structure for image synthesis and robotic imitation}},
+booktitle = {Neural Information Processing},
+year = {2006}
+}
+
+@article{Ledda:2005tx,
+author = {Ledda, P and Chalmers, A and Troscianko, T},
+title = {{Evaluation of tone mapping operators using a high dynamic range display}},
+journal = {ACM Transactions on {\ldots}},
+year = {2005}
+}
+
+@phdthesis{Rusu:2011thesis,
+author = {Rusu, Radu Bogdan},
+title = {{Semantic 3D Object Maps for Everyday Manipulation in Human Living Environments}},
+school = {Technische Universit{\"a}t M{\"u}nchen},
+year = {2009}
+}
+
+@inproceedings{Parikh:2008gx,
+author = {Parikh, D and Zitnick, C.L and Chen, Tsuhan},
+title = {{From appearance to context-based recognition: Dense labeling in small images}},
+booktitle = {IEEE Conference on Computer Vision and Pattern Recognition },
+year = {2008}
+}
+
+@inproceedings{Yin:2006cc,
+author = {Yin, Lijun and Wei, Xiaozhou and Sun, Yi and Wang, Jun and Rosato, M.J},
+title = {{A 3D facial expression database for facial behavior research}},
+booktitle = {Automatic Face and Gesture Recognition, 2006. FGR 2006. 7th International Conference on},
+year = {2006}
+}
+
+@article{Tenenbaum:2000jp,
+author = {Tenenbaum, Joshua B and de Silva, Vin and Langford, John C},
+title = {{A Global Geometric Framework for Nonlinear Dimensionality Reduction}},
+journal = {Science},
+year = {2000}
+}
+
+@inproceedings{Lebrun:uv,
+author = {Lebrun, Justine and Philipp-Foliguet, Sylvie and Gosselin, Philippe-Henri},
+title = {{Image retrieval with graph kernel on regions}},
+booktitle = {hal.archives-ouvertes.fr}
+}
+
+@article{Simons:1999vv,
+author = {Simons, Daniel J and Chabris, Christopher F},
+title = {{Gorillas in our midst: Sustained inattentional blindness for dynamic events}},
+journal = {Perception},
+year = {1999}
+}
+
+@inproceedings{Lane:2010ue,
+author = {Lane, Terran and Yackley, Ben and Plis, Sergey and Anderson, Blake},
+title = {{Geometric Embedding for Learning Combinatorial Structures}},
+booktitle = {International Conference on Machine Learning, Workshop on Learning on Non-(geo)metric spaces},
+year = {2010}
+}
+
+@article{Dillmann:2004ub,
+author = {Dillmann, R},
+title = {{Teaching and learning of robot tasks via observation of human performance}},
+journal = {Robotics and Autonomous Systems},
+year = {2004}
+}
+
+@article{Rensink:2000wk,
+author = {Rensink, RA and OʼRegan, JK},
+title = {{On the failure to detect changes in scenes across brief interruptions}},
+journal = {Visual Cognition: Special Issue on Change Blindness and Visual Memory},
+year = {2000}
+}
+
+@inproceedings{Prisacariu:2011ue,
+author = {Prisacariu, Victor Adrian and Reid, Ian},
+title = {{Nonlinear Shape Manifolds as Shape Priors in Level Set Segmentation and Tracking}},
+booktitle = {Computer Vision and Pattern Recognition},
+year = {2011}
+}
+
+@inproceedings{Xing:2003uy,
+author = {Xing, EP and Ng, AY and Jordan, MI},
+title = {{Distance metric learning with application to clustering with side-information}},
+booktitle = {Advances in Neural Information Processing},
+year = {2003}
+}
+
+@article{Yan:2007dz,
+author = {Yan, Shuicheng and Xu, Dong and Zhang, Benyu and Zhang, Hong-jiang and Yang, Qiang and Lin, Stephen},
+title = {{Graph Embedding and Extensions: A General Framework for Dimensionality Reduction}},
+journal = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+year = {2007}
+}
+
+@article{Weiss:2004wz,
+author = {Weiss, Erica J and Flanders, Martha},
+title = {{Muscular and Postural Synergies of the Human Hand}},
+journal = {Journal of neurophysiology},
+year = {2004}
+}
+
+@article{Sridhar:2010wb,
+author = {Sridhar, M and Cohn, AG},
+title = {{Unsupervised learning of event classes from video}},
+journal = {Proc AAAI},
+year = {2010}
+}
+
+@article{Kruger:2010bw,
+author = {Kruger, Volker and Herzog, Dennis and Baby, Sanmohan and Ude, Ales and Kragic, Danica},
+title = {{Learning Actions from Observations}},
+journal = {IEEE Robotics and Automation Magazine},
+year = {2010}
+}
+
+@article{Wang:2006jc,
+author = {Wang, J and Yin, L and Wei, X},
+title = {{3D facial expression recognition based on primitive surface feature distribution}},
+journal = {Computer Vision and Pattern Recognition, 2006 IEEE Computer Society Conference on},
+year = {2006}
+}
+
+@inproceedings{Luo:2011vg,
+author = {Luo, Guoliang and Bergstr{\"o}m, Niklas and Ek, Carl Henrik and Kragic, Danica},
+title = {{Representing Actions with Kernels}},
+booktitle = {International Conference of Inteligent Robots and Systems},
+year = {2011}
+}
+
+@inproceedings{Harchaoui:2007ho,
+author = {Harchaoui, Zaid and Bach, Francis},
+title = {{Image Classification with Segmentation Graph Kernels}},
+booktitle = {IEEE Conference on Computer Vision and Pattern Recognition },
+year = {2007}
+}
+
+@article{Kjellstrom:2011tw,
+author = {Kjellstr{\"o}m, Hedvig and Romero, Javier and Kragic, Danica},
+title = {{Visual object-action recognition: Inferring object affordances from human demonstration}},
+journal = {Computer Vision and Image Understanding},
+year = {2011}
+}
+
+@article{Santello:1998un,
+author = {Santello, M and Flanders, M},
+title = {{Postural hand synergies for tool use}},
+journal = {The Journal of Neuroscience},
+year = {1998}
+}
+
+@article{Roweis:2000ey,
+author = {Roweis, Sam T and Saul, Lawrence K},
+title = {{Nonlinear dimensionality reduction by locally linear embedding}},
+journal = {Science},
+year = {2000}
+}
+
+@book{Nowozin:wv,
+author = {Nowozin, Sebastian and Lampert, Christoph H},
+title = {{Structured Learning and Prediction in Computer Vision}},
+publisher = {nowozin.net}
+}
+
+@inproceedings{Sriperumbudur:2010ta,
+author = {Sriperumbudur, Bharath K and Lanckriet, Gert R G},
+title = {{Metric Embedding for Nearest Neighbor Classification}},
+booktitle = {arXiv.org},
+year = {2010}
+}
+
+@unpublished{Romero:va,
+author = {Romero, Javier and Feix, Thomas and Ek, Carl Henrik and Kjellstr{\"o}m, Hedvig and Kragic, Danica},
+title = {{Extracting Postural Synergies for Grasping}}
+}
+
+@inproceedings{Griffiths:2006tp,
+author = {Griffiths, Thomas L. and Ghahrmani, Zuobin},
+title = {{Infinite latent feature models and the Indian buffet process}},
+booktitle = {Advances in Neural Information Processing},
+year = {2006}
+}
+
+@inproceedings{BarHillel:2003wa,
+author = {Bar-Hillel, A and Hertz, T and Shental, N},
+title = {{Learning distance functions using equivalence relations}},
+booktitle = {International Conference on Machine Learning},
+year = {2003}
+}
+
+@article{BarHillel:2003waa,
+author = {Bar-Hillel, A and Hertz, T and Shental, N},
+title = {{Learning distance functions using equivalence relations}},
+journal = {Machine learning},
+year = {2003}
+}
+
+@article{Wang:2007vx,
+author = {Wang, Jun and Yin, Lijun},
+title = {{Static topographic modeling for facial expression recognition and analysis}},
+journal = {Computer Vision and Image Understanding},
+year = {2007}
+}
+
+@article{Shamir:uo,
+author = {Shamir, Lior},
+title = {{Unsupervised detection of peculiar images using multi-order image transforms}},
+journal = {Computer Vision and Image Understanding}
+}
+
+@inproceedings{Sigal:2009fk,
+author = {Sigal, L and Memisevic, R and Fleet, D J},
+title = {{Shared Kernel Information Embedding for Discriminative Inference}},
+booktitle = {2009 IEEE Computer Society Conference on Computer Vision and Pattern Recognition Workshops (CVPR Workshops)},
+year = {2009}
+}
+
+@article{Ballan:2010tg,
+author = {Ballan, L and Bertini, M and Del Bimbo, A},
+title = {{Video event classification using string kernels}},
+journal = {Multimedia Tools and Applications},
+year = {2010}
+}
+
+@book{bellman1957dynamic,
+author = {Bellman, R.E. and {Rand Corporation}},
+title = {{Dynamic programming}},
+publisher = {Princeton University Press},
+year = {1957}
+}
+
+@inproceedings{Bergstrom:2011ti,
+author = {Bergstr{\"o}m, Niklas and Yamakawa, Yuji and Senoo, Taku and Ek, Carl Henrik and Ishikawa, Masatoshi},
+title = {{State Recognition of Deformable Objects Using Shape Context}},
+booktitle = {29th Annual Conference of the Robotics Society of Japan},
+year = {2011}
+}
+
+@book{Rangarajan:2005vc,
+author = {Rangarajan, Anand and Vemuri, Baba C and Yuille, A L},
+title = {{Energy Minimization Methods in Computer Vision and Pattern Recognition}},
+publisher = {Springer Berlin / Heidelberg},
+year = {2005}
+}
+
+@incollection{xiaolei05lncs,
+title = {{Deformable-Model Based Textured Object Segmentation}},
+booktitle = {Energy Minimization Methods in Computer Vision and Pattern Recognition},
+year = {2005}
+}
+
+@inproceedings{McFee:2010va,
+author = {McFee, Brian and Lanckriet, Gert},
+title = {{Metric Learning to Rank}},
+booktitle = {International Conference on Machine Learning},
+year = {2010}
+}
+
+@inproceedings{Bilenko:2004uh,
+author = {Bilenko, M and Basu, S and Mooney, Raymond J.},
+title = {{Integrating constraints and metric learning in semi-supervised clustering}},
+booktitle = {International Conference on Machine Learning},
+year = {2004}
+}
+
+@article{Shi:2000gfa,
+author = {Shi, Jianbo and Malik, J},
+title = {{Normalized cuts and image segmentation}},
+journal = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+year = {2000}
+}
+
+@inproceedings{Gabiccini:wa,
+author = {Gabiccini, Marco and Bicchi, Antonio},
+title = {{On the Role of Hand Synergies in the Optimal Choice of Grasping Forces}},
+booktitle = {Robotics Science and Systems},
+year = {2006}
+}
+
+@booklet{Huczynski:1997ur,
+title = {{Organizational Behaviour: An Introductory Text}}
+}
+
+@article{Yamakawa:2011te,
+author = {Yamakawa, Yuji and Namiki, Akio and Ishikawa, Masatoshi},
+title = {{Dynamic Manipulation of a Cloth by High-speed Robot System using High-speed Visual Feedback}},
+year = {2011}
+}
+
+@inproceedings{Yamakawa:2011tl,
+author = {Yamakawa, Yuji and Namiki, Akio and Ishikawa, Masatoshi},
+title = {{Motion Planning for Dynamic Folding of a Cloth with Two High-speed Robot Hands and Two High-speed Sliders}},
+booktitle = {ICRA},
+year = {2011}
+}
+
+@article{Li:2006tt,
+author = {Li, Ming and Zhu, Yanong},
+title = {{Image classification via LZ78 based string kernel: a comparative study}},
+journal = {Advances in knowledge discovery and data mining},
+year = {2006}
+}
+
+@article{Ciocarlie:2010eo,
+author = {Ciocarlie, M. and Allen, P.},
+title = {{Data-driven optimization for underactuated robotic hands}},
+journal = {International Conference on Robotics and Automation},
+year = {2010}
+}
+
+@inproceedings{GraphKernels:tk,
+author = {Vishwanathan, S. V. N.},
+title = {{Graph Kernels}},
+booktitle = {stat.purdue.edu}
+}
+
+@phdthesis{Borgwardt:tk,
+author = {Borgwardt, Karsten Michael},
+title = {{Graph Kernels}},
+school = {Ludwig-Maximilians-Universit{\"a}t Munchen}
+}
+
+@inproceedings{Kashima:2002ty,
+author = {Kashima, Hisashi and Inokuchi, Akihiro},
+title = {{Kernels for graph classification}},
+booktitle = {ICDM Workshop on Active Mining},
+year = {2002}
+}
+
+@inproceedings{Boykov:2005fu,
+author = {Boykov, Y.Y and Jolly, M.-P},
+title = {{Interactive Graph Cuts for Optimal Boundary {\&} Region Segmentation of Objects in N-D Images}},
+booktitle = {International Conference on Computer Vision},
+year = {2005}
+}
+
+@book{CombinatorialStocha:2006ue,
+author = {Pitman, Jim},
+title = {{Combinatorial Stochastic Processes}},
+publisher = {Berlin: Springer-Verlag},
+year = {2006}
+}
+
+@inproceedings{StringandTreeKern:tv,
+author = {Vishwanathan, S. V. N.},
+title = {{String and Tree Kernels}},
+booktitle = {stat.purdue.edu}
+}
+
+@article{Leslie:2004vk,
+author = {Leslie, Christina and Kuang, Rui},
+title = {{Fast String Kernels using Inexact Matching for Protein Sequences}},
+journal = {The Journal of Machine Learning Research},
+year = {2004}
+}
+
+@inproceedings{Laptev:2008hb,
+author = {Laptev, I and Marszalek, M and Schmid, C and Rozenfeld, B},
+title = {{Learning realistic human actions from movies}},
+booktitle = {IEEE Conference on Computer Vision and Pattern Recognition },
+year = {2008}
+}
+
+@booklet{Bishop:2006ui,
+title = {{Pattern recognition and machine learning}}
+}
+
+@inproceedings{Nowozin:2007gi,
+author = {Nowozin, S and Bakir, G and Tsuda, K},
+title = {{Discriminative Subsequence Mining for Action Classification}},
+booktitle = {International Conference on Computer Vision},
+year = {2007}
+}
+
+@inproceedings{Yan:2005ix,
+author = {Yan, Shuicheng and Xu, Dong and Zhang, Benyu and Zhang, Hong-jiang},
+title = {{Graph embedding: a general framework for dimensionality reduction}},
+booktitle = {Computer Vision and Pattern Recognition},
+year = {2005}
+}
+
+@inproceedings{Laptev:2007ds,
+author = {Laptev, I and Perez, P},
+title = {{Retrieving actions in movies}},
+booktitle = {IEEE 11th International Conference on Computer Vision.},
+year = {2007}
+}
+
+@techreport{Saric:2011vw,
+author = {Saric, Marin and Ek, Carl Henrik and Kragic, Danica},
+title = {{Dimensionality Reduction via Euclidean Distance Embeddings}},
+institution = {KTH, Royal Institute of Technology},
+year = {2011}
+}
+
+@article{Scholkopf:1997vl,
+author = {Sch{\"o}lkopf, B and Smola, A},
+title = {{Kernel principal component analysis}},
+journal = {Artificial Neural Networks---ICANN'97},
+year = {1997}
+}
+
+@inproceedings{Tsoli:2008vr,
+author = {Tsoli, Aggeliki and Jenkins, Odest Chadwicke},
+title = {{Neighborhood Denoising for Learning High-dimensional Grasping Manifolds}},
+booktitle = {International Conference on Intelligent Robots and Systems},
+year = {2008}
+}
+
+@inproceedings{DomenicoPrattichizzo:2010tm,
+author = {Domenico Prattichizzo and Malvezzi, Monica and Bicchi, Antonio},
+title = {{On motion and force controllability of grasping hands with postural synergies}},
+booktitle = {Robotics Science and Systems},
+year = {2010}
+}
+
+@inproceedings{Kjellstrom:2008wz,
+author = {Kjellstr{\"o}m, Hedvig and Romero, Javier and Mart{\'\i}nez, D and Kragic, Danica},
+title = {{Simultaneous visual recognition of manipulation actions and manipulated objects}},
+booktitle = {European Conference on Computer Vision},
+year = {2008}
+}
+
+@techreport{Dickinson:vp,
+author = {Dickinson, Sven},
+title = {{The Evolution of Object Categorization and the Challenge of Image Abstraction}},
+institution = {Department of Computer Science University of Toronto}
+}
+
+@inproceedings{bagon08eccv,
+title = {{What Is a Good Image Segment? A Unified Approach to Segment Extraction}},
+booktitle = {Proceedings of the 10th European Conference on Computer Vision: Part IV},
+year = {2008}
+}
+
+@article{mishra09ijhr,
+title = {{Active Segmentation}},
+journal = {I. J. Humanoid Robotics},
+year = {2009}
+}
+

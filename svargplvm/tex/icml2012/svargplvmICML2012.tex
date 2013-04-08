@@ -1,0 +1,204 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%% ICML 2012 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Use the following line _only_ if you're still using LaTeX 2.09.
+%\documentstyle[icml2012,epsf,natbib]{article}
+% If you rely on Latex2e packages, like most moden people use this:
+\documentclass{article}
+
+% For figures
+\usepackage{graphicx} % more modern
+%\usepackage{epsfig} % less modern
+\usepackage{subfigure} 
+
+% For citations
+\usepackage{natbib}
+
+% For algorithms
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% As of 2011, we use the hyperref package to produce hyperlinks in the
+% resulting PDF.  If this breaks your system, please commend out the
+% following usepackage line and replace \usepackage{icml2012} with
+% \usepackage[nohyperref]{icml2012} above.
+\usepackage{hyperref}
+
+% Packages hyperref and algorithmic misbehave sometimes.  We can fix
+% this with the following command.
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% Employ the following version of the ``usepackage'' statement for
+% submitting the draft version of the paper for review.  This will set
+% the note in the first column to ``Under review.  Do not distribute.''
+%\usepackage{icml2012} 
+% Employ this version of the ``usepackage'' statement after the paper has
+% been accepted, when creating the final version.  This will set the
+% note in the first column to ``Appearing in''
+\usepackage[accepted]{icml2012}
+
+%-------
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{subfigure}
+\usepackage{cancel}
+\usepackage{color}
+\usepackage{hyperref}
+%\usepackage{multicol}
+%\usepackage{blindtext}
+
+%\usepackage[usenames,dvipsnames]{color}
+
+\newcommand{\highlight}[1]{\colorbox{yellow}{#1}}
+\newcommand{\bff}{\mathbf{f}}
+\newcommand{\bfu}{\mathbf{u}}
+\newcommand{\bfy}{\mathbf{y}}
+\newcommand{\bfx}{\mathbf{x}}
+\newcommand{\bft}{\mathbf{t}}
+\newcommand{\bfk}{\mathbf{k}}
+\newcommand{\bfzi}{\mathbf{z}}
+\newcommand{\bfw}{\mathbf{w}}
+\newcommand{\bfmu}{\boldsymbol \mu}
+\newcommand{\bfz}{\mathbf{0}}
+\newcommand{\bftheta}{\boldsymbol \theta}
+\newcommand{\T}{{\top}}
+\newcommand{\bfa}{\mathbf{a}}
+\newcommand{\bb}{\beta^{-1}}
+\newcommand{\la}{\left\langle}
+\newcommand{\ra}{\right\rangle}
+\newcommand{\vv}{\vartheta}
+\newcommand{\intd}{\text{d}}
+\newcommand{\ie}{i.e.\ }
+\newcommand{\eg}{e.g.\ }
+
+%------------
+\definecolor{light-gray}{gray}{0.43}
+
+
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{Manifold Relevance Determination}
+
+
+\begin{document}
+
+\twocolumn[
+\icmltitle{Manifold Relevance Determination}
+
+% It is OKAY to include author information, even for blind
+% submissions: the style file will automatically remove it for you
+% unless you've provided the [accepted] option to the icml2012
+% package.
+%\icmlauthor{Andreas C. Damianou$^1$}{Andreas.Damianou@sheffield.ac.uk} \\
+%%\icmladdress{Dept. of Computer Science \& Sheffield Institute for Translational Neuroscience, University of Sheffield, UK}
+%\icmlauthor{Carl Henrik Ek}{chek@csc.kth.se}
+%\icmladdress{KTH -- Royal Institute of Technology, CVAP Lab, Stockholm, Sweden}
+%\icmlauthor{Michalis K. Titsias}{mtitsias@well.ox.ac.uk}
+%\icmladdress{Wellcome Trust Centre for Human Genetics, Roosevelt Drive, Oxford OX3 7BN, UK }
+%\icmlauthor{Neil D. Lawrence$^2$}{n.lawrence@sheffield.ac.uk}
+%\icmladdress{$^{1,2}$Dept. of Computer Science \& Sheffield Institute for Translational Neuroscience, University of Sheffield, UK}
+
+\icmlauthor{Andreas C. Damianou}{Andreas.Damianou@sheffield.ac.uk}
+\icmladdress{Dept. of Computer Science \& Sheffield Institute for Translational Neuroscience, University of Sheffield, UK}
+\icmlauthor{Carl Henrik Ek}{chek@csc.kth.se}
+\icmladdress{KTH -- Royal Institute of Technology, CVAP Lab, Stockholm, Sweden}
+\icmlauthor{Michalis K. Titsias}{mtitsias@well.ox.ac.uk}
+\icmladdress{Wellcome Trust Centre for Human Genetics, Roosevelt Drive, Oxford OX3 7BN, UK }
+\icmlauthor{Neil D. Lawrence}{n.lawrence@sheffield.ac.uk}
+\icmladdress{Dept. of Computer Science \& Sheffield Institute for Translational Neuroscience, University of Sheffield, UK}
+
+% You may provide any keywords that you 
+% find helpful for describing your paper; these are used to populate 
+% the "keywords" metadata in the PDF but will not be shown in the document
+\icmlkeywords{GP-LVM, Bayesian, machine learning, ICML}
+
+\vskip 0.3in
+]
+
+% \begin{abstract} 
+%   In this paper we present a fully Bayesian latent variable model
+%   which exploits conditional non-linear (in)-dependence structures to
+%   learn an efficient latent representation. The model is capable of
+%   learning from extremely high-dimensional data such as directly
+%   modelling high resolution images. The latent representation is
+%   factorized to represent shared and private information from multiple
+%   views of the data. Bayesian techniques allow us to automatically
+%   estimate the dimensionality of the latent spaces. We demonstrate the
+%   model by prediction of human pose in an ambiguous setting. Our
+%   Bayesian representation allows us to perform disambiguation in a
+%   principled manner by including priors which incorporate the dynamic
+%   structure of the data. 
+%   We demonstrate the ability of the model to
+%   capture structure underlying extremely high dimensional spaces by
+%   learning a low-dimensional representation of a set of facial images
+%   under different illumination conditions. The model correctly
+%   automatically creates a factorized representation where the lighting
+%   variance is represented in a separate latent space from the variance
+%   associated with different faces. We show that the model is capable
+%   of generating morphed faces and images from novel light directions.
+% \end{abstract} 
+
+\begin{abstract} 
+  In this paper we present a fully Bayesian latent variable model
+  which exploits conditional non-linear (in)-dependence structures to
+  learn an efficient latent representation. 
+  The latent space is factorized to represent shared and private information from multiple
+  views of the data. In contrast to previous approaches, we introduce a relaxation to
+  the discrete segmentation and allow for a ``softly'' shared latent space.
+  Further, Bayesian techniques allow us to automatically
+  estimate the dimensionality of the latent spaces.
+%
+%   The model is capable of
+%    capturing structure underlying extremely high dimensional spaces.
+%   This is illustrated by directly modelling the pixels of a set of high resolution facial images
+%   under different illumination conditions. We show that the model automatically
+%   correctly separates the lighting variance from the one associated with different
+%   face characteristics and is also able of generating morphed faces and images from novel light directions.
+ The model is capable of capturing structure underlying extremely high dimensional spaces.
+ This is illustrated by 
+% directly modelling relatively large 
+ modelling unprocessed images with tenths of thousands of pixels. This also allows us
+ to directly generate novel images from the trained model by sampling from the discovered latent spaces.
+%
+  We also demonstrate the
+  model by prediction of human pose in an ambiguous setting. Our
+  Bayesian framework allows us to perform disambiguation in a
+  principled manner by including latent space priors which incorporate the dynamic
+  nature of the data. 
+\end{abstract} 
+
+
+
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+\input{includes/introduction.tex}
+
+\input{includes/model2.tex}
+
+\input{includes/experiments.tex}
+
+\input{includes/conclusions.tex}
+
+
+\section*{Acknowledgments}
+Research was partially supported by the University of Sheffield Moody endowment fund and the Greek State Scholarships Foundation (IKY).
+We would like to thank the reviewers for their useful feedback.
+
+
+
+\small
+\bibliography{svargplvmICML2012,other,lawrence,zbooks}
+\bibliographystyle{icml2012}
+%}
+
+%\input{includes/supplementary.tex}
+
+
+\end{document}

@@ -1,0 +1,37 @@
+%%%% This is a draft tutorial - manual, for the variational GPLVM %%%
+
+% Setting the path
+The dependencies are listed in the release webpage.
+Additionally, you should include in the path ./data and ./utilities, if you
+intend to use them. 
+
+% Loading the data
+The provided demos are often required to load very large files that cannot
+be stored on SVN, and thus, they cannot be loaded in the standard way using
+lvmLoadData (which reads the data from the DATASETS directory).
+For this reason, we have a "vargplvmLoadLocalData.m" function which looks
+into two directories which should be both added to the path: the first one,
+must also contain the file "localDatasetsDirectorySmall.m", and is
+typically used for small datasets (e.g. that can be synced via dropbox etc).
+Similarly, the second directory should contain the file
+"localDatasetsDirectoryLarge.m". Everything else becomes just automatic, in
+the sense that the function that you only need to call 
+"vargplvmLoadLocalData.m" will check both of the aforementioned local dirs
+and if it fails, it calls lvmLoadData as usual.
+
+
+% The model structure
+
+
+
+% Parallelism
+Paralellism can be achieved in two levels: with respect to models, and with
+respect to N in each model (this is done in the rbfard2VardistPsi2Compute
+and rbfard2VardistPsi2Gradients). 
+
+We should perform some benchmarks and see which are the optimal settings,
+but one would expect that it is not optimal to use both ways to parallelize
+the program. 
+A reasonable idea is to use the model-wise parallelism when we have a large
+number of models (e.g. close to the number of cores/workers to be used),
+otherwise (and if N is relatively big) we can use the point-wise paral
