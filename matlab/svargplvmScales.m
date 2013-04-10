@@ -4,7 +4,7 @@ function ret = svargplvmScales(method, model, varargin)
 %
 % COPYRIGHT : Andreas C. Damianou, 2011
 
-% SVARGPLVM
+% VARGPLVM
 
 if ~isfield(model, 'numModels') && isfield(model, 'M')
     model.numModels = model.M;

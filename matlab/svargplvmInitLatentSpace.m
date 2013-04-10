@@ -19,7 +19,7 @@ function X_init = svargplvmInitLatentSpace(Ytr, d, options, initLatent, varargin
 % 
 % COPYRIGHT : Andreas C. Damianou, Carl Henrik Ek, 2011
 
-% SVARGPLVM
+% VARGPLVM
 
 latentDim = varargin{1};
 latentDimPerModel = varargin{2};

@@ -5,7 +5,7 @@
 % us a wrapper for the generic shared var. GP-LVM demo
 % (demSharedVargplvm1). 
 
-% SVARGPLVM
+% VARGPLVM
 
 % Create the dataset out of the images.
 baseDir=[localDatasetsDirectoryLarge 'CroppedYale' filesep 'CroppedYale'];

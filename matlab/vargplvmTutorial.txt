@@ -1,3 +1,7 @@
+% VARGPLVMTUTORIAL
+% Copyright: Andreas C. Damianou, 2012, 2013
+% VARGPLVM
+
 %%%% This is a draft tutorial - manual, for the variational GPLVM %%%
 
 % Setting the path

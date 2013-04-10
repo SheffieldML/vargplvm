@@ -7,7 +7,7 @@ function x_cur = svargplvmPredictX(x_star, X, kNN, sharedDims, options)
 %
 % COPYRIGHT : Andreas C. Damianou, 2011
 
-% SVARGPLVM
+% VARGPLVM
 
 switch options
     case 1

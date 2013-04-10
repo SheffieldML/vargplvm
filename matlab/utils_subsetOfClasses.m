@@ -5,7 +5,7 @@ function [classInds, Y, labels, lbls, timeStamps] = utils_subsetOfClasses(Y, dat
 % SEEALSO: demClassificationGeneral
 % COPYRIGHT: Andreas C. Damianou, 2012
 
-% SVARGPLVM
+% VARGPLVM
 
 if nargin<5
     timeStamps = [];

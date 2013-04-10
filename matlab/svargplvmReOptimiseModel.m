@@ -6,7 +6,7 @@ function [model, globalOpt] = svargplvmReOptimiseModel(model, initVardistIters, 
 %
 % COPYRIGHT : Andreas C. Damianou, 2011
 
-% SVARGPLVM
+% VARGPLVM
 
 globalOptOrig = model.globalOpt;
 globalOpt = globalOptOrig;

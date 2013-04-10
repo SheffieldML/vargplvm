@@ -1,7 +1,7 @@
 function kern = svargplvmInitDynKernel(kern, globalOpt, optionsDyn, indexInComp)
 
 % SVARGPLVMINITDYNKERNEL
-% SVARGPLVM
+% VARGPLVM
 
 X = optionsDyn.t;
 

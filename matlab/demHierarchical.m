@@ -4,7 +4,7 @@
 % shared sub-model for each latent dimension.
 % TODO: Visualisation
 
-% SVARGPLVM
+% VARGPLVM
 
 
 

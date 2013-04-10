@@ -3,7 +3,7 @@ function [labelErrors, labelSharingErrors, wrongIndices] = findLabelErrors(realL
 % FINDLABELERRORS Find the number of errors in the predicted vs the real
 % labels
 % COPYRIGHT: Andreas C. Damianou, 2012
-% SVARGPLVM
+% VARGPLVM
 
 %%% WARNING: This function only works if there are no multi-label examples!
 

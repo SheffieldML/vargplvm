@@ -5,7 +5,7 @@
 %
 % COPYRIGHT: Andreas C. Damianou
 %
-% SVARGPLVM
+% VARGPLVM
 
 
 % Fix seeds

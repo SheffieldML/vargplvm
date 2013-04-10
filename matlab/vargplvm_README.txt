@@ -1,3 +1,6 @@
+% VARGPLVM_README
+% Copyright: Andreas C. Damianou, 2012, 2013
+% VARGPLVM
                              _                 
                             | |                
  __   ____ _ _ __ __ _ _ __ | |_   ___ __ ___  

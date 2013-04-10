@@ -5,7 +5,7 @@ function [Ynew, lblsNew] = utils_transformMultiLabel(Y, lbls)
 % SEEALSO: transformMultiLabel
 %
 % COPYRIGHT: Andreas C. Damianou, 2012
-% SVARGPLVM
+% VARGPLVM
 
 Ynew = [];
 lblsNew = [];

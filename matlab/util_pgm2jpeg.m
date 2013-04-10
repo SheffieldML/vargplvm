@@ -1,5 +1,5 @@
 % PGM2JPEG Converts all pgm files in a directory into jpeg files.
-% SVARGPLVM
+% VARGPLVM
 
 function a = pgm2jpeg(dirFrom, dirTo)
 if nargin < 1

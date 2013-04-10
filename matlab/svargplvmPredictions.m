@@ -4,7 +4,7 @@
 %
 % COPYRIGHT : Andreas C. Damianou, 2011
 
-% SVARGPLVM
+% VARGPLVM
 
 
 %%%--- Script: svargplvmPredictions %%%%-

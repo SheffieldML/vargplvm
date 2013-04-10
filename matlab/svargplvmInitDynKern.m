@@ -1,6 +1,6 @@
 % SVARGPLVMINITDYNKERN Initialize a dynamics kernel for shared var.gplvm
 % DESC Initialize a dynamics kernel for a shared variational gplvm model.
-% SVARGPLVM
+% VARGPLVM
 
 
 % ATTENTION: For the gradients we assume that the base kernel (rbf,

@@ -2,7 +2,7 @@ function model = svargplvmEqualizeScales(model, globalOpt)
 
 % SVARGPLVMEQUALIZESCALES 
 % COPYRIGHT: Andreas C. Damianou, 2012
-% SVARGPLVM
+% VARGPLVM
 
 if nargin < 2
     globalOpt = model.globalOpt;

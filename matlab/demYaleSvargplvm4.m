@@ -5,7 +5,7 @@
 % demYaleSvargplvm1, this demo is not a wrapper, it can be used as a
 % standalone demo.
 %
-% SVARGPLVM
+% VARGPLVM
 
 % Fix seeds
 randn('seed', 1e5);

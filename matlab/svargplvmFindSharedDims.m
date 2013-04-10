@@ -9,7 +9,7 @@ function [sharedDims, privateDims] = svargplvmFindSharedDims(model, thresh, prin
 %
 % COPYRIGHT: Andreas C. Damianou, 2012, 2013
 %
-% SVARGPLVM
+% VARGPLVM
 
 if nargin < 3 || isempty(printOut), printOut = false; end
 if nargin < 2 || isempty(thresh), thresh = 0.005; end

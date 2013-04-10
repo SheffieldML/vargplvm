@@ -42,7 +42,7 @@
 %
 % COPYRIGHT: Andreas C. Damianou, 2012
 %
-% SVARGPLVM
+% VARGPLVM
 
 % Fix seeds
 randn('seed', 1e5);

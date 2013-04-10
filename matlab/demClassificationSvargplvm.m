@@ -1,7 +1,7 @@
 % DEMCLASSIFICATIONSVARGPLVM
 % COPYRIGHT Andreas C. Damianou, 2012
 % SEEALSO: demClassificationSvargplvm2, demClassificationSvargplvm3,  demClassificationSvargplvm4
-% SVARGPLVM
+% VARGPLVM
 
 % clear;scale2var1 = 1;dataPerClass = 10;initial_X = 'together';itNo =
 % [];indPoints = 30; initVardistIters = 300;latentDim = 6;demClassificationSvargplvm
