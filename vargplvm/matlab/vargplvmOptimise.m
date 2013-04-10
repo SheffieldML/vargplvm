@@ -1,6 +1,6 @@
 function model = vargplvmOptimise(model, display, iters, varargin)
 
-% SHEFFIELDMLOPTIMISE Optimise the VARGPLVM.
+% VARGPLVMOPTIMISE Optimise the VARGPLVM.
 % FORMAT
 % DESC takes a given GP-LVM model structure and optimises with
 % respect to parameters and latent positions. 
@@ -18,7 +18,7 @@ function model = vargplvmOptimise(model, display, iters, varargin)
 % 
 % COPYRIGHT : Neil D. Lawrence, 2005, 2006
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 if nargin < 3

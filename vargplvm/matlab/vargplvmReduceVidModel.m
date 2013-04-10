@@ -1,11 +1,11 @@
 function [model, newHeight, newWidth] = vargplvmReduceVidModel(model, height, width, varargin)
 
-% SHEFFIELDMLREDUCEVIDMODEL Take a model computed on a video dataset and return a model which is computed on
+% VARGPLVMREDUCEVIDMODEL Take a model computed on a video dataset and return a model which is computed on
 % the same video but with lower resolution
 % DESC Take a model computed on a video dataset and return a model which is computed on
 % the same video but with lower resolution.
 % SEEALSO: vargplvmReduceVideo.m
-% SHEFFIELDML
+% VARGPLVM
 
 % varargin may include "factor1" and "factor2" optionally
 

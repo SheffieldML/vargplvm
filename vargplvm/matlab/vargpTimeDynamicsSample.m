@@ -1,6 +1,6 @@
 %VARGPTIMEDYNAMICSSAMPLE
 function [ySamp, xSamp] = vargpTimeDynamicsSample(model, noiseless)
-% SHEFFIELDML
+% VARGPLVM
 
 % Fix seeds
 randn('seed', 1e5);

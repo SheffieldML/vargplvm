@@ -16,7 +16,7 @@ function [gVarmeans gVarcovs gDynKern] = ...
 % Most of the things are doable, only where I've put "TODO!!!" there is a
 % little problem that must be taken care of.
 %
-% SHEFFIELDML
+% VARGPLVM
 
 Kt = kernCompute(model.kern, model.t);
 Lt = jitChol(Kt)';

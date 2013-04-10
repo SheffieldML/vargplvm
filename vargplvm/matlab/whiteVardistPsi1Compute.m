@@ -16,7 +16,7 @@ function [K, P] = whiteVardistPsi1Compute(whitekern, vardist, Z)
 % COPYRIGHT : Michalis K. Titsias, 2009
 %
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 

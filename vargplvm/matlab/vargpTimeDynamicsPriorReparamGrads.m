@@ -40,7 +40,7 @@ function [gVarmeans gVarcovs gDynKern] = vargpTimeDynamicsPriorReparamGrads(dynM
 % COPYRIGHT : Michalis K. Titsias and Andreas C. Damianou, 2010-2011
 
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 if isfield(dynModel, 'seq') & ~isempty(dynModel.seq)

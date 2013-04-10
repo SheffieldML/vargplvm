@@ -1,6 +1,6 @@
 function [f, g] = vargplvmObjectiveGradient(params, model)
 
-% SHEFFIELDMLOBJECTIVEGRADIENT Wrapper function for VARGPLVM objective and gradient.
+% VARGPLVMOBJECTIVEGRADIENT Wrapper function for VARGPLVM objective and gradient.
 % FORMAT
 % DESC returns the negative log likelihood of a Gaussian process
 % model given the model structure and a vector of parameters. This
@@ -20,7 +20,7 @@ function [f, g] = vargplvmObjectiveGradient(params, model)
 %
 % COPYRIGHT : Neil D. Lawrence, 2005, 2006
 
-% SHEFFIELDML
+% VARGPLVM
   
 % Check how the optimiser has given the parameters
 if size(params, 1) > size(params, 2)

@@ -1,6 +1,6 @@
 function f = vargplvmPointObjective(x, model, y)
 
-% SHEFFIELDMLPOINTOBJECTIVE Wrapper function for objective of a single point in latent space and the output location..
+% VARGPLVMPOINTOBJECTIVE Wrapper function for objective of a single point in latent space and the output location..
 % FORMAT
 % DESC provides a wrapper function for the negative log probability
 % of a given data point under the posterior distribution of the
@@ -16,7 +16,7 @@ function f = vargplvmPointObjective(x, model, y)
 %
 % COPYRIGHT : Michalis K. Titsias and Neil D. Lawrence, 2009
 
-% SHEFFIELDML
+% VARGPLVM
 
 if isfield(model, 'dynamics') && ~isempty(model.dynamics)
     if isfield(model.dynamics, 'reoptimise') && model.dynamics.reoptimise  %%% RE-OPT-CODE-NEW

@@ -1,7 +1,0 @@
-# These are files that should be packaged for the svargplvm software
-dir: html
-~/mlprojects/svargplvm/html/index.html
-dir: demos
-~/mlprojects/svargplvm/matlab/demos/*
-dir: matFiles
-~/mlprojects/svargplvm/matlab/matFiles/*

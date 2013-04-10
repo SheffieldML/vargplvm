@@ -2,7 +2,7 @@ function gInd = kernKuuXuGradient(kern, Z, covGrad)
 
 % KERNKUUXUGRADIENT Description
 
-% SHEFFIELDML
+% VARGPLVM
 
 if ~strcmp(kern.type,'cmpnd')
   % 

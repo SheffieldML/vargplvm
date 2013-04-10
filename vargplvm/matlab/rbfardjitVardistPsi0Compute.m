@@ -2,7 +2,7 @@ function k0 = rbfardjitVardistPsi0Compute(rbfardKern, vardist)
 
 % RBFARDJITVARDISTPSI0COMPUTE description.
   
-% SHEFFIELDML
+% VARGPLVM
   
 % variational means
 

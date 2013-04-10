@@ -2,7 +2,7 @@ function Psi0 = linard2VardistPsi0Compute(linard2kern, vardist)
 
 % LINARD2VARDISTPSI0COMPUTE Description
 
-% SHEFFIELDML
+% VARGPLVM
   
 A = linard2kern.inputScales;
 Psi0 = sum(A.*sum((vardist.means.*vardist.means) + vardist.covars,1));

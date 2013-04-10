@@ -1,5 +1,5 @@
 function [g, model] = vargplvmSeqDynLogLikeGradient(model, vardistx, y)
-% SHEFFIELDMLSEQDYNLOGLIKEGRADIENT Log-likelihood gradient for of a point of the GP-LVM.
+% VARGPLVMSEQDYNLOGLIKEGRADIENT Log-likelihood gradient for of a point of the GP-LVM.
 % FORMAT
 % DESC returns the gradient of the log likelihood with respect to
 % the latent position, where the log likelihood is conditioned on
@@ -16,7 +16,7 @@ function [g, model] = vargplvmSeqDynLogLikeGradient(model, vardistx, y)
 %
 % COPYRIGHT : Michalis K. Titsias and Andreas Damianou, 2011
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 % y is a new block/sequence 

@@ -1,9 +1,9 @@
 function model = vargplvmOptimiseModel(model, varargin)
 
-% SHEFFIELDMLOPTIMISEMODEL Optimise a varglpvm model (wrapper)
+% VARGPLVMOPTIMISEMODEL Optimise a varglpvm model (wrapper)
 % SEEALSO: vargplvmOptimise
 % COPYRIGHT: Andreas C. Damianou, 2012
-% SHEFFIELDML
+% VARGPLVM
 
 
 % model, pruneModel, saveModel, {initVardistIters, itNo}, display

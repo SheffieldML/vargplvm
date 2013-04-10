@@ -1,5 +1,5 @@
 function model = vargplvmInitDynamics(model,optionsDyn)
-% SHEFFIELDMLINITDYNAMICS Initialize the dynamics of a var-GPLVM model.
+% VARGPLVMINITDYNAMICS Initialize the dynamics of a var-GPLVM model.
 % FORMAT
 % ARG optionsDyn : the VARGPLVM structure with the options used to
 % create the vargplvm model..
@@ -11,7 +11,7 @@ function model = vargplvmInitDynamics(model,optionsDyn)
 %
 % SEEALSO : vargplvmOptionsDyn, vargplvmAddDynamics
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 

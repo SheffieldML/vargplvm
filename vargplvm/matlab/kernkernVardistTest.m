@@ -2,7 +2,7 @@ function kernkernVardistTest(kernType1, kernType2, numData, numIn)
 
 % KERNKERNVARDISTTEST Description
 
-% SHEFFIELDML
+% VARGPLVM
 
 x = randn(numData, numIn);
 x2 = randn(numData/2, numIn);

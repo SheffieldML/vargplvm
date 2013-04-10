@@ -1,5 +1,5 @@
 function model = vargplvmAddDynamics(model, type, varargin)
-% SHEFFIELDMLADDDYNAMICS Add a dynamics structure to the model.
+% VARGPLVMADDDYNAMICS Add a dynamics structure to the model.
 %
 %	Description:
 %
@@ -18,7 +18,7 @@ function model = vargplvmAddDynamics(model, type, varargin)
 %
 %	See also
 %	MODELCREATE
-% SHEFFIELDML
+% VARGPLVM
 
 type = [type 'Dynamics'];
 model.dynamics = modelCreate(type, model.q, model.q, model.X, varargin{:}); % e.g. vargpTimeDynamicsCreate

@@ -1,5 +1,5 @@
-% SHEFFIELDMLINITDYNKERNEL Initialise a compound dynamics kernel
-% SHEFFIELDML
+% VARGPLVMINITDYNKERNEL Initialise a compound dynamics kernel
+% VARGPLVM
 
         if isfield(kern,'comp')
             fprintf('# Dynamics Kernel initialization: \n')

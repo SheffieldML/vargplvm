@@ -14,7 +14,7 @@ function Psi0 = biasVardistPsi0Compute(biaskern, vardist)
 % COPYRIGHT : Michalis K. Titsias, 2009
 %
 
-% SHEFFIELDML
+% VARGPLVM
 
 Psi0 = vardist.numData*biaskern.variance; 
 

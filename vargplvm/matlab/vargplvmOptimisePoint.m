@@ -1,6 +1,6 @@
 function [X, varX, model] = vargplvmOptimisePoint(model, vardistx, y, display, iters)
 
-% SHEFFIELDMLOPTIMISEPOINT Optimise the postion of one or more latent points.
+% VARGPLVMOPTIMISEPOINT Optimise the postion of one or more latent points.
 % FORMAT
 % DESC optimises the location of a group of points in latent space
 % given an initialisation and the corresponding observed data point.
@@ -23,7 +23,7 @@ function [X, varX, model] = vargplvmOptimisePoint(model, vardistx, y, display, i
 %
 % SEEALSO : vargplvmCreate, vargplvmOptimiseSequence, vargplvmPointObjective, vargplvmPointGradient
 
-% SHEFFIELDML
+% VARGPLVM
 
 if nargin < 5
     iters = 2000;

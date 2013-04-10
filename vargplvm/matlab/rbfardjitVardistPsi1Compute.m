@@ -2,7 +2,7 @@ function [K, Knovar, argExp] = rbfardjitVardistPsi1Compute(rbfardKern, vardist, 
 
 % RBFARDJITVARDISTPSI1COMPUTE description.
   
-% SHEFFIELDML
+% VARGPLVM
 
 
  [K, Knovar, argExp] = rbfard2VardistPsi1Compute(rbfardKern, vardist, Z);

@@ -1,6 +1,6 @@
 function model = vargplvmExpandParam(model, params)
 
-% SHEFFIELDMLEXPANDPARAM Expand a parameter vector into a GP-LVM model.
+% VARGPLVMEXPANDPARAM Expand a parameter vector into a GP-LVM model.
 % FORMAT
 % DESC takes an VARGPLVM structure and a vector of parameters, and
 % fills the structure with the given parameters. Also performs any
@@ -18,7 +18,7 @@ function model = vargplvmExpandParam(model, params)
 %
 % SEEALSO : vargplvmCreate, vargplvmExtractParam, modelExpandParam
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 %%% Parameters must be passed as a vector in the following order (left to right) 

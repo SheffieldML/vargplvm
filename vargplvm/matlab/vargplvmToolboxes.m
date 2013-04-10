@@ -1,4 +1,4 @@
-% SHEFFIELDMLTOOLBOXES Load in the relevant toolboxes for variational gplvm.
+% VARGPLVMTOOLBOXES Load in the relevant toolboxes for variational gplvm.
 
 importLatest('netlab');
 importLatest('prior');

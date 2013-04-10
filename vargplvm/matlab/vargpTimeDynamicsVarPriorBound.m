@@ -20,7 +20,7 @@ function pb = vargpTimeDynamicsVarPriorBound(dynModel)
 % COPYRIGHT : Andreas C. Damianou, 2010-2011
 % COPYRIGHT : Neil D. Lawrence, 2010-2011
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 if isfield(dynModel, 'seq') & ~isempty(dynModel.seq)

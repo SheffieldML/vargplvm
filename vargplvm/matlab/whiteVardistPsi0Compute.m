@@ -14,7 +14,7 @@ function Psi0 = whiteVardistPsi0Compute(whitekern, vardist)
 % COPYRIGHT : Michalis K. Titsias, 2009
 %
 
-% SHEFFIELDML
+% VARGPLVM
 
 % the "white" kernel only affects the K_uu matrix (jitter inducing variables)"
 % that's why the psi0_white = 0 

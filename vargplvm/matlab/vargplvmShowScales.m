@@ -1,7 +1,7 @@
 function scales = vargplvmShowScales(model, printPlots)
 
-% SHEFFIELDMLSHOWSCALES A simple wrapper tha shows tha ARD weights of the mapping kernel.
-% SHEFFIELDML
+% VARGPLVMSHOWSCALES A simple wrapper tha shows tha ARD weights of the mapping kernel.
+% VARGPLVM
 
 if nargin < 2
     printPlots = true;

@@ -2,7 +2,7 @@ function [gKern1, gKern2, gVarmeans, gVarcovars, gInd] = kernkernVardistPsi2Grad
 
 % KERNKERNVARDISTPSI2GRADIENT Description
   
-% SHEFFIELDML
+% VARGPLVM
 
 if nargin < 6
     learnInducing = true;

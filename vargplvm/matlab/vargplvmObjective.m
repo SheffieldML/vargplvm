@@ -1,6 +1,6 @@
 function f = vargplvmObjective(params, model)
 
-% SHEFFIELDMLOBJECTIVE Wrapper function for variational GP-LVM objective.
+% VARGPLVMOBJECTIVE Wrapper function for variational GP-LVM objective.
 % FORMAT
 % DESC provides a wrapper function for the variational GP-LVM, it
 % takes the negative of the log likelihood, feeding the parameters
@@ -15,7 +15,7 @@ function f = vargplvmObjective(params, model)
 % COPYRIGHT : Michalis K. Titsias, 2009-2011
 % COPYRIGHT : Neil D. Lawrence, 2009-2011
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 model = modelExpandParam(model, params);

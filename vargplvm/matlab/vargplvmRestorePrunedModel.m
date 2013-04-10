@@ -1,5 +1,5 @@
 function model = vargplvmRestorePrunedModel(model, Ytr, onlyData, options)
-% SHEFFIELDMLRESTOREPRUNEDMODEL Restore a pruned var-GPLVM model.
+% VARGPLVMRESTOREPRUNEDMODEL Restore a pruned var-GPLVM model.
 % FORMAT
 % DESC restores a vargplvm model which has been pruned and it brings it in
 % the same state that it was before pruning.
@@ -13,7 +13,7 @@ function model = vargplvmRestorePrunedModel(model, Ytr, onlyData, options)
 %
 % SEEALSO : vargplvmReduceModel, vargplvmPruneModel
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 % TODO: We could also prune bias and scale (big matrices) but then the user

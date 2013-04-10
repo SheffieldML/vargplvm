@@ -2,7 +2,7 @@ function [gKern, gVarmeans, gVarcovars, gInd] = kernVardistPsi2Gradient(kern, va
 
 % KERNVARDISTPSI2GRADIENT description.  
 
-% SHEFFIELDML
+% VARGPLVM
 
 if nargin < 5
     % If learnInducing == 0, then gInd will be returned as a a vector of

@@ -1,6 +1,6 @@
 function model = vargplvmCreate(q, d, Y, options)
 
-% SHEFFIELDMLCREATE Create a GPLVM model with inducing variables.
+% VARGPLVMCREATE Create a GPLVM model with inducing variables.
 % FORMAT
 % DESC creates a GP-LVM model with the possibility of using
 % inducing variables to speed up computation.
@@ -9,7 +9,7 @@ function model = vargplvmCreate(q, d, Y, options)
 % ARG Y : the data to be modelled in design matrix format (as many
 % rows as there are data points).
 % ARG options : options structure as returned from
-% SHEFFIELDMLOPTIONS. This structure determines the type of
+% VARGPLVMOPTIONS. This structure determines the type of
 % approximations to be used (if any).
 % ARG enableDgtN: if set to true, the model will be created in D >> N
 % mode (if this is indeed the case).
@@ -20,7 +20,7 @@ function model = vargplvmCreate(q, d, Y, options)
 %
 % SEEALSO : vargplvmOptions
 
-% SHEFFIELDML
+% VARGPLVM
 
 if size(Y, 2) ~= d
     error(['Input matrix Y does not have dimension ' num2str(d)]);

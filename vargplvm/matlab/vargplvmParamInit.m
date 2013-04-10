@@ -1,8 +1,8 @@
 function model = vargplvmParamInit(model,Y,X, options)
 
-% SHEFFIELDMLPARAMINIT Initialize the variational GPLVM from the data
+% VARGPLVMPARAMINIT Initialize the variational GPLVM from the data
 % COPYRIGHT: Michalis Titsias 2009-2011
-% SHEFFIELDML
+% VARGPLVM
   
   
 % if input dimension is equal to the latent dimension, 

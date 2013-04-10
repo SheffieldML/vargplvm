@@ -2,7 +2,7 @@ function vardist = vardistCreate(X, Q, type, constraint)
 
 % VARDISTCREATE description.
   
-% SHEFFIELDML 
+% VARGPLVM 
   
 %
 % creates the structure of the variational distirbution over the latent

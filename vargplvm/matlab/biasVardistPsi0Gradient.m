@@ -19,7 +19,7 @@ function [gKern, gVarmeans, gVarcovars] = biasVardistPsi0Gradient(biaskern, vard
 % COPYRIGHT : Michalis K. Titsias, 2009
 %
 
-% SHEFFIELDML
+% VARGPLVM
 
 gKern = covGrad*vardist.numData;
  

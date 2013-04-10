@@ -20,7 +20,7 @@ function [Psi2, Pnobias, Psi1] = linard2biasVardistPsi2Compute(linardKern, biasK
 % COPYRIGHT : Neil D. Lawrence, 2009
 %
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 Psi1 = linard2VardistPsi1Compute(linardKern, vardist, Z); 

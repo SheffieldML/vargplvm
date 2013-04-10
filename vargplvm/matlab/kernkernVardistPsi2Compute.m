@@ -2,7 +2,7 @@ function [Psi2, Pnovar, Psi1] = kernkernVardistPsi2Compute(kern1, kern2, vardist
 
 % KERNKERNVARDISTPSI2COMPUTE description.
 
-% SHEFFIELDML
+% VARGPLVM
 
 %
 

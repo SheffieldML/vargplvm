@@ -2,7 +2,7 @@ function [gKern, gVarmeans, gVarcovars, gInd] = rbfardVardistPsi2Gradient(rbfard
 
 % RBFARDVARDISTPSI2GRADIENT description.
   
-% SHEFFIELDML
+% VARGPLVM
   
 % variational means
 N = size(vardist.means,1);

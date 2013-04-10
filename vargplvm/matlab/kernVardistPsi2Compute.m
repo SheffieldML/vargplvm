@@ -2,7 +2,7 @@ function [Psi2 P] = kernVardistPsi2Compute(kern, vardist, Z)
 
 % KERNVARDISTPSI2COMPUTE description.  
 
-% SHEFFIELDML
+% VARGPLVM
 
 % compute first the "square" terms of Psi2 
 if ~strcmp(kern.type,'cmpnd')

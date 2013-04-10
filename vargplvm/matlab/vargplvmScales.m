@@ -1,7 +1,7 @@
 function ret = vargplvmScales(method, model, varargin)
 
-% SHEFFIELDMLSCALES A small wrapper to set and get ARD weights (scales) from a vargplvm model
-% SHEFFIELDML
+% VARGPLVMSCALES A small wrapper to set and get ARD weights (scales) from a vargplvm model
+% VARGPLVM
 
 if strcmp(method, 'get')
     if strcmp(model.kern.type, 'rbfardjit')

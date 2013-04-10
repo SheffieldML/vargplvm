@@ -17,7 +17,7 @@ function [gKern, gVarmeans, gVarcovars, gInd] = whiteVardistPsi2Gradient(whiteke
 % COPYRIGHT : Michalis K. Titsias, 2009
 %
 
-% SHEFFIELDML
+% VARGPLVM
   
   gKern = 0;
   gVarmeans = zeros(1,prod(size(vardist.means))); 

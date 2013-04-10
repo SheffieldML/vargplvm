@@ -16,7 +16,7 @@ function [Psi2, P] = whiteVardistPsi2Compute(whitekern, vardist, Z)
 % COPYRIGHT : Michalis K. Titsias, 2009
 %
 
-% SHEFFIELDML
+% VARGPLVM
 
 Psi2 = zeros(size(Z,1),size(Z,1)); 
 

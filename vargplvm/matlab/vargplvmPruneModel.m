@@ -1,5 +1,5 @@
 function mm = vargplvmPruneModel(model, onlyData)
-% SHEFFIELDMLPRUNEMODEL Prune a var-GPLVM model.
+% VARGPLVMPRUNEMODEL Prune a var-GPLVM model.
 % FORMAT
 % DESC prunes a VAR-GPLVM model by removing some fields which can later be
 % reconstructed based on what is being kept. Used when storing a model.
@@ -12,7 +12,7 @@ function mm = vargplvmPruneModel(model, onlyData)
 %
 % SEEALSO : vargplvmReduceModel, vargplvmRestorePrunedModel
 
-% SHEFFIELDML
+% VARGPLVM
 
 if exist('onlyData') && onlyData
     model.m = [];

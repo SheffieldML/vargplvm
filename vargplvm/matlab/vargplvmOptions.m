@@ -1,6 +1,6 @@
 function options = vargplvmOptions(varargin)
 
-% SHEFFIELDMLOPTIONS Return default options for VARGPLVM model.
+% VARGPLVMOPTIONS Return default options for VARGPLVM model.
 % FORMAT
 % DESC returns the default options in a structure for a VARGPLVM model.
 % ARG approx : approximation type, either 'ftc' (no approximation),
@@ -17,7 +17,7 @@ function options = vargplvmOptions(varargin)
 %
 % COPYRIGHT : Neil D. Lawrence, 2005, 2009
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 

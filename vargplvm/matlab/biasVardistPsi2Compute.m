@@ -16,7 +16,7 @@ function [Psi2 P] = biasVardistPsi2Compute(biaskern, vardist, Z)
 % COPYRIGHT : Michalis K. Titsias, 2009
 %
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 Psi2 = repmat(vardist.numData*(biaskern.variance^2),size(Z,1),size(Z,1)); 

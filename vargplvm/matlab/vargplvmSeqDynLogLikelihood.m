@@ -1,5 +1,5 @@
 function [ll, model] = vargplvmSeqDynLogLikelihood(model, vardistx, y)
-% SHEFFIELDMLSEQDYNLOGLIKELIHOOD Log-likelihood of a point for the GP-LVM.
+% VARGPLVMSEQDYNLOGLIKELIHOOD Log-likelihood of a point for the GP-LVM.
 % FORMAT
 % DESC returns the log likelihood of a latent point and an observed
 % data point for the posterior prediction of the GP-LVM model.
@@ -16,7 +16,7 @@ function [ll, model] = vargplvmSeqDynLogLikelihood(model, vardistx, y)
 %
 % COPYRIGHT : Michalis K. Titsias and Andreas Damianou, 2011
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 % !!!!!! this function can become faster with precomputations stored in the

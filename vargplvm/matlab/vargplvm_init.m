@@ -1,7 +1,7 @@
-% SHEFFIELDML_INIT Initialise the global options structure for a demo that runs the
+% VARGPLVM_INIT Initialise the global options structure for a demo that runs the
 % variational GP-LVM.
 % COPYRIGHT: Andreas C. Damianou, 2012
-% SHEFFIELDML
+% VARGPLVM
 
 % Initialise options. If the field name of 'defaults' already exists as a
 % variable, the globalOpt will take this value, otherwise the default one.

@@ -1,7 +1,7 @@
 function retainedScales = vargplvmRetainedScales(model, thresh)
 
-% SHEFFIELDMLRETAINEDSCALES A small wrapper that shows which scales are switched off after Bayesian optimisation with Bayesian GP-LVM
-% SHEFFIELDML
+% VARGPLVMRETAINEDSCALES A small wrapper that shows which scales are switched off after Bayesian optimisation with Bayesian GP-LVM
+% VARGPLVM
 
 if nargin < 2
     thresh = 0.005;

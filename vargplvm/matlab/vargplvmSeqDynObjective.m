@@ -1,6 +1,6 @@
 function f = vargplvmSeqDynObjective(x, model, y)
 
-% SHEFFIELDMLSEQDYNOBJECTIVE Wrapper function for objective of a group of points in latent space and the output locations..
+% VARGPLVMSEQDYNOBJECTIVE Wrapper function for objective of a group of points in latent space and the output locations..
 % FORMAT
 % DESC provides a wrapper function for the negative log probability
 % of a group of data points under the posterior distribution of the
@@ -16,7 +16,7 @@ function f = vargplvmSeqDynObjective(x, model, y)
 %
 % COPYRIGHT : Michalis K. Titsias and Neil D. Lawrence, 2011
 
-% SHEFFIELDML
+% VARGPLVM
 
 % % this is doing the expand 
 % x = reshape(x, model.N+size(y,1), model.dynamics.q*2);

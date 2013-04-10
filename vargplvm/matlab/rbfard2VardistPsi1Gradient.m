@@ -2,7 +2,7 @@ function [gKern, gVarmeans, gVarcovars, gInd] = rbfard2VardistPsi1Gradient(rbfar
 
 % RBFARD2VARDISTPSI1GRADIENT description.
   
-% SHEFFIELDML
+% VARGPLVM
   
 
 if nargin < 5

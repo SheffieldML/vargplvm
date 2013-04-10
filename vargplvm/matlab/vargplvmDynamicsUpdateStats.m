@@ -1,5 +1,5 @@
 function model = vargplvmDynamicsUpdateStats(model)
-% SHEFFIELDMLDYNAMICSUPDATESTATS wrapper function which according to the type
+% VARGPLVMDYNAMICSUPDATESTATS wrapper function which according to the type
 % of the model dynamics calls the appropriate function to perform the
 % precomputations needed for the dynamics model
 % DESC 
@@ -9,7 +9,7 @@ function model = vargplvmDynamicsUpdateStats(model)
 %
 % COPYRIGHT Andreas C. Damianou, Michalis Titsias, Neil Lawrence, 2010-2011
 %
-% SHEFFIELDML
+% VARGPLVM
 
 fhandle = str2func([model.dynamics.type 'UpdateStats']);
 model = fhandle(model);

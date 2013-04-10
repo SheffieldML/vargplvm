@@ -1,5 +1,5 @@
-% SHEFFIELDMLCREATETOYDATA Create a trivial dataset for testing var. GPLVM
-% SHEFFIELDML
+% VARGPLVMCREATETOYDATA Create a trivial dataset for testing var. GPLVM
+% VARGPLVM
 
 t = linspace(0,4*pi,100);
 % The original signal will be a cosine, a sine and a squared cosine.

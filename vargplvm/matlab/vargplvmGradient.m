@@ -1,6 +1,6 @@
 function g = vargplvmGradient(params, model)
 
-% SHEFFIELDMLGRADIENT Variational GP-LVM gradient wrapper.
+% VARGPLVMGRADIENT Variational GP-LVM gradient wrapper.
 % FORMAT
 % DESC is a wrapper function for the gradient of the negative log
 % likelihood of an variatioanl GP-LVM model with respect to the latent postions
@@ -19,7 +19,7 @@ function g = vargplvmGradient(params, model)
 %
 % COPYRIGHT : Neil D. Lawrence, 2006, 2005, 2010-2011
 
-% SHEFFIELDML
+% VARGPLVM
 
 model = modelExpandParam(model, params);
 

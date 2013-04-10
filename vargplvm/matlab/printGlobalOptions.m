@@ -1,7 +1,7 @@
 function printGlobalOptions(globalOpt)
 
 % PRINTGLOBALOPTIONS
-% SHEFFIELDML
+% VARGPLVM
 
 fprintf(1,'\n#----------------------------------------------------\n');
 fprintf(1,'# Dataset: %s\n',globalOpt.dataSetName);

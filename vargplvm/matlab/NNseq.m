@@ -2,7 +2,7 @@ function [NNpredBest, errors] = NNseq(Ytr, YtsOriginal, YtsMissing, windowSizes,
 
 % NNSEQ Sequential NN
 % COPYRIGHT: Andreas C. Damianou, 2012
-% SHEFFIELDML
+% VARGPLVM
 
 if nargin < 6 || isempty(replacePresent),   replacePresent = true;  end
 if nargin < 5 || isempty(startingPoint),    startingPoint = 1;      end

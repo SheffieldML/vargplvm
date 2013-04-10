@@ -16,7 +16,7 @@ function [K, P] = biasVardistPsi1Compute(biaskern, vardist, Z)
 % COPYRIGHT : Michalis K. Titsias, 2009
 %
 
-% SHEFFIELDML
+% VARGPLVM
 
 K = repmat(biaskern.variance,size(vardist.means,1),size(Z,1));
 

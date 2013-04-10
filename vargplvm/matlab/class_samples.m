@@ -2,7 +2,7 @@ function [idcs, nSmpls] = class_samples( lbls, nActive )
 
 % CLASS_SAMPLES
 % COPYRIGHT: Patrick Sauer, 2012
-% SHEFFIELDML
+% VARGPLVM
 
     if size(lbls,1) ~= 1
         lbls = lbls';

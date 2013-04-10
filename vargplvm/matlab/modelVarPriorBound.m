@@ -20,7 +20,7 @@ function ll = modelVarPriorBound(model)
 % COPYRIGHT : Andreas C. Damianou, 2010-2011
 
 
-% SHEFFIELDML
+% VARGPLVM
 
 fhandle = str2func([model.dynamics.type 'VarPriorBound']);
 ll = fhandle(model.dynamics);

@@ -2,7 +2,7 @@ function [gKern, gVarmeans, gVarcovars, gInd] = rbfard2VardistPsi2GradientNEW(rb
 
 % RBFARD2VARDISTPSI2GRADIENTNEW description.
   
-% SHEFFIELDML
+% VARGPLVM
 
 try
     pool_open = matlabpool('size')>0;

@@ -1,6 +1,6 @@
 function g = vargplvmSeqDynGradient(x, model, y)
 
-% SHEFFIELDMLSEQDYNGRADIENT Wrapper function for gradient of a single point.
+% VARGPLVMSEQDYNGRADIENT Wrapper function for gradient of a single point.
 % FORMAT
 % DESC is a wrapper function for the gradient of the log likelihood
 % with respect to a point in the latent space. The GP-LVM
@@ -16,7 +16,7 @@ function g = vargplvmSeqDynGradient(x, model, y)
 %
 % COPYRIGHT Michalis K. Titsias and Neil D. Lawrence, 2009
 
-% SHEFFIELDML
+% VARGPLVM
 
 % if isfield(model, 'dynamics') && ~isempty(model.dynamics)
 %    % this is doing the expand 

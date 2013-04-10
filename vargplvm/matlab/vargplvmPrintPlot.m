@@ -1,9 +1,9 @@
 function h = vargplvmPrintPlot(model, lbls, capName, experimentNo, writeFile, skipPng)
 
-% SHEFFIELDMLPRINTPLOT Print latent space for learnt model.
+% VARGPLVMPRINTPLOT Print latent space for learnt model.
 %
 % h = vargplvmPrintPlot(model, lbls, capName, experimentNo)
-% SHEFFIELDML
+% VARGPLVM
 
 if nargin < 6
     skipPng = false;

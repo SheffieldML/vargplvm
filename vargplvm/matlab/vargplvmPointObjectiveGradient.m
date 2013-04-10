@@ -1,6 +1,6 @@
 function [f, g] = vargplvmPointObjectiveGradient(x, model, y)
 
-% SHEFFIELDMLPOINTOBJECTIVEGRADIENT Wrapper function for objective and gradient of a single point in latent space and the output location..
+% VARGPLVMPOINTOBJECTIVEGRADIENT Wrapper function for objective and gradient of a single point in latent space and the output location..
 % FORMAT
 % DESC provides a wrapper function for the negative log probability
 % of a given data point under the posterior distribution of the
@@ -21,7 +21,7 @@ function [f, g] = vargplvmPointObjectiveGradient(x, model, y)
 %
 % COPYRIGHT : Michalis K. Titsias and Neil D. Lawrence, 2009
 
-% SHEFFIELDML
+% VARGPLVM
 
 % Check how the optimiser has given the parameters
 if size(xvec, 1) > size(xvec, 2)

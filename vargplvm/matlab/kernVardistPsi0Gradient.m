@@ -1,7 +1,7 @@
 function [gKern, gVarmeans, gVarcovars] = kernVardistPsi0Gradient(kern, vardist, covGrad)
 
 % KERNVARDISTPSI0GRADIENT description.  
-% SHEFFIELDML
+% VARGPLVM
   
     if ~strcmp(kern.type,'cmpnd')
        % 

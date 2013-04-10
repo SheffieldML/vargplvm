@@ -1,9 +1,9 @@
 function model = vargplvmModelInit(model, globalOpt)
 
-% SHEFFIELDMLMODELINIT Initialise a vargplvm model given global demo options
+% VARGPLVMMODELINIT Initialise a vargplvm model given global demo options
 % COPYRIGHT: Andreas C. Damianou, 2012
 % SEEALSO: vargplvmCreate
-% SHEFFIELDML
+% VARGPLVM
 
 if globalOpt.DgtN
     model.mOrig = model.m;

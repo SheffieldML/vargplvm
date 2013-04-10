@@ -1,9 +1,9 @@
 function [X, sigma2, W, model, modelInitVardist] = vargplvmEmbed2(Y, dims, varargin)
-% SHEFFIELDMLEMBED2 Embed given data Y into a lower dimensional manifold with Bayesian GP-LVM
+% VARGPLVMEMBED2 Embed given data Y into a lower dimensional manifold with Bayesian GP-LVM
 %
 % COPYRIGHT: Andreas C. Damianou, 2012
 %
-% SHEFFIELDML
+% VARGPLVM
 
 
 % [X, sigma2, W, model, modelInitVardist] = vargplvmEmbed(Y, dims, varargin)

@@ -2,7 +2,7 @@ function [Psi2, Pnobias, Psi1] = rbfard2biasVardistPsi2Compute(rbfardKern, biasK
 
 % RBFARD2BIASVARDISTPSI2COMPUTE description.
   
-% SHEFFIELDML
+% VARGPLVM
 
 Psi1 = rbfard2VardistPsi1Compute(rbfardKern, vardist, Z); 
 

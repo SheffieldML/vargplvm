@@ -1,5 +1,5 @@
 function [ll, model] = vargplvmPointLogLikelihood(model, vardistx, y)
-% SHEFFIELDMLPOINTLOGLIKELIHOOD Log-likelihood of one or more points for the GP-LVM.
+% VARGPLVMPOINTLOGLIKELIHOOD Log-likelihood of one or more points for the GP-LVM.
 % FORMAT
 % DESC returns the log likelihood of some latent points and the corresponding
 % (possibly partly) observed data point for the posterior prediction of the GP-LVM model.
@@ -18,7 +18,7 @@ function [ll, model] = vargplvmPointLogLikelihood(model, vardistx, y)
 %
 % COPYRIGHT : Michalis K. Titsias and Neil D. Lawrence, 2009, 2011
 % COPYRIGHT : Andreas C. Damianou, 2011
-% SHEFFIELDML
+% VARGPLVM
 
 
 % !!!!!! this function can become faster with precomputations stored in the

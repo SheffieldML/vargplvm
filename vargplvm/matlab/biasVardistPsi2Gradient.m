@@ -17,7 +17,7 @@ function [gKern, gVarmeans, gVarcovars, gInd] = biasVardistPsi2Gradient(biaskern
 % COPYRIGHT : Michalis K. Titsias, 2009
 %
 
-% SHEFFIELDML
+% VARGPLVM
 
 gKern = (2*vardist.numData*biaskern.variance)*sum(sum(ones(size(Z,1),size(Z,1)).*covGrad)); 
 

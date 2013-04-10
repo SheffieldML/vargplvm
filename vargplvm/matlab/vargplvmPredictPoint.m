@@ -1,6 +1,6 @@
 function [X, varX] = vargplvmPredictPoint(dynModel, t_star)
 
-% SHEFFIELDMLPREDICTPOINT Predict the postions of a number of latent points.
+% VARGPLVMPREDICTPOINT Predict the postions of a number of latent points.
 % FORMAT
 % DESC Given a trained dynamics model dynModel along with a vector of (test) time
 % points t_star, this function predicts the latent points corresponding to
@@ -23,7 +23,7 @@ function [X, varX] = vargplvmPredictPoint(dynModel, t_star)
 %
 % SEEALSO : vargplvmOptimisePoint
 
-% SHEFFIELDML
+% VARGPLVM
 
 N_star = size(t_star,1); % number of test points
 K_ss = kernDiagCompute(dynModel.kern, t_star);

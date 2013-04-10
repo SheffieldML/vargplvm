@@ -2,7 +2,7 @@ function [gKern, gVarmeans, gVarcovars, gInd] = rbfardjitVardistPsi1Gradient(rbf
 
 % RBFARDJITVARDISTPSI1GRADIENT description.
   
-% SHEFFIELDML
+% VARGPLVM
   
 if nargin < 5
     learnInducing = 1;

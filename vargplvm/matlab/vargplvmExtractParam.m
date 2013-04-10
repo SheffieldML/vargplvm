@@ -1,6 +1,6 @@
 function [params, names] = vargplvmExtractParam(model)
 
-% SHEFFIELDMLEXTRACTPARAM Extract a parameter vector from a variational GP-LVM model.
+% VARGPLVMEXTRACTPARAM Extract a parameter vector from a variational GP-LVM model.
 % FORMAT
 % DESC extracts a parameter vector from a given VARGPLVM structure.
 % ARG model : the model from which parameters are to be extracted.
@@ -18,7 +18,7 @@ function [params, names] = vargplvmExtractParam(model)
 %
 % SEEALSO : vargplvmCreate, vargplvmExpandParam, modelExtractParam
 
-% SHEFFIELDML
+% VARGPLVM
 
 %%% Parameters must be returned as a vector in the following order (left to right) 
 % - parameter{size} -

@@ -20,6 +20,6 @@ function [K, outKern, sumKern, Kgvar] = rbfardjitVardistPsi2Compute(rbfardKern, 
 % COPYRIGHT : Neil D. Lawrence, 2009
 %
 
-% SHEFFIELDML
+% VARGPLVM
 
 [K, outKern, sumKern, Kgvar] = rbfard2VardistPsi2Compute(rbfardKern, vardist, Z);

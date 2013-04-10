@@ -2,7 +2,7 @@ function [gKern, gVarmeans, gVarcovars] = linard2VardistPsi0Gradient(linard2Kern
 
 % LINARD2VARDISTPSI0GRADIENT description.
 
-% SHEFFIELDML
+% VARGPLVM
   
 A = linard2Kern.inputScales;
 gKern = covGrad*sum((vardist.means.*vardist.means) + vardist.covars,1); 

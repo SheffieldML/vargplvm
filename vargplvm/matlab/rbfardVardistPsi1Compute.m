@@ -17,7 +17,7 @@ function [K, Knovar, argExp] = rbfardVardistPsi1Compute(rbfardKern, vardist, Z)
 % COPYRIGHT : Michalis K. Titsias, 2009
 %
 
-% SHEFFIELDML
+% VARGPLVM
 
 % variational means
 N  = size(vardist.means,1);

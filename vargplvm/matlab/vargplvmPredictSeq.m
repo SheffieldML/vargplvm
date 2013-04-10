@@ -1,8 +1,8 @@
 function [X, varX] = vargplvmPredictSeq(dynModel, t_star, seqInit)
-% SHEFFIELDMLPREDICTSEQ Predict the postions of a number of latent points.
+% VARGPLVMPREDICTSEQ Predict the postions of a number of latent points.
 % This function is not correct / complete and is not currently used.
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 seq = dynModel.seq;

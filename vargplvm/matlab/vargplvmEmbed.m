@@ -1,9 +1,9 @@
 function [X, sigma2, W, model, modelInitVardist] = vargplvmEmbed(Y, dims, varargin)
-% SHEFFIELDMLEMBED Embed given data Y into a lower dimensional structure with Bayesian GPLVM
+% VARGPLVMEMBED Embed given data Y into a lower dimensional structure with Bayesian GPLVM
 % 
 % COPYRIGHT: Andreas C. Damianou, 2012
 % 
-% SHEFFIELDML
+% VARGPLVM
 
 % [X, sigma2, W, model, modelInitVardist] = vargplvmEmbed(Y, dims, varargin)
 %

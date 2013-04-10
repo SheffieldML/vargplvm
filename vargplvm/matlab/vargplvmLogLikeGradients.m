@@ -1,6 +1,6 @@
 function g = vargplvmLogLikeGradients(model)
 
-% SHEFFIELDMLLOGLIKEGRADIENTS Compute the gradients for the variational GPLVM.
+% VARGPLVMLOGLIKEGRADIENTS Compute the gradients for the variational GPLVM.
 % FORMAT
 % DESC returns the gradients of the log likelihood with respect to the
 % parameters of the GP-LVM model and with respect to the latent
@@ -30,7 +30,7 @@ function g = vargplvmLogLikeGradients(model)
 
 % SEEALSO : vargplvmLogLikelihood, vargplvmCreate, modelLogLikeGradients
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 % The gradient of the kernel of the dynamics (e.g. temporal prior)

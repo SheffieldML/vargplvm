@@ -2,7 +2,7 @@ function [Psi2, Pnovar, Psi1] = rbfard2linard2VardistPsi2Compute(rbfardKern, lin
 
 % RBFARD2LINARD2VARDISTPSI2COMPUTE description
 
-% SHEFFIELDML
+% VARGPLVM
 
 % variational means
 N  = size(vardist.means,1);

@@ -1,5 +1,5 @@
 function [vardistx, model] = vargplvmPartExpand(model, x, update)
-% SHEFFIELDMLPARTEXPAND
+% VARGPLVMPARTEXPAND
 % This function is used when the model is using jointly the test and
 % training data (possibly with missing values from the first) to optimise
 % and in that case only part of the parameters are being optimised. This
@@ -18,7 +18,7 @@ function [vardistx, model] = vargplvmPartExpand(model, x, update)
 % [(N*Q*2)+(Nstar*Q*2)  |theta_t| Q*k]             -> x
 %
 % COPYRIGHT: Andreas C. Damianou, Michalis K. Titsias 2011
-% SHEFFIELDML
+% VARGPLVM
 
 % The model params before optimisation
 paramsOrig = vargplvmExtractParam(model);

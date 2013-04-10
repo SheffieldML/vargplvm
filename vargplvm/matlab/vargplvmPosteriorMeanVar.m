@@ -1,6 +1,6 @@
 function [mu, varsigma] = vargplvmPosteriorMeanVar(model, X, varX)
 
-% SHEFFIELDMLPOSTERIORMEANVAR Mean and variances of the posterior at points given by X.
+% VARGPLVMPOSTERIORMEANVAR Mean and variances of the posterior at points given by X.
 % FORMAT
 % DESC returns the posterior mean and variance for a given set of
 % points.
@@ -14,7 +14,7 @@ function [mu, varsigma] = vargplvmPosteriorMeanVar(model, X, varX)
 %
 % COPYRIGHT : Michalis K. Titsias and Neil D. Lawrence, 2009, 2011
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 % do prediction by replacing the variational distribution with a delta function  

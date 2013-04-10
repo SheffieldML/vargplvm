@@ -25,7 +25,7 @@ function [params, names] = vargpTimeDynamicsExtractParam(model)
 
 
 %	Based on GPTIMEDYNAMICSEXTRACTPARAM
-% SHEFFIELDML
+% VARGPLVM
 
 if nargout > 1
   returnNames = true; % Also return parameter names in an array

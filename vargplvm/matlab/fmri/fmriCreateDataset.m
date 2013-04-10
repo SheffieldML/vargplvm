@@ -18,7 +18,7 @@
 %
 % SEEALSO : demFmriVargplvm1.m
 
-% SHEFFIELDML
+% VARGPLVM
 
 %---- Constants----
 % maskPath='lc1ms_deskulled.img'

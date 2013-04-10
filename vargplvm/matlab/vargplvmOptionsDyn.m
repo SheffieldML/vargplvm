@@ -1,5 +1,5 @@
 function optionsDyn = vargplvmOptionsDyn(optionsDyn, X)
-% SHEFFIELDMLOPTIONSDYN Fill in an options structure with default parameters
+% VARGPLVMOPTIONSDYN Fill in an options structure with default parameters
 % FORMAT
 % DESC takes an VARGPLVM options structure amends it with default values
 % wherever the field is empty.
@@ -13,7 +13,7 @@ function optionsDyn = vargplvmOptionsDyn(optionsDyn, X)
 % 
 % SEEALSO : vargplvmInitDynamics, vargplvmAddDynamics
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 if isfield(optionsDyn, 'type') && ~isempty(optionsDyn.type)

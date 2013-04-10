@@ -1,6 +1,6 @@
 function ll = vargplvmLogLikelihood(model)
 
-% SHEFFIELDMLLOGLIKELIHOOD Log-likelihood for a variational GP-LVM.
+% VARGPLVMLOGLIKELIHOOD Log-likelihood for a variational GP-LVM.
 % FORMAT
 % DESC returns the log likelihood for a given GP-LVM model.
 % ARG model : the model for which the log likelihood is to be
@@ -13,7 +13,7 @@ function ll = vargplvmLogLikelihood(model)
 % COPYRIGHT : Andreas Damianou, 2010-2011
 
 
-% SHEFFIELDML
+% VARGPLVM
 
 % Note: The 'onlyKL' and 'onlyLikelihood' fields can be set by external
 % wrappers and cause the function to only calculate the likelihood or the

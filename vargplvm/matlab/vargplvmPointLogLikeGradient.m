@@ -1,5 +1,5 @@
 function [g, model] = vargplvmPointLogLikeGradient(model, vardistx, y)
-% SHEFFIELDMLPOINTLOGLIKEGRADIENT Log-likelihood gradient for of some points of the GP-LVM.
+% VARGPLVMPOINTLOGLIKEGRADIENT Log-likelihood gradient for of some points of the GP-LVM.
 % FORMAT
 % DESC returns the gradient of the log likelihood with respect to
 % the latent positions, where the log likelihood is conditioned on
@@ -17,7 +17,7 @@ function [g, model] = vargplvmPointLogLikeGradient(model, vardistx, y)
 %
 % COPYRIGHT : Michalis K. Titsias and Neil D. Lawrence, 2009, 2011
 % COPYRIGHT : Andreas C. Damianou, 2011
-% SHEFFIELDML
+% VARGPLVM
 
 
 if isfield(model, 'dynamics') && ~isempty(model.dynamics)

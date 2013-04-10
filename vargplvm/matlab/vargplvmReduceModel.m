@@ -1,6 +1,6 @@
 function [mm, order] = vargplvmReduceModel(model, P, dims)
 
-% SHEFFIELDMLREDUCEMODEL prunes out dimensions of the model.
+% VARGPLVMREDUCEMODEL prunes out dimensions of the model.
 % FORMAT
 % DESC order the latent dimensions acorrding to the inputScales and
 % reduces the model to have smaller number of latent dimensions.
@@ -16,7 +16,7 @@ function [mm, order] = vargplvmReduceModel(model, P, dims)
 % 
 % SEEALSO : vargplvmCreate  
 
-% SHEFFIELDML
+% VARGPLVM
 
 if nargin == 3
     P = length(dims);

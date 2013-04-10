@@ -19,7 +19,7 @@ function [gKern, gVarmeans, gVarcovars] = whiteVardistPsi0Gradient(whitekern, va
 % COPYRIGHT : Michalis K. Titsias, 2009
 %
 
-% SHEFFIELDML
+% VARGPLVM
 
   
 % the "white" kernel only affects the K_uu matrix (jitter inducing variables)"

@@ -1,5 +1,5 @@
 function [muX, varX, model]  = vargplvmDynamicsUpdateModelTestVar(model, x, varx, y)        
-% SHEFFIELDMLDYNAMICSUPDATEMODELTESTVAR return the original variational means and
+% VARGPLVMDYNAMICSUPDATEMODELTESTVAR return the original variational means and
 % variances for the test data and update the model to be prepared for
 % prediction
 % DESC in the dynamical vargplvm the original variational parameters are
@@ -24,7 +24,7 @@ function [muX, varX, model]  = vargplvmDynamicsUpdateModelTestVar(model, x, varx
 % COPYRIGHT : Michalis K. Titsias, 2009-2011
 % COPYRIGHT : Neil D. Lawrence, 2009-2011
 %
-% SHEFFIELDML
+% VARGPLVM
   
 Nstar = size(x,1);    
 N = model.N;

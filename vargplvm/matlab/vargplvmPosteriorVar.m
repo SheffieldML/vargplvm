@@ -1,6 +1,6 @@
 function varsigma = vargplvmPosteriorVar(model, X)
 
-% SHEFFIELDMLPOSTERIORVAR variances of the posterior at points given by X.
+% VARGPLVMPOSTERIORVAR variances of the posterior at points given by X.
 % FORMAT
 % DESC returns the posterior mean and variance for a given set of
 % points.
@@ -14,7 +14,7 @@ function varsigma = vargplvmPosteriorVar(model, X)
 %
 % COPYRIGHT : Neil D. Lawrence, 2005, 2006
 
-% SHEFFIELDML
+% VARGPLVM
  
 
 %% ORIGINAL

@@ -1,8 +1,8 @@
 function logProb = vargplvmProbabilityCompute(model, y, display, iters)
 
-% SHEFFIELDMLPROBABILITYCOMPUTE description
+% VARGPLVMPROBABILITYCOMPUTE description
   
-% SHEFFIELDML
+% VARGPLVM
   
 % Takes an input a trained vargplvm and a test data point (with possibly missing values)
 % Computes the probability density in the test data point 

@@ -42,7 +42,7 @@ function [gVarmeans gVarcovs gDynKern] = modelPriorReparamGrads(dynModel, gVarme
 % COPYRIGHT : Neil D. Lawrence, 2010-2011
 % COPYRIGHT : Andreas C. Damianou, 2010-2011
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 fhandle = str2func([dynModel.type 'PriorReparamGrads']);

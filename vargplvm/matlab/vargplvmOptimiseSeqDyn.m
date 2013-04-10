@@ -1,6 +1,6 @@
 function [X varX] = vargplvmOptimiseSeqDyn(model, vardistx, y, display, iters);
 
-% SHEFFIELDMLOPTIMISESEQDYN Optimise the positions of a group of latent
+% VARGPLVMOPTIMISESEQDYN Optimise the positions of a group of latent
 % point which correspond to a independent sequence.
 % FORMAT
 % DESC optimises the locations of a group of points in latent space
@@ -20,7 +20,7 @@ function [X varX] = vargplvmOptimiseSeqDyn(model, vardistx, y, display, iters);
 % COPYRIGHT :  Michalis K. Titsias 2011
 % SEEALSO : vargplvmCreate, vargplvmOptimiseSequence, vargplvmPointObjective, vargplvmPointGradient
 
-% SHEFFIELDML
+% VARGPLVM
 
 if nargin < 5
   iters = 2000;

@@ -17,7 +17,7 @@ function vardist = vardistExpandParam(vardist, params)
 % 
 % SEEALSO : vardistCreate, vardistExtractParam, modelExpandParam
 
-% SHEFFIELDML
+% VARGPLVM
 
 if ~isempty(vardist.transforms)
   for i = 1:length(vardist.transforms)

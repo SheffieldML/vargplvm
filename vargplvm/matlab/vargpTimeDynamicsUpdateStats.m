@@ -27,7 +27,7 @@ function model = vargpTimeDynamicsUpdateStats(model)
 % 
 
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 

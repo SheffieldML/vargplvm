@@ -3,7 +3,7 @@ function model = addDefaultVargpTimeDynamics(model, timeStamps, seq)
 % Depricated. Instead, use vargplvmOptionsDyn. e.g., see
 % demStickVargplvmDynMissing1.m
 % This file is here for back-compatibility with some older demos.
-% SHEFFIELDML
+% VARGPLVM
    
 fprintf(1,'# Adding dynamics to the model...\n');
 

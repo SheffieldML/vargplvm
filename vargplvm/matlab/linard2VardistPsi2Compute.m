@@ -2,7 +2,7 @@ function [Psi2, P] = linard2VardistPsi2Compute(linard2kern, vardist, Z)
 
 % LINARD2VARDISTPSI2COMPUTE description.
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 %Psi1 = linard2KernCompute(linard2kern, vardist.means, Z);

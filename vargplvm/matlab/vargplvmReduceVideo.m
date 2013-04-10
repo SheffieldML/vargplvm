@@ -1,6 +1,6 @@
 function [Z, newHeight, newWidth] = vargplvmReduceVideo(Yall, h, w, factor1,factor2)
 
-% SHEFFIELDMLREDUCEVIDEO Receives a video and reduces its resolution by factor1 (lines) and factor2).
+% VARGPLVMREDUCEVIDEO Receives a video and reduces its resolution by factor1 (lines) and factor2).
 % DESC Receives a video and reduces its resolution by factor1 (lines) and factor2). The video
 % is in a 2-D matrix form.
 % FORMAT
@@ -18,7 +18,7 @@ function [Z, newHeight, newWidth] = vargplvmReduceVideo(Yall, h, w, factor1,fact
 %
 % COPYRIGHT : Andreas Damianou, 2011
 % SEEALSO: vargplvmReduceVidModel.m
-% SHEFFIELDML
+% VARGPLVM
   
 if nargin == 3
     factor1 = 2;

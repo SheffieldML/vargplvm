@@ -1,5 +1,5 @@
 function model = vargplvmUpdateStats(model, X_u)
-% SHEFFIELDMLUPDATESTATS Update stats for VARGPLVM model.
+% VARGPLVMUPDATESTATS Update stats for VARGPLVM model.
 %
 % COPYRIGHT : Michalis K. Titsias, 2009-2011
 % COPYRIGHT : Neil D. Lawrence, 2009-2011
@@ -7,7 +7,7 @@ function model = vargplvmUpdateStats(model, X_u)
 % 
 % SEEALSO : vargplvmOptimise, vargplvmExpandParam
 
-% SHEFFIELDML
+% VARGPLVM
   
 jitter = 1e-6;
 %model.jitter = 1e-6;

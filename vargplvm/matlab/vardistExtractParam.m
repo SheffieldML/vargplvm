@@ -16,7 +16,7 @@ function [params, names] = vardistExtractParam(vardist)
 %
 % SEEALSO : vardistCreate, vardistExpandParam, modelExtractParam
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 

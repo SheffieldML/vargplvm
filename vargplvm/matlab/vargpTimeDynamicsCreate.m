@@ -34,7 +34,7 @@ function model = vargpTimeDynamicsCreate(q, d, latentVals, options, varargin)
 
 
 %	Based on GPTIMEDYNAMICSCREATE
-% SHEFFIELDML
+% VARGPLVM
 
 % Varargin may contain t, diff, learn, seq).
 if nargin>4

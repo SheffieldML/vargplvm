@@ -2,7 +2,7 @@ function [errStruct] = vargplvmTaylorAngleErrors(model, Y, Ytest, startInd, orig
     missingInd, name, expNo)
 
 
-% SHEFFIELDMLTAYLORANGLEERRORS Helper function for computing angle errors for CMU 35 data using
+% VARGPLVMTAYLORANGLEERRORS Helper function for computing angle errors for CMU 35 data using
 %	GPLVM with dynamics.
 %
 %	Description:
@@ -10,7 +10,7 @@ function [errStruct] = vargplvmTaylorAngleErrors(model, Y, Ytest, startInd, orig
 %                                              missingInd, name, expNo);
 % 	Based on fgplvmTaylorAngleErrors.m for FGPLVM.
 % COPYRIGHT: Neil Lawrence, Andreas Damianou, Michalis Titsias 2010-2011
-% SHEFFIELDML
+% VARGPLVM
 
 %%%NEW
 Ygplvm=Y;

@@ -1,6 +1,6 @@
 function [Y, lbls, Ytest, lblstest] = vargplvmLoadData(dataset, local, seedVal, field)
 
-% SHEFFIELDMLLOADDATA Load a latent variable model dataset from a local folder
+% VARGPLVMLOADDATA Load a latent variable model dataset from a local folder
 % or from the global repository. This function tries to load the file from
 % the following directories (in that order): the local directory where
 % the small datasets are kept, the local directory where the large files
@@ -30,7 +30,7 @@ function [Y, lbls, Ytest, lblstest] = vargplvmLoadData(dataset, local, seedVal, 
 % SEEALSO : lvmLoadData
 %
 
-% SHEFFIELDML
+% VARGPLVM
 
 if nargin > 1 && ~isempty(local)
     searchLocally = local;

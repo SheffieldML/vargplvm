@@ -2,7 +2,7 @@ function [gKern, gVarmeans, gVarcovars] = rbfardjitVardistPsi0Gradient(rbfardjit
 
 % RBFARDJITVARDISTPSI0GRADIENT Description
   
-% SHEFFIELDML
+% VARGPLVM
 
 [gKern, gVarmeans, gVarcovars] = rbfard2VardistPsi0Gradient(rbfardjitKern, vardist, covGrad);
 

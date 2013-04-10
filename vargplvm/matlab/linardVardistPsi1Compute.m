@@ -2,7 +2,7 @@ function [K, Knovar, argExp] = linardVardistPsi1Compute(linardkern, vardist, Z)
 
 % LINARDVARDISTPSI1COMPUTE description.
 
-% SHEFFIELDML
+% VARGPLVM
   
 % variational means
 N  = size(vardist.means,1);

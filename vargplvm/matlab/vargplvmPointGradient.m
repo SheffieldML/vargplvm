@@ -1,5 +1,5 @@
 function g = vargplvmPointGradient(x, model, y)
-% SHEFFIELDMLPOINTGRADIENT Wrapper function for gradient of a single point.
+% VARGPLVMPOINTGRADIENT Wrapper function for gradient of a single point.
 % FORMAT
 % DESC is a wrapper function for the gradient of the log likelihood
 % with respect to a point in the latent space. The GP-LVM
@@ -16,7 +16,7 @@ function g = vargplvmPointGradient(x, model, y)
 % COPYRIGHT Michalis K. Titsias and Neil D. Lawrence, 2009, 2011
 % COPYRIGHT Andreas C. Damianou, 2011
 
-% SHEFFIELDML
+% VARGPLVM
 
 if isfield(model, 'dynamics') && ~isempty(model.dynamics)
     if isfield(model.dynamics, 'reoptimise') && model.dynamics.reoptimise  %%% RE-OPT-CODE-NEW

@@ -2,7 +2,7 @@ function Psi0 = kernVardistPsi0Compute(kern, vardist)
 
 % KERNVARDISTPSI0COMPUTE description.  
 
-% SHEFFIELDML
+% VARGPLVM
 
 
 if ~strcmp(kern.type,'cmpnd')

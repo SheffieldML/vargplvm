@@ -20,7 +20,7 @@ function [K, outKern, sumKern, Kgvar] = rbfard2VardistPsi2Compute(rbfardKern, va
 % COPYRIGHT : Neil D. Lawrence, 2009
 %
 
-% SHEFFIELDML
+% VARGPLVM
 
 try
     pool_open = matlabpool('size')>0;

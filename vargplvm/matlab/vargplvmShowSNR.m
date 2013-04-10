@@ -1,7 +1,7 @@
 function SNR = vargplvmShowSNR(model, displ)
 
-% SHEFFIELDMLSHOWSNR A simple wrapper to display the Signal to Noise Ratio of an optimised varglpvm model.
-% SHEFFIELDML
+% VARGPLVMSHOWSNR A simple wrapper to display the Signal to Noise Ratio of an optimised varglpvm model.
+% VARGPLVM
 
 if nargin < 2
     displ = true;
