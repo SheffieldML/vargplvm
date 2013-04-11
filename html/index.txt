@@ -1,155 +1,309 @@
+<!--#include virtual="../software/header.shtml" -->
+
+<!--#include virtual="../software/style.html" -->
+
 <head>
-
 <title>Bayesian GP-LVM Model - MATLAB Software</title>
-
 </head>
-
-
 
 <body><div class="section">
 
-
-
 <h1>Bayesian GP-LVM model</h1>
 
-
-
 <p>This page describes examples of how to use the variational approximation to the Bayesian GP-LVM model.
+Two important extensions also included, is the Variational Gaussian Process Dynamical Systems (VGPDS) and
+the Manifold Relevance Determination (MRD) methods.
 
+    <p>The VARGPLVM software can be downloaded
+    <a href="http://www.cs.man.ac.uk/neill-bin/software/downloadForm.cgi?toolbox=vargplvm">here</a>.
+    <h2>Release Information</h2>
+    <p><b>Current release is 0.3</b>.
+    <p>The current release includes the Manifold Relevance Determination (MRD) method (shared variational GP-LVM)
+and various utilities for easier initialisation and demo configuration, as well as better documentation.
 
-RELEASEINFORMATION
+    <p>As well as downloading the VARGPLVM software you need to obtain the GPmat toolbox
+	<a href="http://staffwww.dcs.sheffield.ac.uk/people/N.Lawrence/gpmat/">GPmat</a> toolbox.
+<!--
+    <b>These can be downloaded using the <i>same</i> password you get from registering for the  VARGPLVM software.</b>
+    <table>
+    <tr>
+    <td width="65%"><b>Toolbox</b></td>
+    <td width="35%"><b>Version</b></td>
+    </tr><tr><td><a href="http://www.cs.man.ac.uk/~neill/netlab/downloadFiles/vrs3p3">NETLAB</a></td><td> 3.3</td></tr>
+<tr><td><a href="http://www.cs.man.ac.uk/~neill/prior/downloadFiles/vrs0p22">PRIOR</a></td><td> 0.22</td></tr>
+<tr><td><a href="http://www.cs.man.ac.uk/~neill/optimi/downloadFiles/vrs0p132">OPTIMI</a></td><td> 0.132</td></tr>
+<tr><td><a href="http://www.cs.man.ac.uk/~neill/datasets/downloadFiles/vrs0p1371">DATASETS</a></td><td> 0.1371</td></tr>
+<tr><td><a href="http://www.cs.man.ac.uk/~neill/mltools/downloadFiles/vrs0p138">MLTOOLS</a></td><td> 0.138</td></tr>
+<tr><td><a href="http://www.cs.man.ac.uk/~neill/kern/downloadFiles/vrs0p227">KERN</a></td><td> 0.227</td></tr>
+<tr><td><a href="http://www.cs.man.ac.uk/~neill/ndlutil/downloadFiles/vrs0p162">NDLUTIL</a></td><td> 0.162</td></tr>
+<tr><td><a href="http://www.cs.man.ac.uk/~neill/mocap/downloadFiles/vrs0p136">MOCAP</a></td><td> 0.136</td></tr>
+<tr><td><a href="http://www.cs.man.ac.uk/~neill/gp/downloadFiles/vrs0p137">GP</a></td><td> 0.137</td></tr>
+<tr><td><a href="http://www.cs.man.ac.uk/~neill/noise/downloadFiles/vrs0p141">NOISE</a></td><td> 0.141</td></tr>
+</table>
+-->
 
-The released software now includes dynamical models.
+<h4>Version 0.2</h4>
+<p>This release includes dynamical models (VGPDS implementation).
 
 <h4>Version 0.14</h4>
-
 <p>This release includes improved numerical stability on the gradient and bound computations which finds better solutions under the optimizer. Derived and implemented by Andreas Damianou and Michalis Titsias.
 
 
-
 <h4>Version 0.1</h4>
-
-
-
 <p>This release is for the AISTATS 2010 submission.
 
 
 
 
 
-<h2>Examples</h2>
+
+
+
+
+
+
+<h2>Bayesian GP-LVM examples</h2>
 
 
 
 <h3>Oil Data</h3>
-
-
-
-<p>The 'oil data' is commonly used as a bench mark for visualisation algorithms. For more details on the data see <a href="http://www.ncrg.aston.ac.uk/GTM/3PhaseData.html">this page</a>. In all of the following examples 50 inducing points were used.
-
+<p>The 'oil data' is commonly used as a bench mark for visualisation algorithms. 
+For more details on the data see <a href="http://www.ncrg.aston.ac.uk/GTM/3PhaseData.html">this page</a>. 
+In all of the following examples 50 inducing points were used.
 
 
 <h4>Standard dataset</h4>
-
-The script <code>demOilVargplvm1.m</code> runs the Bayesian GP-LVM Model on this dataset, giving the results shown on the left of the figure that follows. The visualization was achieved by keeping the most dominant latent dimensions (2 and 3) which have the largest inverse lengthscale value. Dimension 2 is plotted on the <i>y</i>-axis and 3 and on the <i>x</i>-axis. The script <code>demOilVargplvm2.m</code> is similar but there are missing outputs from test points; the model attempts to reconstruct these missing outputs. The result is shown on the right of the figure.
-
-
-
+The script <code>demOilVargplvm1.m</code> runs the Bayesian GP-LVM Model on this dataset, giving the results
+ shown on the left of the figure that follows. The visualization was achieved by keeping the most dominant
+ latent dimensions (2 and 3) which have the largest inverse lengthscale value. Dimension 2 is plotted on the
+ <i>y</i>-axis and 3 and on the <i>x</i>-axis. The script <code>demOilVargplvm2.m</code> is similar but there
+ are missing outputs from test points; the model attempts to reconstruct these missing outputs. The result is
+ shown on the right of the figure.
 <p><center><img src="demOilVargplvm1.png" width="49%"><img src="demOilVargplvm2.png" width="49%"><br>
-
 <i>Left</i>: Bayesian GP-LVM on the oil data without missing outputs. The phases of flow are shown as green circles, blue crosses and red plusses.  <i>Right</i>: Similar but in this case 50% of the outputs are missing and the model attempts to reconstruct them.</center>
 
 
-
-
-
 <h4>100 points in the active set</h4>
-
 The script <code>demOil100Vargplvm1.m</code> runs the Bayesian GP-LVM Model on the Oil Data with only 100 points in the active set, giving the result on the figure below.
-
-
-
 <p><center><img src="demOil100Vargplvm1.png" width="49%"><br>
-
 Bayesian GP-LVM on the oil data using 100 points in the active set.</center>
 
 
-
-
-
 <h3>Loop Closure in Robotics</h3>
-
-
-
 In on-going work with Dieter Fox and Brian Ferris at the University of Washington we are interested in loop closure for robotic navigation, included as an example is a data set of a robot completing a loop while reading wireless access point signal strengths. The script <code>demRobotWirelessVargplvm1.m</code> runs the Bayesian GP-LVM Model on this dataset in order to produce a neat track and close the loop, as can be seen on the figure shown below. 
-
-
-
 <p><center><img src="demRobotWirelessVargplvm1.png" width="49%"><br>
-
 Use of the Bayesian GP-LVM Model to obtain loop closure in a robot navigation example.</center>
 
 
-
 <h3>Frey Faces Data</h3>
-
-
-
 In this dataset, we try to exploit the ability of the model to reconstruct partially observed test data. Therefore, when the model is trained only half of the image pixels are assumed to be observed. After training on 1000 images, each partially observed test image was processed separately and the missing pixels were predicted as shown on the figures below. The code to obtain the following figures was based on the <code>demBrendanVargplvm3.m</code> script.
-
-
-
-<p><center><img src="demBrendanTestImag1_3.png" width="7%"><img src="demBrendanTestImag2_3.png" width="7%"><img src="demBrendanTestImag4_3.png" width="7%"><img src="demBrendanTestImag127_3.png" width="7%"><img src="demBrendanTestImag11_3.png" width="7%"><img src="demBrendanTestImag24_3.png" width="7%"><img src="demBrendanTestImag51_3.png" width="7%"><img src="demBrendanTestImag62_3.png" width="7%"><br>
-
-
-
-<p><img src="demBrendanTestImag1WithMissing_3.png" width="7%"><img src="demBrendanTestImag2WithMissing_3.png" width="7%"><img src="demBrendanTestImag4WithMissing_3.png" width="7%"><img src="demBrendanTestImag127WithMissing_3.png" width="7%"><img src="demBrendanTestImag11WithMissing_3.png" width="7%"><img src="demBrendanTestImag24WithMissing_3.png" width="7%"><img src="demBrendanTestImag51WithMissing_3.png" width="7%"><img src="demBrendanTestImag62WithMissing_3.png" width="7%"><br>
-
-
-
+<p><center><img src="demBrendanTestImag1_3.png" width="7%"><img src="demBrendanTestImag2_3.png" width="7%"><img src="demBrendanTestImag4_3.png" width="7%"><img src="demBrendanTestImag127_3.png" width="7%"><img src="demBrendanTestImag11_3.png" width="7%"><img src="demBrendanTestImag24_3.png" width="7%"><img src="demBrendanTestImag51_3.png" width="7%"><img src="demBrendanTestImag62_3.png" width="7%"><br><p><img src="demBrendanTestImag1WithMissing_3.png" width="7%"><img src="demBrendanTestImag2WithMissing_3.png" width="7%"><img src="demBrendanTestImag4WithMissing_3.png" width="7%"><img src="demBrendanTestImag127WithMissing_3.png" width="7%"><img src="demBrendanTestImag11WithMissing_3.png" width="7%"><img src="demBrendanTestImag24WithMissing_3.png" width="7%"><img src="demBrendanTestImag51WithMissing_3.png" width="7%"><img src="demBrendanTestImag62WithMissing_3.png" width="7%"><br>
 <p><img src="demBrendanTestImag1Reconst_3.png" width="7%"><img src="demBrendanTestImag2Reconst_3.png" width="7%"><img src="demBrendanTestImag4Reconst_3.png" width="7%"><img src="demBrendanTestImag127Reconst_3.png" width="7%"><img src="demBrendanTestImag11Reconst_3.png" width="7%"><img src="demBrendanTestImag24Reconst_3.png" width="7%"><img src="demBrendanTestImag51Reconst_3.png" width="7%"><img src="demBrendanTestImag62Reconst_3.png" width="7%"><br>
-
 Examples of reconstruction of partially observed test images in Frey faces by applying the Bayesian GP-LVM. Each column corresponds to a test image. In every column, the top panel shows the true test image, the middle panel the partially observed image (where missing pixels are shown in black) and the bottom image is the reconstructed image.
-
 </center>
 
 
 
-
-
-<h3>Dynamical Systems Modelling</h3>
-
-
-
-The Bayesian GPLVM model has been extended with dynamics in a fully Bayesian framework, where a temporal prior is placed on the latent space and the latent points are integrated out. This makes the model suitable for robust modelling of dynamical systems, such as motion capture data or video sequences. Given that the model is generative, the method can also be used to produce novel sequences. The script <code>demosDynamics.m</code> reproduces the corresponding experiments. The first diagram below demonstrates the ability of the method to reconstruct partially observed frames taken from a video sequence. The second diagram shows an image which is generated without giving partial information, apart from a time interval for inter- or extrapolation. The video used for that experiment expressed strong periodicity, which allowed the model to be trained on 60 frames and then produce a novel video sequence for any given time interval (in the particular experiment for times 61 to 100). The complete videos generated for these experiments can be found <a href="http://staffwww.dcs.shef.ac.uk/people/A.Damianou/varFiles/paper/supplementary/">here</a>.
-
-
-
+<h2>Dynamical Systems Modelling</h2>
+The Bayesian GPLVM model has been extended with dynamics 
+(see <a href="http://books.nips.cc/papers/files/nips24/NIPS2011_1354.pdf">here</a>)
+in a fully Bayesian framework, where a temporal prior is placed on the latent space and the latent points are integrated out. This makes the model suitable for robust modelling of dynamical systems, such as motion capture data or video sequences. Given that the model is generative, the method can also be used to produce novel sequences. The script <code>demosDynamics.m</code> reproduces the corresponding experiments. The first diagram below demonstrates the ability of the method to reconstruct partially observed frames taken from a video sequence. The second diagram shows an image which is generated without giving partial information, apart from a time interval for inter- or extrapolation. The video used for that experiment expressed strong periodicity, which allowed the model to be trained on 60 frames and then produce a novel video sequence for any given time interval (in the particular experiment for times 61 to 100). The complete videos generated for these experiments can be found <a href="http://staffwww.dcs.shef.ac.uk/people/A.Damianou/varFiles/paper/supplementary/">here</a>.
 <p><center><img src="missaGpdsPredFrame17.png" width="49%"><br>
-
 Reconstructing a partially observed frame.</center>
-
-
-
 <p><center><img src="dogGeneration_frame14.png" width="39%"><br>
-
 One of the frames that belong to a video sequence which is generated by the model.</center>
 
 
 
-<p>
 
+
+
+
+<br>
+<h2>Manifold Relevance Determination</h2>
+<p> 
+This concerns the implementation of a Manifold Relevance Determination model, or
+a 'shared variational GP-LVM' (svargplvm). 
+This model has been presented in the
+Manifold Relevance Determination paper by A. Damianou, C. Ek, M. Titsias
+and N. Lawrence, ICML 2012 (<a href="http://icml.cc/2012/papers/94.pdf">link</a>).
+
+Being an extension to the Bayesian GP-LVM, in the MRD the latent
+space is marginalised out and the use of Automatic Relevance Determination
+(ARD) covariance functions for the mapping from the latent to the observation
+ space allows for automatic dimensionality detection. However, in
+contrast to the Bayesian GP-LVM, here a different Gaussian Process (GP)
+mapping is used per output modality, each with a different covariance
+function and, hence, different set of ARD hyperparameters.
+<br>
+Notation: latent space 
+<img src="eqX.png">, output modalities <img src="eqYmodalities.png">.
+</p>
+
+The MRD method consists of tools that allow for efficient initialisation
+and training of such a model, so that after optimisation the different
+sets of ARD hyperparamters define a "soft" segmentation for the latent
+space, in the sense that each of the different modalities is allowed to
+assign different importance to each dimension of the latent space, even
+switching off completely some of those. If the ARD hyperparameters for
+modality <img src="eqY1.png"> and <img src="eqY2.png"> are the same for dimension q, then we say that these
+modalities share this dimension. Otherwise, dimension "q" can only be
+active for one of the modalities ("private space") or for none (completely
+switched off dimension). In general, even if dimension q is shared for,
+e.g. modalties <img src="eqY1.png"> and <img src="eqY2.png">, the corresponding weights 
+<img src="eqW1.png"> and <img src="eqW2.png"> can be dissimilar, hence the aforementioned "soft segmentation".
+<br> See the file <code>svargplvm_README.txt</code> for more information.
+
+<h3>Examples</h3>
+The demos are all packaged into a single tutorial demo: <code>MRDtutorial.m</code> which 
+goes through the following results and explains them.
+<h4>Toy data without dynamical prior</h4>
+For this toy data, we create two datasets, each having a private and a shared signal.
+The model automatically segments the signal as is shown in the figures below (optimised
+weights and discovered latent spaces).
+<br>
+<img src="demToySvargplvm2_scales.png" width="25%">
+<img src="demToySvargplvm2_fig1.png" width="49%">
+<img src="demToySvargplvm2_fig2.png" width="49%">
+<img src="demToySvargplvm2_fig3.png" width="49%">
+
+<h4>Toy data with a dynamical prior for the latent space</h4>
+This example is the same as above but the latent space is constrained to be smooth with a temporal prior.
+<br>
+<img src="demToySvargplvm3_scales.png" width="25%">
+<img src="demToySvargplvm3_fig1.png" width="49%">
+<img src="demToySvargplvm3_fig2.png" width="49%">
+<img src="demToySvargplvm3_fig3.png" width="49%">
+
+<h4>Yale faces data</h4>
+The <a href="http://vision.ucsd.edu/~leekc/ExtYaleDatabase/ExtYaleB.html">Yale dataset</a>
+contains images of several
+human faces under different poses and 64 illumination conditions.  We
+considered a single pose for each subject such that the only variations
+are the location of the light source and the subject's appearance.
+Since the model is capable of working with very high-dimensional data, 
+it can be directly applied to the raw pixel values.
+<p>
+From the full Yale database, we constructed a dataset <code>Y</code>
+containing the pictures corresponding to all 64 different illumination conditions for each one of 3
+subjects and
+similarly for <code>Z</code>, for 3 different subjects.
+  In this way, we formed two datasets, <code>Y</code> and <code>Z</code>,
+each consisting of all 64 times 3 images corresponding to a set of
+three different faces, under all possible illumination conditions.
+ We then aligned the order of the images in each dataset, so that each
+image <code>y</code> from the first one was randomly set to correspond to one of
+the 3 possible images <code>z</code> of the second dataset which are depicted in the same
+illumination condition as <code>y</code>.
+In that way, we matched datapoints between the two datasets only according to the 
+illumination condition and not the identity of the faces, so that
+the model is not explicitly forced to learn the correspondence between face characteristics.
+<p>
+The optimized relevance weights are
+visualized as bar graphs below:
+<p><center>
+<img src="Yale6Sets/scalesMod1_noNum.png" width="20%">
+<img src="Yale6Sets/scalesMod2_noNum.png" width="20%">
+<br>
+Figure: The relevance  weights for the faces data. Despite allowing for soft sharing, 
+the first 3 dimensions are switched on with approximately the same weight for both 
+views of the data. Most of the remaining dimensions are used to explain private variance. 
+</center>
+<br>
+<p>
+The two data views allocated approximately equal
+weights to the shared latent dimensions, which
+are visualized below, along with the private latent space of the first modality:
+
+<p><center>
+<img src="Yale6Sets/mod1X_1_2.png" width="20%">
+<img src="Yale6Sets/mod1X_1_3.png" width="20%">
+<img src="Yale6Sets/mod1_X5_14.png" width="20%">
+<br>
+Figure:Projection of the shared latent space into dimensions {1,2} and {1,3} (<i>left</i> and <i>middle</i>
+figures) and projection of the <code>Y-</code>private dimensions {5,14}
+(figure on the <i>right</i>).
+ It is clear how the latent points in the third figure
+ form three clusters, each responsible for modelling one of the three faces in the first modality.
+</center>
+<br>
+
+The demo then samples from the discovered latent spaces plotted above and then maps back to the observed data spaces.
+By sampling in between the training latent points (red crosses) we are able to interpolate between latent positions
+and, therefore, generate novel outputs. In other words, when we sample from the shared latent subspace we generate
+outputs of interpolated, novel lighting directions and when we sample from the private subspace we generate outputs
+of interpolated faces (morphing effect). This is demonstrated in the figures below, which are also generated with the demo.
+<p><center>
+<img src="Yale6Sets/lightInterpolation/X13_1000.png" width="8%">
+<img src="Yale6Sets/lightInterpolation/X13_1009.png" width="8%">
+<img src="Yale6Sets/lightInterpolation/X13_1021.png" width="8%">
+<img src="Yale6Sets/lightInterpolation/X13_1022.png" width="8%">
+<img src="Yale6Sets/lightInterpolation/X13_1036.png" width="8%">
+<img src="Yale6Sets/lightInterpolation/X13_1040.png" width="8%">
+<img src="Yale6Sets/lightInterpolation/X13_1046.png" width="8%">
+<img src="Yale6Sets/lightInterpolation/X13_1055.png" width="8%">
+<img src="Yale6Sets/lightInterpolation/X13_1063.png" width="8%">
+<br>
+<img src="Yale6Sets/lightInterpolation/X13_1064.png" width="8%">
+<img src="Yale6Sets/lightInterpolation/X13_1072.png" width="8%">
+<img src="Yale6Sets/lightInterpolation/X13_1079.png" width="8%">
+<img src="Yale6Sets/lightInterpolation/X13_1085.png" width="8%">
+<img src="Yale6Sets/lightInterpolation/X13_1095.png" width="8%">
+<img src="Yale6Sets/lightInterpolation/X13_1110.png" width="8%">
+<img src="Yale6Sets/lightInterpolation/X13_1125.png" width="8%">
+<img src="Yale6Sets/lightInterpolation/X13_1137.png" width="8%">
+<img src="Yale6Sets/lightInterpolation/X13_1149.png" width="8%">
+<br>
+<img src="Yale6Sets/morphing/1054.png" width="8%">
+<img src="Yale6Sets/morphing/1079.png" width="8%">
+<img src="Yale6Sets/morphing/1089.png" width="8%">
+<img src="Yale6Sets/morphing/1094.png" width="8%">
+<img src="Yale6Sets/morphing/1102.png" width="8%">
+<img src="Yale6Sets/morphing/1106.png" width="8%">
+<img src="Yale6Sets/morphing/1123.png" width="8%">
+<br>
+Figure: Sampling inputs to produce novel outputs.
+First row shows interpolation between positions of the light source in the <code>x</code> coordinate
+and second row in the <code>y</code> coordinate (elevation). Last row shows interpolation between
+face characteristics to produce a morphing effect.
+These images are presented scaled here, the original ones are in 32,256 dimensions.
+<br>
+</center>
+<br>
+
+Finally, the demo confirms the efficient segmentation of the
+latent space into private and shared parts by automatically recovering
+all the illumination similarities found in the training set.  More
+specifically, given a datapoint <code>y</code> from the first dataset, it
+searches the whole space of training inputs <code>X</code> to find the 6 Nearest
+Neigbours to the latent representation <code>x</code> of <code>y</code>, based
+only on the shared dimensions.
+
+ From these latent points, we can then obtain points in the output
+ space of the second dataset. As
+ can be seen in the figure below, the model returns
+ images with matching illumination condition.  Moreover, the fact
+ that, typically, the first neighbours of each given point correspond
+ to outputs belonging to different faces, indicates that the shared
+ latent space is "pure", and is not polluted by information that
+ encodes the face appearance.
+
+<p><center>
+<img src="Yale6Sets/grouping/givenMod2/122.png" width="50%">
+<img src="Yale6Sets/grouping/givenMod2/107.png" width="50%">
+<img src="Yale6Sets/grouping/givenMod1/24.png" width="50%">
+<img src="Yale6Sets/grouping/givenMod1/70.png" width="50%">
+<br>
+Figure: Given the images of the first column, the model searches only in the shared latent space to 
+find the pictures of the opposite dataset
+which have the same illumination condition. The images found, are sorted in columns
+2 - 7 by relevance.
+<br>
+</center>
+<br>
 
 
 <p><code>
-
-
-
 </code>
-
-
-
 </div>
-
 </body>
-

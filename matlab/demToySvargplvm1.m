@@ -60,7 +60,8 @@ if ~exist('itNo', 'var'), itNo = 200; end
 if ~exist('latentDimPerModel', 'var'), latentDimPerModel = 4; end % Only used if initial_X is 'separately'
 if ~exist('latentDim', 'var'), latentDim = 6; end % Only used if initial_X is 'concatenated'
 if ~exist('initial_X', 'var'), initial_X = 'separately';  end
-
+if ~exist('printPlot', 'var'), printPlot = false; end
+if ~exist('experimentNo', 'var'), experimentNo = 1; end
 
 %% Create toy dataset
 alpha = linspace(0,4*pi,100);
@@ -168,34 +169,62 @@ model = svargplvmExpandParam(model, params);
 model = svargplvmOptimiseModel(model);
 
 %% Results
+handle = {}; titleHandle = {}; subplotHandle = {};
 fprintf('# Finished!\n')
 fprintf('# Variational lower bound: %.6f\n', svargplvmLogLikelihood(model))
-figure
-svargplvmShowScales(model); title('Learned scales for the two models')
+figScales = figure;
+svargplvmShowScales(model); 
+titleHandle{1} = title('Learned scales for the two models');
 [sharedDims, privateDims] = svargplvmFindSharedDims(model,0.05,true);
 %
-figure
-subplot(1,2,1)
+handle{end+1} = figure;
+subplotHandle{1} = subplot(1,2,1);
 plot(model.vardist.means(:,sharedDims), 'x-');
-title('Recovered signal for shared dimensions.')
-subplot(1,2,2)
-plot(Z3, 'x-'); title('True (and noiseless) shared signal.');
+titleHandle{end+1} = title('Recovered signal for shared dimensions.');
+subplotHandle{end+1} = subplot(1,2,2);
+plot(Z3, 'x-'); 
+titleHandle{end+1} = title('True (and noiseless) shared signal.');
 %
+pos = get(gcf,'Position');
+
 for i = 1:length(privateDims)
-figure
-subplot(1,2,1)
+handle{end+1} = figure;
+subplotHandle{end+1} = subplot(1,2,1);
 plot(model.vardist.means(:,privateDims{i}), 'x-');
-title(sprintf('Recovered signal for private dimensions of model %d.', i))
-subplot(1,2,2)
+titleHandle{end+1} = title(sprintf('Recovered signal for private dimensions of model %d.', i));
+subplotHandle{end+1} = subplot(1,2,2);
 if i == 1
     plot(Z1, 'x-'); 
 else
     plot(Z2, 'x-'); 
 end
-title(sprintf('True (and noiseless) private signal for modality %d.', i));
+titleHandle{end+1} = title(sprintf('True (and noiseless) private signal for modality %d.', i));
 end
 
 if ~isempty(globalOpt.dynamicsConstrainType)
-    figure
-    imagesc(model.dynamics.Kt); title('Latent space prior cov. matrix.')
+    figure;
+    imagesc(model.dynamics.Kt); 
+    titleHandle{end+1} = title('Latent space prior cov. matrix.');
+end
+
+if printPlot
+    pos(3) = 1200; pos(4) = 350;
+    for i=1:length(handle)
+        set(handle{i}, 'Position', pos);
+    end   
+    %for i=1:length(subplotHandle)
+    %    subplot(subplotHandle{i})
+    %    axis off
+    %end
+    for i=1:length(titleHandle)
+        set(titleHandle{i}, 'FontSize', 18)
+    end
+    set(figScales,'PaperPositionMode','auto'); % printing: wysiwyg
+    print(figScales,'-dpng',['../html/demToySvargplvm' num2str(experimentNo) '_scales.png'])
+    fprintf('# Printed: %s\n', ['../html/demToySvargplvm' num2str(experimentNo) '_scales.png']);
+    for i=1:length(handle)
+        set(handle{i},'PaperPositionMode','auto') 
+        print(handle{i},'-dpng',['../html/demToySvargplvm' num2str(experimentNo) '_fig' num2str(i) '.png'])
+        fprintf('# Printed: %s\n', ['../html/demToySvargplvm' num2str(experimentNo) '_fig' num2str(i) '.png']);
+    end
 end
