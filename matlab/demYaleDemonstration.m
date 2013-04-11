@@ -9,6 +9,7 @@ disp('#--- YALE FACES DEMO ---------')
 disp('# Change modality (set of 3 faces) from the variable ''faceSet'' of the demo.')
 disp('# For 1st modality, check sampling from dimensions (1,3) and (5,14)')
 disp('# For 2nd modality, check sampling from dimensions (1,3) and (10,13)')
+fprintf('\n# Please wait for the figures to pop up... ');
 
 %
 % The only parameter of the demo: it can take values 1 or 2, depending on
@@ -161,6 +162,10 @@ lvmVisualiseGeneral(model.comp{v}, [], 'imageMRDVisualise', 'imageMRDModify', fa
 figure
 svargplvmShowScales(model);
 
+fprintf('OK! You should now have 3 figures open...\n');
+fprintf('  Sample from the latent space with the mouse and observe the outputs in the other figure.\n')
+fprintf('  Then, press any key to continue to solving the correspondence problem...')
+pause
 
 %%
 
