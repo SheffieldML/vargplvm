@@ -3,7 +3,7 @@
 % SEEALSO: MRDtutorial.m
 % COPYRIGHT: Andreas C. Damianou, 2013
 % 
-% VARGPLVM
+% SVARGPLVM
 
 disp('#--- YALE FACES DEMO ---------')
 disp('# Change modality (set of 3 faces) from the variable ''faceSet'' of the demo.')

@@ -14,7 +14,7 @@ function options = svargplvmOptions(Ytr, globalOpt, labelsTrain)
 %
 % COPYRIGHT : Andreas C. Damianou, 2011
 
-% VARGPLVM
+% SVARGPLVM
 
 
 if nargin < 3
@@ -35,7 +35,8 @@ for i=1:length(Ytr)
     options{i}.numActive = globalOpt.indPoints;
     options{i}.optimiser = 'scg2';
     options{i}.enableDgtN = globalOpt.DgtN;
-
+    options{i}.fixInducing = globalOpt.fixInd;
+    
     % !!!!! Be careful to use the same type of scaling and bias for all
     % models!!!
     

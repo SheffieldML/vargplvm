@@ -3,7 +3,7 @@
 %
 % COPYRIGHT: Andreas C. Damianou, 2013
 %
-% VARGPLVM
+% SVARGPLVM
 
 allDataToKeep = [70 100:100:1000];
 experimentNo = 6000;

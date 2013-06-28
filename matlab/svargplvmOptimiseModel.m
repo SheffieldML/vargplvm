@@ -15,7 +15,7 @@ function model = svargplvmOptimiseModel(model, varargin)
 % 
 % COPYRIGHT: Andreas C. Damianou, 2012, 2013
 
-% VARGPLVM
+% SVARGPLVM
 
 % modelType can be 'bc' or 'discr'
 
@@ -60,7 +60,7 @@ while ~isempty(globalOpt.initVardistIters(i:end)) || ~isempty(globalOpt.itNo(i:e
         model.initVardist = 1; model.learnSigmaf = 0;
         model = svargplvmPropagateField(model,'initVardist', model.initVardist);
         model = svargplvmPropagateField(model,'learnSigmaf', model.learnSigmaf);
-        fprintf(1,'# Intitiliazing the variational distribution...\n');
+        fprintf(1,'# Intitiliazing the variational distribution for %d iterations...\n', globalOpt.initVardistIters);
         model = svargplvmOptimise(model, display, globalOpt.initVardistIters); % Default: 20
         model.initVardistIters = model.initVardistIters + globalOpt.initVardistIters(i);
         if saveModel

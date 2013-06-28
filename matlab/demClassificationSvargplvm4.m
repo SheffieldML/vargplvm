@@ -1,5 +1,5 @@
 % DEMCLASSIFICATIONSVARGPLVM4
-% VARGPLVM
+% SVARGPLVM
 
 % Like demClassificationSvargplvm.m but here we load the data a bit differently
 % (without relying on the bc_* functions and selecting random subsets)
@@ -211,7 +211,7 @@ end
 % DEMCLASSIFICATION4
 % COPYRIGHT Andreas C. Damianou, 2012
 % SEEALSO: demClassification2, demClassification3,  demClassification
-% VARGPLVM
+% SVARGPLVM
 
 %%
 

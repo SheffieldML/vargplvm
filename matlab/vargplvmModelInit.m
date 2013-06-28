@@ -43,7 +43,6 @@ else
     model.beta = globalOpt.betaInit;
 end
 
-%%% NEW
 if model.beta < 1e-7
     warning('Beta was too small... Setting beta to 1e-7')
     model.beta = 1e-7;
@@ -51,6 +50,19 @@ elseif model.beta > 1e+7
     warning('Beta was too big... Setting beta to 1e+7')
     model.beta = 1e+7;
 end
+
+% Check for inconsistencies
+if isfield(model, 'dynamics') && ~isempty(model.dynamics)
+    if isfield(model.dynamics, 'reoptimise') && model.dynamics.reoptimise
+        if isfield(model, 'fixInducing') && model.fixInducing
+            msg = sprintf('Reoptimising inducing points for test and fixing ind. points are incompatible!\nSetting reoptimising to false.');
+            warning(msg);
+            model.dynamics.reoptimise = false;
+            globalOpt.testReoptimise = false;
+        end
+    end
+end
+
 
 model.dataSetInfo.dataSetName = globalOpt.dataSetName;
 

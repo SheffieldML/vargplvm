@@ -2,7 +2,7 @@
 %
 % COPYRIGHT: Andreas C. Damianou, 2013
 %
-% VARGPLVM
+% SVARGPLVM
 
 %-----------------    SIMPLE INITIAL DEMO -------------------------------%
 %----- Main demo used: demToySvargplvm1.m

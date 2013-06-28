@@ -458,6 +458,18 @@ end
 %%%-----------------------   RECONSTRUCTION --------------------%%%
 
 %%
+% Check for inconsistencies (This has been moved to vargplvmModelInit)
+if isfield(model, 'dynamics') && ~isempty(model.dynamics)
+    if isfield(model.dynamics, 'reoptimise') && model.dynamics.reoptimise
+        if isfield(model, 'fixInducing') && model.fixInducing
+            msg = sprintf('Reoptimising inducing points for test and fixing ind. points are incompatible!\nSetting reoptimising to false.');
+            warning(msg);
+            model.dynamics.reoptimise = false;
+            globalOpt.testReoptimise = false;
+        end
+    end
+end
+
 model = modelTr;
 clear modelTr %%
 model.y = Ytr;

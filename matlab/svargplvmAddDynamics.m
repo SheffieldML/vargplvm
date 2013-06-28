@@ -14,7 +14,7 @@ function  model = svargplvmAddDynamics(model, globalOpt, optionsDyn)
 %
 % COPYRIGHT: Andreas C. Damianou, 2013
 %
-% VARGPLVM
+% SVARGPLVM
 
     timeConstr = find(strcmp(optionsDyn.constrainType, 'time'));
     dataConstr = find(strcmp(optionsDyn.constrainType, 'data'));

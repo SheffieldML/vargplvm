@@ -20,7 +20,7 @@ options.kern = {'rbfard2', 'bias', 'white'};
 options.numActive = 50; 
 %options.tieParam = 'tied';  
 
-options.optimiser = 'scg';
+options.optimiser = 'scg2';
 latentDim = 10;
 d = size(Y, 2);
 

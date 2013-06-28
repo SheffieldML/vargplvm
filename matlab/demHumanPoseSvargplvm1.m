@@ -3,7 +3,7 @@
 % COPYRIGHT: Andreas C. Damianou, Carl Henrik Ek,  2011
 % SEEALSO : demHumanPosePrepareData
 %
-% VARGPLVM
+% SVARGPLVM
 
 
 % Human pose data with the whole silhouette
@@ -685,7 +685,7 @@ else
         for k=1:numberOfNN
             % fprintf('.');
             x_cur = model.X(ind(k),:);%%%%  % modelOrig.X(ind2(k));
-            x_cur(sharedDims) = x_star(i,sharedDims); %%% OPTIONAL!!!
+            x_cur(sharedDims) = x_star(sharedDims); %%% OPTIONAL!!!
             
             %---- OPTIONAL 3
             %  xcurOrig  = x_cur(sharedDims);

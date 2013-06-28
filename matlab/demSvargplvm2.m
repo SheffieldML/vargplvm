@@ -2,7 +2,7 @@
 %
 % COPYRIGHT: Andreas C. Damianou, 2012
 %
-% VARGPLVM
+% SVARGPLVM
 
 %------
 % This is a generic demo for svargplvm. It only requires a cell-array
@@ -138,3 +138,33 @@ end
 model = svargplvmOptimiseModel(model);
 
 svargplvmShowScales(model)
+
+return
+
+
+%% PREDICTIONS
+
+% obsMod = 1 means that the 1st modality is considered to be observed and
+% the other modality is considered to be the unobserved one, during test
+% time.
+obsMod = 1; % one of the involved sub-models (the one for which we have the data)
+infMod = setdiff(1:2, obsMod);
+
+[sharedDims, privateDims] = svargplvmFindSharedDims(model);
+
+% We can either use a totally new test set (a matrix Yts must be created
+% where e.g. Yts{1} and Yts{2} are the two test modalities) or using the
+% training set. In the later case, we solve the correspondance problem, ie
+% for a given y we find the K most similar z's in the other modality (in
+% the code, K = numberOfNN). See the Yale faces example.
+fprintf('\n# PREDICTIONS: \n\n');
+if ~exist('testOnTraining')
+    testOnTraining=0;
+end
+
+numberOfNN = 5;
+
+%--------------------%
+svargplvmPredictions %---- Script returning: ZpredMuAll and mini(the indices for NN)
+%--------------------%
+

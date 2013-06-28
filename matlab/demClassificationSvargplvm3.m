@@ -1,7 +1,7 @@
 % DEMCLASSIFICATIONSVARGPLVM3
 % COPYRIGHT Andreas C. Damianou, 2012
 % SEEALSO: demClassificationSvargplvm2, demClassificationSvargplvm,  demClassificationSvargplvm4
-% VARGPLVM
+% SVARGPLVM
 
 % Like demClassificationSvargplvm2 but we train
 % with RANDOM subsets of the training data what necessarily have the same number

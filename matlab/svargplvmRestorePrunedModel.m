@@ -14,7 +14,7 @@ function model = svargplvmRestorePrunedModel(model, Ytr, onlyData, options)
 %
 % SEEALSO : svargplvmPruneModel, vargplvmRestorePrunedModel
 
-% VARGPLVM
+% SVARGPLVM
 
 if nargin <3
     onlyData = 0;

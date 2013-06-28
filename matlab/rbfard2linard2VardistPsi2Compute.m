@@ -20,6 +20,7 @@ QsumS = AA1.*(vardist.covars./AS);
 QsumM = vardist.means./AS;
 
 AZ = sparse(diag(A2))*Z';
+% AZ = Z'.*(A2'*ones(1,M)); % Equivalent
 Pnovar = (Z.*(Pnovar'*QsumS)  + Pnovar'*QsumM)*AZ;
 Psi2 = rbfardKern.variance*(Pnovar + Pnovar');
 

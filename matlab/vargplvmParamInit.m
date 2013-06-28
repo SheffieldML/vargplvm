@@ -81,12 +81,12 @@ end
 % it with noise. The closer 1/beta is to the variance the more information
 % the model attempts to explain with noise.
 if ~isempty(options) && isfield(options, 'initSNR')
-    %if isfield(model, 'mOrig')
-    %    mm = model.mOrig;
-    %else
-    %    mm = model.m;
-    %end
-    mm = Y;
+    if isfield(model, 'mOrig')
+        mm = model.mOrig;
+    else
+        mm = model.m;
+    end
+    % mm = Y;
     if var(mm(:)) < 1e-8
         warning(['Variance in data was too small. Setting beta to 1e+7'])
         model.beta = 1e+7;

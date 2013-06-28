@@ -19,7 +19,7 @@ function [X_init, m] = svargplvmInitLatentSpace2(Ytr, globalOpt, options)
 %
 % COPYRIGHT : Andreas C. Damianou, Carl Henrik Ek, 2011
 
-% VARGPLVM
+% SVARGPLVM
 
 latentDim = globalOpt.latentDim;
 latentDimPerModel = globalOpt.latentDimPerModel;
@@ -82,6 +82,13 @@ else
         X_init = [Xy Xs Xz]; % sizes: 2,1,2
         X_init = (X_init-repmat(mean(X_init),size(X_init,1),1))./repmat(std(X_init),size(X_init,1),1);
     elseif strcmp(initLatent,'separately')
+        fprintf(['# Initialising the latent space with ' initX ' separately for each modality, with Q=['])
+        if iscell(latentDimPerModel)
+            for i=1:length(Ytr), fprintf('%d ', latentDimPerModel{i}); end
+        else
+            fprintf('%d', latentDimPerModel);
+        end
+        fprintf(']...\n')
         X_init = [];
         for i=1:length(Ytr)
             if iscell(latentDimPerModel)
@@ -94,12 +101,15 @@ else
             X_init = [X_init X_init_cur];
         end
     elseif strcmp(initLatent,'concatenated')
+        fprintf(['# Initialising the latent space with ' initX ' after concatenating modalities in Q = %d ...\n'], latentDim)
         X_init = initFunc(mAll, latentDim);
     elseif strcmp(initLatent, 'custom')
         clear mAll
         % Like pca initialisation but favour the first model compared to the
         % second (only for two submodels)
+        assert(length(Ytr)==2, 'Custom initialisation only for 2 submodels!')
         try
+            fprintf(['# Initialising the latent space with ' initX ' separately, with (%d, %d) dims. for each modality...\n'],latentDimPerModel{1},latentDimPerModel{2})
             X_init{1} = initFunc(m{1},latentDimPerModel{1});
             if latentDimPerModel{2} ~= 0
                 X_init{2} = initFunc(m{2},latentDimPerModel{2});
