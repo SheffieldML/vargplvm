@@ -1,7 +1,7 @@
 function model = svargplvmOptimiseModelNoDisplay(model, varargin)
 % SVARGPLVMOPTIMISEMODELNODISPLAY See svargplvmOptimiseModel
 %
-% SVARGPLVM
+% VARGPLVM
 
 % modelType can be 'bc' or 'discr'
 

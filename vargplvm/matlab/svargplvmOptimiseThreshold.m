@@ -9,7 +9,7 @@ function [bestThreshold, bestError, totalError] = svargplvmOptimiseThreshold(Zpr
 %
 % COPYRIGHT : Andreas C. Damianou, 2011
 %
-% SVARGPLVM
+% VARGPLVM
 
 L = size(ZtrueOrig,2);
 ss=0;

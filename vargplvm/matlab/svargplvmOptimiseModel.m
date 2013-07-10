@@ -15,7 +15,7 @@ function model = svargplvmOptimiseModel(model, varargin)
 % 
 % COPYRIGHT: Andreas C. Damianou, 2012, 2013
 
-% SVARGPLVM
+% VARGPLVM
 
 % modelType can be 'bc' or 'discr'
 

@@ -19,7 +19,7 @@ function [X_init, m] = svargplvmInitLatentSpace2(Ytr, globalOpt, options)
 %
 % COPYRIGHT : Andreas C. Damianou, Carl Henrik Ek, 2011
 
-% SVARGPLVM
+% VARGPLVM
 
 latentDim = globalOpt.latentDim;
 latentDimPerModel = globalOpt.latentDimPerModel;

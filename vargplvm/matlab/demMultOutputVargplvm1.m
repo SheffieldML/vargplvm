@@ -3,7 +3,7 @@
 %
 % COPYRIGHT: Andreas C. Damianou, Carl Henrik Ek, 2011
 % SEEALSO: demSharedVargplvm1
-% SVARGPLVM
+% VARGPLVM
 
 
 

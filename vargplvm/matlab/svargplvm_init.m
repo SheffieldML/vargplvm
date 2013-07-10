@@ -2,7 +2,7 @@
 % variable, the globalOpt will take this value, otherwise the default one.
 %
 % COPYRIGHT: Andreas C. Damianou, 2012, 2013
-% SVARGPLVM
+% VARGPLVM
 
 if ~exist('globalOpt')
     %% Default values for the model

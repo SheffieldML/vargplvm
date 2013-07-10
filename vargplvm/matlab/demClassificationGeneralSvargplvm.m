@@ -1,7 +1,7 @@
 % DEMCLASSIFICATIONGENERALSVARGPLVM
 % COPYRIGHT Andreas C. Damianou, 2012
 % SEEALSO: demClassificationSvargplvm, demClassificationSvargplvm2, demClassificationSvargplvm3,  demClassificationSvargplvm4
-% SVARGPLVM
+% VARGPLVM
 
 %-- Example script
 %{

@@ -4,7 +4,7 @@
 %
 % COPYRIGHT : Andreas C. Damianou, 2011
 
-% SVARGPLVM
+% VARGPLVM
 
 % There are two kinds of predictions: on training and on test data.
 % * Predict on the training data: given a test points y* which is a copy of

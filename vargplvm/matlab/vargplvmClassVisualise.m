@@ -11,7 +11,7 @@ function vargplvmClassVisualise(call)
 %
 % SEEALSO : lvmResultsDynamic
 
-% MLTOOLS 
+% VARGPLVM 
 
 global visualiseInfo
 

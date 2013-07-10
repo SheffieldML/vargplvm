@@ -4,7 +4,7 @@
 %
 % COPYRIGHT : Andreas C. Damianou, 2011
 
-% SVARGPLVM
+% VARGPLVM
 
 %%%--- Script: svargplvmPredictions2 %%%%-
 %%% This script is like svargplvmPredictions with a few additions (it

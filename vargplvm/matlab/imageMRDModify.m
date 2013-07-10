@@ -23,7 +23,7 @@ function handle = imageMRDModify(handle, imageValues, imageSize, transpose, nega
 %
 % SEEALSO : imageModify, imageMRDVisualise, fgplvmResultsDynamic
 
-% SVARGPLVM
+% VARGPLVM
 
 %save 'TEMP.mat' 'imageValues'
 

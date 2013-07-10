@@ -2,7 +2,7 @@
 %
 % COPYRIGHT: Andreas C. Damianou, 2012
 %
-% SVARGPLVM
+% VARGPLVM
 
 %------
 % This is a generic demo for svargplvm. It only requires a cell-array

@@ -11,7 +11,7 @@
 %
 % SEEALSO : vargplvmPruneModel, svargplvmRestorePrunedModel
 
-% SVARGPLVM
+% VARGPLVM
 
 function model = svargplvmPruneModel(model, onlyData)
 

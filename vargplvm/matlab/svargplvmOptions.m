@@ -14,7 +14,7 @@ function options = svargplvmOptions(Ytr, globalOpt, labelsTrain)
 %
 % COPYRIGHT : Andreas C. Damianou, 2011
 
-% SVARGPLVM
+% VARGPLVM
 
 
 if nargin < 3
