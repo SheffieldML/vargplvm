@@ -74,10 +74,6 @@ if dynUsed
     model = vargplvmInitDynamics(model,optionsDyn);
 end
 
-
-
-modelInit = model;%%%% Delete
-
 % Optimise the model.
 fprintf('  # vargplvmEmbed: Optimising var. distr. for %d iters...\n',initVardistIters);
 if initVardistIters > 0

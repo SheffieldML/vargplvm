@@ -404,6 +404,10 @@ if isfield(options, 'tieParam') & ~isempty(options.tieParam)
     %
 end
 
+if isfield(options, 'learnInducing')
+    model.learnInducing = options.learnInducing;
+end
+
 %{
 %  if isstruct(options.back)
 
