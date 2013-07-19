@@ -15,7 +15,7 @@ Two important extensions also included, is the Variational Gaussian Process Dyna
 the Manifold Relevance Determination (MRD) methods.
 
     <p>The VARGPLVM software can be downloaded
-    <a href="http://www.cs.man.ac.uk/neill-bin/software/downloadForm.cgi?toolbox=vargplvm">here</a>.
+    <a href="https://github.com/SheffieldML/vargplvm">here</a>.
     <h2>Release Information</h2>
     <p><b>Current release is 0.3</b>.
     <p>The current release includes the Manifold Relevance Determination (MRD) method (shared variational GP-LVM)
