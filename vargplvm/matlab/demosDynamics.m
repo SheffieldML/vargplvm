@@ -142,7 +142,10 @@ fprintf(1,'\n\n#-----  DOG DEMO: Generation ----#\n');
 dataSetName = 'dog';
 experimentNo=61;
 indPoints=-1; latentDim=35;
-fixedBetaIters=400;
+%fixedBetaIters=400;
+fixedBetaIters= 0;
+initVardistIters = 800;
+mappingKern = 'rbfardjit';
 reconstrIters = 1; % no reconstruction needed here
 itNo=[1000 1000 1000 1000 1000 1000 500 500 500 500 1000 1000 1000 1000 1000 1000 1000 500 500]; %16000
 periodicPeriod = 4.3983; % Recalculated for dataToKeep=60
