@@ -392,7 +392,7 @@ if trainModel
     if initVardistIters ~=0
         model.initVardist = 1;
         model.learnBeta = 0; model.learnSigmaf = 0; % This should be merged with the initVardist field
-        fprintf(1,'# Intitiliazing the model (fixed beta)...\n');
+        fprintf(1,'# Intitiliazing the variational distribution...\n');
         model = vargplvmOptimise(model, display, initVardistIters); % Default: 20
         fprintf(1,'1/b = %.4d\n',1/model.beta);
         model.learnSigmaf = 1;
@@ -427,6 +427,10 @@ if trainModel
     end
     prunedModelTr = prunedModel;
     save(fileToSave, 'prunedModel', 'prunedModelInit', 'prunedModelTr');
+    curSNR = vargplvmShowSNR(model);
+    if curSNR < 2
+        error('Signal to noise ratio is 1 (should be larger than 20)! Aborting...')
+    end
 else
     % Load pre-trained model
     disp(['# Loading pre-trained model number ' num2str(experimentNo) '...'])
