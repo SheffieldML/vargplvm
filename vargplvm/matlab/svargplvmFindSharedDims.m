@@ -21,9 +21,17 @@ end
 obsMod = 1; % one of the involved sub-models (the one for which we have the data)
 infMod = setdiff(1:2, obsMod);
 
+if isfield(model.comp{obsMod}.kern, 'comp')
+    s1 = model.comp{obsMod}.kern.comp{1}.inputScales;
+else
+    s1 = model.comp{obsMod}.kern.inputScales;
+end
+if isfield(model.comp{infMod}.kern, 'comp')
+    s2 = model.comp{infMod}.kern.comp{1}.inputScales;
+else
+    s2 = model.comp{infMod}.kern.inputScales;
+end
 
-s1 = model.comp{obsMod}.kern.comp{1}.inputScales;
-s2 = model.comp{infMod}.kern.comp{1}.inputScales;
 % Normalise values between 0 and 1
 s1 = s1 / max(s1);
 s2 = s2 / max(s2);
