@@ -93,6 +93,8 @@ while ~isempty(globalOpt.initVardistIters(i:end)) || ~isempty(globalOpt.itNo(i:e
         for j=1:length(model.comp)
             fprintf('# SNR%d = %.6f\n', j, vargplvmShowSNR(model.comp{j},0))
         end
+        SNR = svargplvmSNR(model);
+        svargplvmCheckSNR(SNR);
         model.iters = model.iters + iters;
         % Save the results.
         if saveModel
