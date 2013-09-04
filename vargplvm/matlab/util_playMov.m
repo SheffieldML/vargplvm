@@ -1,6 +1,7 @@
 function util_playMov(h, w, options, Y1, Y2,sz)
 % UTIL_PLAYMOV Play a video file which is stored by rows in a 2-D matrix.
-% DESC Utility to play video files (a sequence of frames) where each row corresponds
+% DESC util_playMov(h, w, options, Y1, Y2,sz)
+% Utility to play video files (a sequence of frames) where each row corresponds
 % to one frame, serialized by columns. Each frame must then be reshaped before plotted
 % and for this the function must receice its actual dimensions as an argument.
 % Sanity warning: This function has been augmented in many steps and is quite messy!!!
