@@ -1,4 +1,4 @@
-% DEMSVARGPLVM2 A generic demo for the MRD method.
+% DEMSVARGPLVMGENERIC A generic demo for the MRD method.
 %
 % COPYRIGHT: Andreas C. Damianou, 2012
 %
@@ -63,39 +63,26 @@ for i=2:M
 end
 
 
-
 %--- Create model
-
 options = svargplvmOptions(Ytr, globalOpt);
 
-
-
 if ~isempty(globalOpt.dynamicsConstrainType)
-    for i=1:M
-        % Set up dynamcis (i.e. back-constraints) model
-        optionsDyn{i}.type = 'vargpTime';
-        optionsDyn{i}.inverseWidth=30;
-        %   optionsDyn.vardistCovars = vardistCovarsMult;
-        optionsDyn{i}.initX = globalOpt.initX;
-        optionsDyn{i}.constrainType = globalOpt.dynamicsConstrainType;
-        
-        if exist('timeStampsTraining')
-            optionsDyn{i}.t = timeStampsTraining;
-        end
-        if exist('labelsTrain') && ~isempty(labelsTrain)
-            optionsDyn{i}.labels = labelsTrain;
-        end
+    optionsDyn.type = 'vargpTime';
+    optionsDyn.inverseWidth=30;
+    optionsDyn.initX = globalOpt.initX;
+    optionsDyn.constrainType = globalOpt.dynamicsConstrainType;
+    if exist('timeStampsTraining', 'var')
+        optionsDyn.t = timeStampsTraining;
+    end
+    if exist('labelsTrain', 'var') && ~isempty(labelsTrain)
+        optionsDyn.labels = labelsTrain;
     end
 else
     optionsDyn= [];
 end
 
-
 model = svargplvmModelCreate(Ytr, globalOpt, options, optionsDyn);
-if exist('diaryFile')
-    model.diaryFile = diaryFile;
-end
-
+if exist('diaryFile'), model.diaryFile = diaryFile; end
 
 if ~isfield(globalOpt, 'saveName') || isempty(globalOpt.saveName)
     modelType = model.type;
