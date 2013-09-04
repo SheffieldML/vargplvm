@@ -13,7 +13,7 @@ for i=1:model.numModels
     if model.comp{i}.DgtN
         varData = var(model.comp{i}.mOrig(:));
     else
-        varData = var(model.comp{1}.m(:));
+        varData = var(model.comp{i}.m(:));
     end
     SNR{i} = varData/(1/model.comp{i}.beta);
 end

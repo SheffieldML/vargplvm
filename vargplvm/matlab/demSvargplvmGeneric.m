@@ -35,14 +35,17 @@ M = length(Yall);
 % This script initialises the options structure 'globalOpt'.
 svargplvm_init;
 
+% Don't use more inducing points than data
+globalOpt.indPoints = min(globalOpt.indPoints, size(Yall{1},1));
+
 %-- Load datasets
 for i=1:M
     Y = Yall{i};
     dims{i} = size(Y,2);
-    N{i} = size(Y,1);
+    Nall{i} = size(Y,1);
     indTr = globalOpt.indTr;
     if indTr == -1
-        indTr = 1:N{i};
+        indTr = 1:Nall{i};
     end
     if ~exist('Yts')
         indTs = setdiff(1:size(Y,1), indTr);
@@ -57,11 +60,11 @@ clear('Y')
 
 
 for i=2:M
-    if N{i} ~= N{i-1}
+    if Nall{i} ~= Nall{i-1}
         error('The number of observations in each dataset must be the same!');
     end
 end
-
+clear('Nall');
 
 %--- Create model
 options = svargplvmOptions(Ytr, globalOpt);
