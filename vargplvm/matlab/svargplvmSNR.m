@@ -9,6 +9,7 @@ function SNR = svargplvmSNR(model)
 
 % VARGPLVM
 
+
 for i=1:model.numModels
     if model.comp{i}.DgtN
         varData = var(model.comp{i}.mOrig(:));

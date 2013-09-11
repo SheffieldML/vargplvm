@@ -188,9 +188,9 @@ is depending upon many things, mostly: initialisation, optimiser used,
 numerical errors.
 
 From the above, the easiest to control is the initialisation.
-After optimisation, call svargplvmCheckSNR(svargplvmShowSNR(model))
-to check if a bad local minimum is reached (if optimisation is done
-using vargplvmOptimiseModel, then this check will be done automatically).
+After optimisation, call svargplvmCheckSNR(vargplvmShowSNR(model))
+to check if a bad local minimum is reached (the optimisation function actually
+calls automatically this check).
 If this a bad local optimum is reached (ie signal is very low compared to
 noise), then the model is badly trained and the results are unreliable.
 

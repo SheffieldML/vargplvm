@@ -68,6 +68,7 @@ model.scale = ones(1, model.d);
 
 if(isfield(options,'scale2var1'))
     if(options.scale2var1)
+        fprintf('# Scaling output data to variance one...\n')
         model.scale = std(Y);
         model.scale(find(model.scale==0)) = 1;
         if(model.learnScales)
@@ -85,6 +86,11 @@ end
 model.y = Y;
 model.m = gpComputeM(model);
 
+% Marg. likelihood is a sum ML = L + KL. Here we allow for 
+% ML = 2*((1-fw)*L + fw*KL), fw = options.KLweight. Default is 0.5, giving
+% same weight to both terms.
+model.KLweight = options.KLweight;
+assert(model.KLweight >=0 && model.KLweight <=1);
 
 %if options.computeS
 %  model.S = model.m*model.m';
@@ -273,6 +279,7 @@ switch options.approx
         model.k = options.numActive;
         model.fixInducing = options.fixInducing;
         if options.fixInducing
+            assert(model.k == model.N);
             if length(options.fixIndices)~=options.numActive
                 %error(['Length of indices for fixed inducing variables must ' ...
                 %    'match number of inducing variables']);

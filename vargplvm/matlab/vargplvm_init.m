@@ -47,7 +47,14 @@ defaults.scale2var1 = 0;
 defaults.initVardistIters = 50;
 defaults.diaryFile = [];
 defaults.doGradChek = false;
- fnames = fieldnames(defaults);
+
+% This allows to rewrite the standard form of the bound F + KL as
+% 2*((1-fw)*F + fw*KL), where fw is the KLweight. This means that when fw
+% is 0.5 there's no difference, otherwise the KL term can be more or less
+% emphasized
+defaults.KLweight = 0.5;
+
+fnames = fieldnames(defaults);
  for i=1:length(fnames)
     if ~exist(fnames{i})
         globalOpt.(fnames{i}) = defaults.(fnames{i});

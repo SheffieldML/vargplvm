@@ -126,6 +126,12 @@ if ~exist('globalOpt')
     defaults.transformMultiLabel = false;
     defaults.equalizeScales = false;
     
+    % This allows to rewrite the standard form of the bound F + KL as
+    % 2*((1-fw)*F + fw*KL), where fw is the KLweight. This means that when fw
+    % is 0.5 there's no difference, otherwise the KL term can be more or less
+    % emphasized
+    defaults.KLweight = 0.5;
+
     %% The final options structure will contain default values, apart for whatever
     % is already set as a variable
     fnames = fieldnames(defaults);

@@ -10,10 +10,11 @@ Files for (1) and (2) have the prefix "vargplvm". Files for (3) have the prefix 
 Rest of the files are generic and used for all methods.
 
 Dependencies graph:
-(1) GPmat - Neil Lawrence's GP matlab toolbox: https://github.com/SheffieldML/GPmat
-(2) Netlab v.3.3: http://www1.aston.ac.uk/ncrg/
-(3) Isomap.m: http://web.mit.edu/cocosci/isomap/code/Isomap.m
-(4) L2_distance.m: http://web.mit.edu/cocosci/isomap/code/L2_distance.m
+- (1) GPmat - Neil Lawrence's GP matlab toolbox: https://github.com/SheffieldML/GPmat
+- (2) Netlab v.3.3: http://www1.aston.ac.uk/ncrg/
+- (3) Isomap.m: http://web.mit.edu/cocosci/isomap/code/Isomap.m
+- (4) L2_distance.m: http://web.mit.edu/cocosci/isomap/code/L2_distance.m
+- (5) keep.m: http://www.mathworks.com/matlabcentral/fileexchange/181-keep/content/keep.m
 
 L2_distance ---- Isomap ---- GPmat ---- vargplvm
 							/			/

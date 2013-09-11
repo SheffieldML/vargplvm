@@ -24,6 +24,7 @@ function options = vargplvmOptions(varargin)
 
 % Get default options from Gaussian process.
 options = gpOptions(varargin{:});
+options.kern = 'rbfardjit';
 
 % switch optimiser to the OPTIMI specified default.
 options.optimiser = optimiDefaultOptimiser;
@@ -38,6 +39,11 @@ options.prior = 'gaussian';
 options.fixInducing = 0;
 options.optimiseBeta = 1;
 options.beta = 1000;
+
+% Marg. likelihood is a sum ML = L + KL. Here we allow for 
+% ML = 2*((1-fw)*L + fw*KL), fw = options.KLweight. Default is 0.5, giving
+% same weight to both terms.
+options.KLweight = 0.5;
 
 % Whether or not to use back constraints
 %options.back = [];

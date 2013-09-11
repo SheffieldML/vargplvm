@@ -85,6 +85,15 @@ else
     KLdiv=0;
 end
 
+% ll = ll + KLdiv);
+
 % Obtain the final value of the bound by adding the likelihood
-% and the KL term.
-ll = ll + KLdiv;
+% and the KL term (possibly weighted, although this is not tested and
+% weights should better be both 0.5). But this trick is applied only in the
+% normal optimisation loop, not when the var. distr. is optimised with SNR
+% fixed.
+if model.initVardist
+    model.KLweight = 0.5;
+end
+fw = model.KLweight;
+ll = 2*((1 - fw)*ll + fw * KLdiv);

@@ -243,7 +243,7 @@ To summarize, in the full model we can select:
       The initial SNR for the constraint iterations (where a fixed percentage
       of noise is learned by keeping beta fixed) is 100, but you can set it
       yourself in the same way that all initial fields are set, (see
-      svargplvm_init.m).
+      svargplvm_init.m and demos).
 
 
     * MODEL STRUCTURE AND FIELDS:

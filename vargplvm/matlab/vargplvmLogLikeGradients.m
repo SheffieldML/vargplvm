@@ -33,6 +33,13 @@ function g = vargplvmLogLikeGradients(model)
 % VARGPLVM
 
 
+% The trick with weighting the KL (see below) is applied only in the
+% normal optimisation loop, not when the var. distr. is optimised with SNR
+% fixed.
+if model.initVardist
+    model.KLweight = 0.5;
+end
+
 % The gradient of the kernel of the dynamics (e.g. temporal prior)
 gDynKern = [];
 
@@ -49,6 +56,10 @@ if ~isfield(model, 'dynamics') || isempty(model.dynamics)
         gVarmeansKL = 0;
         gVarcovsKL = 0;
     end
+else
+    % Not implemented giving more weight to KL term compared to the
+    % likelihood term
+    assert(model.KLweight == 0.5);
 end
 
 %fprintf(' %d \n',sum([gVarmeansKL gVarcovsKL]));%%%%%TEMP
@@ -161,7 +172,7 @@ if ~(isfield(model, 'onlyKernel') && model.onlyKernel)
         % the derivatives w.r.t kernel parameters also require the derivatives of
         % the likelihood term w.r.t the var. parameters, so this call must be put
         % in this part.
-        
+               
         % For the dynamical GPLVM further the original covs. must be fed,
         % before amending with the partial derivative due to exponing to enforce
         % positiveness.
@@ -182,9 +193,14 @@ if ~(isfield(model, 'onlyKernel') && model.onlyKernel)
         gVarcovs2 = (gVarcovs2(:).*model.vardist.covars(:))';
         
         gVarcovsLik = gVarcovs0 + gVarcovs1 + gVarcovs2;
-        gVarmeans = gVarmeansLik + gVarmeansKL;
         %gVarcovsLik = (gVarcovsLik(:).*model.vardist.covars(:))';
-        gVarcovs = gVarcovsLik + gVarcovsKL;
+
+        %gVarmeans = gVarmeansLik + gVarmeansKL;
+        %gVarcovs = gVarcovsLik + gVarcovsKL;
+        
+        fw = model.KLweight;
+        gVarmeans = 2 * ( (1-fw) * gVarmeansLik + fw * gVarmeansKL);
+        gVarcovs = 2 * ( (1-fw) * gVarcovsLik + fw * gVarcovsKL);
     end
 else
     gVarmeans = [];
@@ -246,7 +262,10 @@ if isfield(model, 'fixInducing') && model.fixInducing && learnInducing
     %gVarmeans(model.inducingIndices, :) = gVarmeans(model.inducingIndices,
     %:) + gInd; % This should work AFTER reshaping the matrices...but here
     %we use all the indices anyway.
-    gVarmeans = gVarmeans + gInd;
+    % Again, the 2*(1-fw) factor is for when KL is weighted differently
+    % than the \tilde{F} (likelihood) term, shouldn't make a difference if
+    % the default weight (fw = 0.5) is used.
+    gVarmeans = gVarmeans + 2*(1-model.KLweight)*gInd;
     gInd = []; % Inducing points are not free variables anymore, they dont have derivatives on their own.
 end
 
@@ -336,8 +355,13 @@ if ~learnInducing
     gInd = [];
 end
 
+gParam = [gInd gKern gBetaFinal];
+% If model.KLweight is 0.5 (default) then this doesn't change anything,
+% otherwise the gradient is weighted (since the likelihood term in the
+% bound is also weighted)
+gParam = 2 * (1-model.KLweight) * gParam;
 % At this point, gDynKern will be [] if there are no dynamics.
-g = [gVar gDynKern gInd gKern gBetaFinal];
+g = [gVar gDynKern gParam];
 
 
 % A 'dirty' trick to fix some parameters

@@ -83,9 +83,6 @@ while ~isempty(globalOpt.initVardistIters(i:end)) || ~isempty(globalOpt.itNo(i:e
         else
             fprintf('# SNR = %.6f\n',(1/model.beta)/var(model.m(:)));
         end
-        % Check if SNR of the optimised model is reasonable (ortherwise a
-        % bad local minimum might have been found)
-        svargplvmCheckSNR(svargplvmSNR(model));
         model.iters = model.iters + iters;
         
         % Save the results.

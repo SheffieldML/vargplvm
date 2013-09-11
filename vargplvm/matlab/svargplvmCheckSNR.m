@@ -40,6 +40,9 @@ if ~isempty(errors)
     errMsg = 'Error! Low SNR in modalities: ';
     errMsg = [errMsg num2str(errors)];
     errMsg = [errMsg errStr];
+    for j=1:length(SNR)
+        fprintf('# SNR%d = %.6f\n', j, SNR{j})
+    end
     error(errMsg);
 else
     for i = 1:length(SNR)

@@ -31,7 +31,6 @@ for i=1:length(Ytr)
     else
         options{i}.kern = globalOpt.baseKern;
     end
-    %indPoints = 80; %%%%%
     options{i}.numActive = globalOpt.indPoints;
     options{i}.optimiser = 'scg2';
     options{i}.enableDgtN = globalOpt.DgtN;
@@ -53,5 +52,7 @@ for i=1:length(Ytr)
         %optionsDyn{i}.labels = Ytr{i}.labels;
      %%%%%
     end
+    
+    options{i}.KLweight = globalOpt.KLweight;
 
 end
