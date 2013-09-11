@@ -95,6 +95,13 @@ catch
     lbls = [height width];    
 end
 
+if exist('pyramid','var') % extract pyramid representation of the images
+    if pyramid
+        for e=1:size(Y,2)
+            Y{e} = im2pyramid(Y{e}, lbls(1), lbls(2), 4);
+        end
+    end
+end
 
 N1 = size(Y{1},1);
 Yall{2} = [Y{4};Y{5};Y{6}];

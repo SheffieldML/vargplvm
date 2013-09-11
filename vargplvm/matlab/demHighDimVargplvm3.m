@@ -424,13 +424,14 @@ if trainModel
         prunedModel = vargplvmPruneModel(model);
         % prunedModelTr = vargplvmPruneModel(modelTr);
         save(fileToSave, 'prunedModel', 'prunedModelInit');
+        curSNR = vargplvmShowSNR(model);
+        if curSNR < 2
+            error('Signal to noise ratio is 1 (should be larger than 20)! Aborting...')
+        end        
     end
     prunedModelTr = prunedModel;
     save(fileToSave, 'prunedModel', 'prunedModelInit', 'prunedModelTr');
-    curSNR = vargplvmShowSNR(model);
-    if curSNR < 2
-        error('Signal to noise ratio is 1 (should be larger than 20)! Aborting...')
-    end
+
 else
     % Load pre-trained model
     disp(['# Loading pre-trained model number ' num2str(experimentNo) '...'])
