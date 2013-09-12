@@ -415,6 +415,11 @@ if isfield(options, 'learnInducing')
     model.learnInducing = options.learnInducing;
 end
 
+% Default field, controlling whether we are in initialising the var. distr.
+% mode (by fixing SNR) or not.
+model.initVardist = 0;
+
+
 %{
 %  if isstruct(options.back)
 
