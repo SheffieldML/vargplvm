@@ -85,11 +85,10 @@ if iters > 0
     else
         error('vargplvmOptimise: Invalid optimiser setting.');
     end
+    %model = vargplvmExpandParam(model, params);
+    model = modelExpandParam(model, params);
+    
+    % Check if SNR of the optimised model is reasonable (ortherwise a
+    % bad local minimum might have been found)
+    svargplvmCheckSNR({vargplvmShowSNR(model)});
 end
-
-%model = vargplvmExpandParam(model, params);
-model = modelExpandParam(model, params);
-
-% Check if SNR of the optimised model is reasonable (ortherwise a
-% bad local minimum might have been found)
-svargplvmCheckSNR({vargplvmShowSNR(model)});

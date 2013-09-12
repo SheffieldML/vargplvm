@@ -79,7 +79,6 @@ if iters > 0
         % NETLAB style optimization.
         params = optim('svargplvmObjective', params,  options,  'svargplvmGradient', model);
     end
+    model = svargplvmExpandParam(model, params);
+    svargplvmCheckSNR(svargplvmSNR(model));
 end
-model = svargplvmExpandParam(model, params);
-
-svargplvmCheckSNR(svargplvmSNR(model));
