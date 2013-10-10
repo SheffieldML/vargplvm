@@ -79,9 +79,9 @@ while ~isempty(globalOpt.initVardistIters(i:end)) || ~isempty(globalOpt.itNo(i:e
         fprintf(1,'# Optimising the model for %d iterations (session %d)...\n',iters,i);
         model = vargplvmOptimise(model, display, iters);
         if isfield(model,'mOrig')
-            fprintf('# SNR = %.6f\n',(1/model.beta)/var(model.mOrig(:)));
+            fprintf('# SNR = %.6f\n',model.beta * var(model.mOrig(:)));
         else
-            fprintf('# SNR = %.6f\n',(1/model.beta)/var(model.m(:)));
+            fprintf('# SNR = %.6f\n',model.beta * var(model.m(:)))
         end
         model.iters = model.iters + iters;
         

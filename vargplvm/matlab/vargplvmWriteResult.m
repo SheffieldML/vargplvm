@@ -13,7 +13,10 @@ if ~isfield(model, 'saveName') || isempty(model.saveName)
   end
   fileName = ['dem' dataset type num2str(number)];
   if nargin > 4
-      fileName = [fileName varargin{1}];
+      fileName = [fileName varargin{1}]; % Potential suffix
+  end
+  if nargin > 5
+      fileName = [varargin{2} fileName]; % Potential prefix
   end
   if isoctave
     fileName = [fileName '.mat'];
@@ -22,8 +25,17 @@ else
     fileName = model.saveName;
 end
 
-  if ~isempty(model)
-    save(fileName, 'model');
-  end
-    
-  
+if ~isempty(model)
+    try
+        save(fileName, 'model');
+        fprintf('# Saved ''%s.mat'' !\n', fileName)
+    catch e
+        e.getReport
+        if ~exist('./tmp.mat', 'file')
+            save('tmp.mat', 'model');
+            warning(0,['Could not save ' fileName '! Saved ''tmp.mat'' instead!'])
+        end
+    end
+end
+
+

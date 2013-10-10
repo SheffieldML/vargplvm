@@ -47,6 +47,10 @@ defaults.scale2var1 = 0;
 defaults.initVardistIters = 50;
 defaults.diaryFile = [];
 defaults.doGradChek = false;
+% By default do not learn the variance of the dynamic kernel (this is
+% basically applied to the matern class of kernels, hoping that the
+% lengthscale will compensate for fixing this value)
+defaults.learnDynKernelVariance = false;
 
 % This allows to rewrite the standard form of the bound F + KL as
 % 2*((1-fw)*F + fw*KL), where fw is the KLweight. This means that when fw

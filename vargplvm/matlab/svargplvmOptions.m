@@ -32,7 +32,7 @@ for i=1:length(Ytr)
         options{i}.kern = globalOpt.baseKern;
     end
     options{i}.numActive = globalOpt.indPoints;
-    options{i}.optimiser = 'scg2';
+    options{i}.optimiser = globalOpt.optimiser;
     options{i}.enableDgtN = globalOpt.DgtN;
     options{i}.fixInducing = globalOpt.fixInd;
     
@@ -45,7 +45,7 @@ for i=1:length(Ytr)
     
     % options{i}.scaleVal = sqrt(var(Ytr{i}(:))); %%% ??
     options{i}.scale2var1 = globalOpt.scale2var1;
-    
+   
     %%%%%
     if ~isempty(labelsTrain)
         options{i}.labels = labelsTrain;

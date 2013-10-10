@@ -20,4 +20,3 @@ function f = vargplvmObjective(params, model)
 
 model = modelExpandParam(model, params);
 f = - vargplvmLogLikelihood(model);
-% fprintf(1,'# F: %.13f .\n',f); %%% DEBUG

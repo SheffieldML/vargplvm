@@ -40,8 +40,9 @@ if length(varargin) == 2
             deltaf = gradient - delta;
             d=norm(deltaf - gradient)/norm(gradient + deltaf);
             d1=norm(deltaf - gradient,1)/norm(gradient + deltaf,1);
-            fprintf(1,' Norm1 difference: %d\n Norm2 difference: %d\n',d1,d);
-            grChek = {delta, d, d1};
+            grRatio = sum(abs(gradient ./ deltaf)) / length(deltaf);
+            fprintf(1,' Norm1 difference: %d\n Norm2 difference: %d\n Ratio: %d\n',d1,d, grRatio);
+            grChek = {delta, gradient, deltaf, d, d1};
         else
             grChek = [];
         end

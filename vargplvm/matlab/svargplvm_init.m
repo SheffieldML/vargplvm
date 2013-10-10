@@ -131,7 +131,31 @@ if ~exist('globalOpt')
     % is 0.5 there's no difference, otherwise the KL term can be more or less
     % emphasized
     defaults.KLweight = 0.5;
-
+    
+    % adjust the "influence" of each of the partial likelihood bounds according
+    % to their dimensionality. Specifically, if the bound is:
+    % F = F_1 + F_2 + ... + F_M - KL, then each F_i is scaled with
+    % 1/dimensionality(F_i) and all F terms are rescaled back so that the
+    % KL part is not unbalanced (ie all the coefficients of F_i's sum to 1)
+    % This is an evil way of balancing the models and should be avoided!!!
+    % See below a better way.
+    defaults.balanceModalities = false;
+    
+    % Similarly to the above, this tackles the fact that sometimes
+    % modalities have very different number of dimensions. This field
+    % linearly maps the selected modalities in higher dimensions via a
+    % random matrix "modalityMapping" which is stored into the model. This
+    % matrix maps to the dimensionality of the biggest modality. If
+    % balanceModalityDim is a single value (true or false) this is
+    % replicated to every modality. If it's a cell array, it only affects
+    % the corresponding modalities.
+    % The reverse mapping can be made by simply multiplying every row of
+    % modality i with model.modalityMapping{i}' (this should be done e.g.
+    % for predictions).
+    defaults.balanceModalityDim = false;
+    defaults.optimiser = 'scg';
+    defaults.saveModelDir = './';
+    
     %% The final options structure will contain default values, apart for whatever
     % is already set as a variable
     fnames = fieldnames(defaults);

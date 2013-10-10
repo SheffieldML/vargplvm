@@ -21,16 +21,57 @@ else
 end
 
 if nargin > 1
-    %-------------- INIT LATENT SPACE ---%
-    [X_init, m] = svargplvmInitLatentSpace2(Ytr, globalOpt, options);
-
-    if nargin > 3 && ~isempty(globalOpt.dynamicsConstrainType) && ~isempty(optionsDyn)
-         dynUsed = 1;
-    else
-        dynUsed = 0;
+    numModels = length(Ytr);
+    
+    %----- Balance modality dimensions
+    % Check svargplvn_init for balanceModalityDim entry to see
+    % a description of what is going on here.
+    if ~iscell(globalOpt.balanceModalityDim)
+        tmp = repmat(globalOpt.balanceModalityDim, 1, numModels);
+        globalOpt.balanceModalityDim = mat2cell(tmp,1,ones(1,size(tmp,2)));
+    end
+    modalityMapping = {};
+    if sum(cell2mat(globalOpt.balanceModalityDim)) > 0
+        maxDval = -Inf;
+        
+        % Find maximum dimensionality
+        for i=1:numModels
+            if size(Ytr{i},2) > maxDval
+                maxDval = size(Ytr{i},2);
+            end
+        end
+        
+        % Do the mapping
+        for i=1:numModels
+            curD = size(Ytr{i},2);
+            if curD < maxDval
+                fprintf('# Mapping modality %d from %d to %d dimensions!\n', i, curD, maxDval)
+                % Fix seed for the random mapping so that it's reproducible
+                curSeed = rng;
+                rng(123);
+                modalityMapping{i} = rand(curD, maxDval);
+                rng(curSeed);
+                %--
+                Ytmp = zeros(size(Ytr{i},1), maxDval);
+                for n = 1:size(Ytmp,1)
+                    Ytmp(n,:) = Ytr{i}(n,:)*modalityMapping{i};
+                end
+                Ytr{i} = Ytmp;
+            end
+        end
     end
 
 
+    %-------------- INIT LATENT SPACE ---%
+    [X_init, m] = svargplvmInitLatentSpace2(Ytr, globalOpt, options);
+    
+    if nargin > 3 && ~isempty(globalOpt.dynamicsConstrainType) && ~isempty(optionsDyn)
+        dynUsed = 1;
+    else
+        dynUsed = 0;
+    end
+    
+    
     latentDim = size(X_init,2);
     %-- Create the sub-models: Assume that for each dataset we have one model.
     % This can be changed later, as long as we find a reasonable way to
@@ -40,10 +81,10 @@ if nargin > 1
         %---- Here put some code to assign X to the global common X which must
         % be created by doing pca in the concatenation of Y's...After this
         % point, model{i}.X will be the same for all i's. TODO...
-       % fprintf(1,'# Creating the model...\n');
+        % fprintf(1,'# Creating the model...\n');
         options{i}.initX = X_init;
         model{i} = vargplvmCreate(latentDim, d{i}, Ytr{i}, options{i});
-
+        
         model{i}.X = X_init; %%%%%%%
         model{i} = vargplvmParamInit(model{i}, m{i}, model{i}.X);
         model{i}.X = X_init; %%%%%%%
@@ -57,22 +98,22 @@ if nargin > 1
         
         model{i}.kern.comp{1}.inputScales = inpScales;
         if ~iscell(model{i}.kern)
-             model{i}.kern.inputScales = model{i}.kern.comp{1}.inputScales;
+            model{i}.kern.inputScales = model{i}.kern.comp{1}.inputScales;
         end
-
+        
         
         params = vargplvmExtractParam(model{i});
         model{i} = vargplvmExpandParam(model{i}, params);
         model{i}.vardist.covars = 0.5*ones(size(model{i}.vardist.covars)) + 0.001*randn(size(model{i}.vardist.covars));
-
-
+        
+        
         %-------- Add dynamics to the model -----
         if  dynUsed
             optionsDyn.initX = X_init;
             model{i} = svargplvmAddDynamics(model{i}, globalOpt, optionsDyn);
         end
-
-
+        
+        
         % model{i}.beta=1/(0.01*var(m{i}(:)));
         % NEW!!!!!
         if var(m{i}(:)) < 1e-8
@@ -81,7 +122,7 @@ if nargin > 1
         else
             model{i}.beta = 1/((1/globalOpt.initSNR * var(m{i}(:))));
         end
-%        model{i}.beta = 1/((1/globalOpt.initSNR * var(model{i}.m(:)))); %%%%%%%%
+        %        model{i}.beta = 1/((1/globalOpt.initSNR * var(model{i}.m(:)))); %%%%%%%%
         
         %prunedModelInit{i} = vargplvmPruneModel(model{i});
         %disp(model{i}.vardist.covars)
@@ -145,7 +186,7 @@ model.type = 'svargplvm';
 % opimisation (i.e their gradients will be forced to be zero)
 if nargin>1 && isfield(globalOpt, 'fixedKernVarianceIndices') && ~isempty(globalOpt.fixedKernVarianceIndices)
     if isfield(model, 'dynamics') && ~isempty(model.dynamics)
-    model.dynamics.fixedKernVariance = globalOpt.fixedKernVarianceIndices;
+        model.dynamics.fixedKernVariance = globalOpt.fixedKernVarianceIndices;
         for i=1:length(model.comp)
             model.comp{i}.dynamics.fixedKernVariance = globalOpt.fixedKernVarianceIndices;
         end
@@ -161,3 +202,64 @@ end
 % else
 %     model.sharedParams = 1:model.vardist.nParams;
 % end
+
+% Make sure that model.comp{i}.KLweight and dynamics are not used together
+if isfield(model.comp{1}, 'dynamics') && ~isempty(model.comp{1}.dynamics)
+    for i=1:model.numModels
+        if isfield(model.comp{i}, 'KLweight')
+            assert(model.comp{1}.KLweight == 0.5)
+        end
+    end
+end
+
+model.optimiser = globalOpt.optimiser;
+
+
+% WARNING: This is not a good thing to do!! See the balanceModalityDim flag
+% for a better solution!
+% Adjust the "influence" of each of the partial likelihood bounds according
+% to their dimensionality. Specifically:
+% Bound is: F = F_1 + F_2 + ... + F_M - KL
+% a_i = 1/model.comp{i}.d = 1 / di
+% First we balance the bound with the dimensionality by multiplying each
+% F_i with its corresponding a_i
+% But now the KL is unequally balanced, since overall we might have given
+% more importance to the F_i terms (in terms of gradient steps, since all
+% multipliers are just scales of the corresponding partial grad). So, we
+% then multiply everything with d1*d2*d3*... / (d2*d3+d1*d3+d1*d2+..). In
+% this way we make sure that overall sum(F_i) coefficients is 1, as if we
+% didn't weight anything. Notice that the weights a_i are given by
+% 1-(a_i/2) (the KL is not actually affected as it is
+% computed in the svargplvm and not the vargplvm framework) because in the
+% vargplvm framework the weights are automatically multiplied by 2.
+if globalOpt.balanceModalities
+    % I know this is a stupid way of computing it, but I want to go for
+    % lunch.
+    fprintf('# Balancing modalities...\n');
+    dimProd = 1;
+    for i=1:model.numModels
+        dimProd = dimProd * log(model.comp{i}.d);
+    end
+    for i=1:model.numModels
+        dimPair(i) = dimProd/log(model.comp{i}.d);
+    end
+    dimPairSum = sum(dimPair);
+    for i=1:model.numModels
+        a_i = (dimProd / dimPairSum)/log(model.comp{i}.d);
+        model.comp{i}.KLweight = 1-(a_i/2);
+        assert(model.comp{i}.KLweight <= 1 && model.comp{i}.KLweight>=0)
+    end
+end
+
+%{
+if ~isempty(modalityMapping)
+    % This is too costly, don't store... 
+    model.modalityMapping = modalityMapping;
+    %Instead, the random seed to generate it is
+    % fixed in this function, so modalityMapping{i} can be reproduced by:
+    %curSeed = rng;
+    %rng(1);
+    %modalityMapping{i} = rand(model.comp{i}.d, maxDval);
+    %rng(curSeed);
+end
+%}

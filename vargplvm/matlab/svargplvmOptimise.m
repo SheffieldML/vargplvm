@@ -19,6 +19,7 @@ function [model, grChek] = svargplvmOptimise(model, display, iters, varargin)
 
 % VARGPLVM
 
+grChek = [];
 
 if nargin < 3
     iters = 2000;
@@ -35,12 +36,13 @@ if length(varargin) == 2
         %options(9) = varargin{2};
         doGradchek = varargin{2};
         if doGradchek
-            [gradient, delta] = feval('gradchek', params, @modelmObjective, @modelGradient, model);
+            [gradient, delta] = feval('gradchek', params, @modelObjective, @modelGradient, model);
             deltaf = gradient - delta;
             d=norm(deltaf - gradient)/norm(gradient + deltaf); %%
             d1=norm(deltaf - gradient,1)/norm(gradient + deltaf,1); %%
-            fprintf(1,' Norm1 difference: %d\n Norm2 difference: %d\n',d1,d);
-            grChek = {delta, d, d1};
+            grRatio = sum(abs(gradient ./ deltaf)) / length(deltaf);
+            fprintf(1,' Norm1 difference: %d\n Norm2 difference: %d\n Ratio: %d\n',d1,d, grRatio);
+            grChek = {delta, gradient, deltaf, d, d1};
         else
             grChek = [];
         end
@@ -53,9 +55,9 @@ options(3) = 0.1*options(3);
 
 if display
     options(1) = 1;
-    if length(params) <= 100
-        options(9) = 1; % gradchek
-    end
+    %if length(params) <= 100
+    %    options(9) = 1; % gradchek
+    %end
 end
 options(14) = iters;
 
@@ -75,10 +77,15 @@ if iters > 0
         % objectiveGradient can be used where applicable, in order to re-use
         % precomputed quantities.
         params = optim('svargplvmObjectiveGradient', params,  options, 'svargplvmGradient', model);
+    elseif strcmp(func2str(optim), 'scg3')
+        % NETLAB style optimization with the modification of scg2 and
+        % additionally another slight modification which allows to update
+        % the model in the objectiveGradient
+        params = optim('svargplvmObjectiveGradient2', params,  options, 'svargplvmGradient', model);
     else
         % NETLAB style optimization.
         params = optim('svargplvmObjective', params,  options,  'svargplvmGradient', model);
     end
     model = svargplvmExpandParam(model, params);
-    svargplvmCheckSNR(svargplvmSNR(model));
+   % svargplvmCheckSNR(svargplvmSNR(model));
 end

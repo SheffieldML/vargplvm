@@ -98,3 +98,31 @@ model = vargplvmUpdateStats(model, model.X_u);
 % end
 % %%%
 
+
+%--------- TMP
+ %{
+if isfield(model, 'paramPriors')
+    if isfield(model.paramPriors{1}.prior, 'scale')
+        model.paramPriors{1}.prior.scale = 1;
+        
+        g = vargplvmLogLikeGradients(model);
+        a = abs(g(end));
+        gP = vargplvmParamPriorGradients(model);
+        b = abs(gP(end));
+        model.paramPriors{1}.prior.scale = max(1,(a/b - 1)/2); %%
+        
+        %--- TMP
+       % m2 = rmfield(model, 'paramPriors');
+       % m2.onlyLikelihood=1;
+       % g2 = vargplvmLogLikeGradients(m2);
+       % fprintf('# %.5f\n', g2(end)/gP(end))
+        %-----
+
+        fprintf('# Scale of prior on beta: %.5f | beta=%.5f\n', model.paramPriors{1}.prior.scale, model.beta)
+        
+       % gP2 = vargplvmParamPriorGradients(model);
+       % fprintf('! %.4f | %.4f\n', g2(end), gP2(end));
+    end
+end
+ %}
+%----

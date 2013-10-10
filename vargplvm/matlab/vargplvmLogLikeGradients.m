@@ -364,6 +364,9 @@ gParam = 2 * (1-model.KLweight) * gParam;
 g = [gVar gDynKern gParam];
 
 
+% If there are priors on parameters, add the contribution here
+g = g + vargplvmParamPriorGradients(model);
+
 % A 'dirty' trick to fix some parameters
 if isfield(model, 'fixParamIndices') && ~isempty(model.fixParamIndices)
     g(model.fixParamIndices) = 0;

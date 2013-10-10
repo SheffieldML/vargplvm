@@ -27,9 +27,11 @@ demSvargplvm2
 randn('seed', 1e5);
 rand('seed', 1e5);
 
-if ~exist('Yall')
+if ~exist('Yall', 'var')
     error('# This demo requires that a cell-array Yall is a priori created. This array should contain one dataset per cell.')
 end
+if ~exist('trainModel', 'var'), trainModel = true; end
+
 M = length(Yall);
 
 % This script initialises the options structure 'globalOpt'.
@@ -52,10 +54,9 @@ for i=1:M
         Yts{i} = Y(indTs,:);
     end
     Ytr{i} = Y(indTr,:);
-    
-    t{i} = linspace(0, 2*pi, size(Y, 1)+1)'; t{i} = t{i}(1:end-1, 1);
-    timeStampsTraining{i} = t{i}(indTr,1); %timeStampsTest = t(indTs,1);
 end
+t = linspace(0, 2*pi, size(Y, 1)+1)'; t = t(1:end-1, 1);
+timeStampsTraining = t(indTr,1); %timeStampsTest = t(indTs,1);
 clear('Y')
 
 
@@ -88,11 +89,8 @@ model = svargplvmModelCreate(Ytr, globalOpt, options, optionsDyn);
 if exist('diaryFile'), model.diaryFile = diaryFile; end
 
 if ~isfield(globalOpt, 'saveName') || isempty(globalOpt.saveName)
-    modelType = model.type;
-    modelType(1) = upper(modelType(1));
-    globalOpt.saveName = ['dem' modelType num2str(globalOpt.experimentNo) '.mat'];
+    model.saveName = vargplvmWriteResult([], model.type, globalOpt.dataSetName, globalOpt.experimentNo, [], globalOpt.saveModelDir);
 end
-model.saveName = globalOpt.saveName;
 model.globalOpt = globalOpt;
 model.options = options;
 
@@ -125,9 +123,10 @@ end
 
 %%
 
-model = svargplvmOptimiseModel(model);
-
-svargplvmShowScales(model)
+if trainModel
+    model = svargplvmOptimiseModel(model);
+    svargplvmShowScales(model)
+end
 
 return
 

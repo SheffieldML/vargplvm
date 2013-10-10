@@ -97,3 +97,6 @@ if model.initVardist
 end
 fw = model.KLweight;
 ll = 2*((1 - fw)*ll + fw * KLdiv);
+
+% If there's a prior on some parameters, add the contribution
+ll = ll + vargplvmParamPriorLogProb(model);

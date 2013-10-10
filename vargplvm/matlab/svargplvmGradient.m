@@ -21,4 +21,3 @@ function g = svargplvmGradient(params, model)
 
 model = svargplvmExpandParam(model, params);
 g = -svargplvmLogLikeGradients(model);
-

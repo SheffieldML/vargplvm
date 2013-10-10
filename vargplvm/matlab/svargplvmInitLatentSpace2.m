@@ -66,7 +66,6 @@ end
 if size(globalOpt.initX,1) ~= 1 % Check if initial X is already given as a matrix
     X_init = globalOpt.initX;
 else
-    initFunc = str2func([initX 'Embed']);
     % %-- Create shared X:
     % initFunc = str2func([initX 'Embed']);
     % X = initFunc(mAll, latentDim);
@@ -82,46 +81,92 @@ else
         X_init = [Xy Xs Xz]; % sizes: 2,1,2
         X_init = (X_init-repmat(mean(X_init),size(X_init,1),1))./repmat(std(X_init),size(X_init,1),1);
     elseif strcmp(initLatent,'separately')
-        fprintf(['# Initialising the latent space with ' initX ' separately for each modality, with Q=['])
+        X_init = [];
+        
+        initFunc{i} = cell(1,length(Ytr));
+        for i = 1:length(Ytr)
+            if ~iscell(initX)
+                initFunc{i} = str2func([initX 'Embed']);
+            else
+                initFunc{i} = str2func([initX{i} 'Embed']);
+            end
+        end
+        
+        if iscell(initX)
+            initXprint = ['{' sprintf('%s ', initX{:}) '}'];
+        else
+            initXprint = initX;
+        end
+        fprintf(['# Initialising the latent space with ' initXprint ' separately for each modality, with Q=['])
         if iscell(latentDimPerModel)
             for i=1:length(Ytr), fprintf('%d ', latentDimPerModel{i}); end
         else
             fprintf('%d', latentDimPerModel);
         end
         fprintf(']...\n')
-        X_init = [];
+        
+            
         for i=1:length(Ytr)
             if iscell(latentDimPerModel)
-                X_init_cur = initFunc(m{i},latentDimPerModel{i});
+                X_init_cur = initFunc{i}(m{i},latentDimPerModel{i});
             elseif isscalar(latentDimPerModel)
-                X_init_cur = initFunc(m{i},latentDimPerModel);
+                X_init_cur = initFunc{i}(m{i},latentDimPerModel);
             else
                 error('Unrecognised format for latentDimPerModel')
             end
             X_init = [X_init X_init_cur];
         end
     elseif strcmp(initLatent,'concatenated')
+        initFunc = str2func([initX 'Embed']);
         fprintf(['# Initialising the latent space with ' initX ' after concatenating modalities in Q = %d ...\n'], latentDim)
         X_init = initFunc(mAll, latentDim);
     elseif strcmp(initLatent, 'custom')
         clear mAll
         % Like pca initialisation but favour the first model compared to the
-        % second (only for two submodels)
-        assert(length(Ytr)==2, 'Custom initialisation only for 2 submodels!')
+        % second
+        % assert(length(Ytr)==2, 'Custom initialisation only for 2 submodels!')
         try
-            fprintf(['# Initialising the latent space with ' initX ' separately, with (%d, %d) dims. for each modality...\n'],latentDimPerModel{1},latentDimPerModel{2})
-            X_init{1} = initFunc(m{1},latentDimPerModel{1});
-            if latentDimPerModel{2} ~= 0
-                X_init{2} = initFunc(m{2},latentDimPerModel{2});
-            else
-                % For some aplications, we do not want embedding...(e.g. when
-                % one of the modalities are the labels for classification)
-                X_init{2} = m{2};
+            latDims = zeros(1, length(latentDimPerModel));
+            for ld = 1:length(latentDimPerModel)
+                if latentDimPerModel{ld} == 0
+                    latDims(ld) = size(m{ld},2);
+                else
+                    latDims(ld) = latentDimPerModel{ld};
+                end
             end
-            X_init = [X_init{1} X_init{2}];
+            X_init = [];
+            
+            initFunc{i} = cell(1,length(Ytr));
+            for i = 1:length(Ytr)
+                if ~iscell(initX)
+                    initFunc{i} = str2func([initX 'Embed']);
+                else
+                    initFunc{i} = str2func([initX{i} 'Embed']);
+                end
+            end
+            
+            if iscell(initX)
+                initXprint = ['{' sprintf('%s ', initX{:}) '}'];
+            else
+                initXprint = initX;
+            end
+            fprintf(['# Initialising the latent space with ' initXprint ' separately, with (%s) dims. for each modality...\n'], num2str(latDims))
+             
+            for ld = 1:length(latentDimPerModel)
+                if latentDimPerModel{ld} ~= 0
+                    X_init_cur = initFunc{ld}(m{ld},latentDimPerModel{ld});
+                else
+                    % For some aplications, we do not want embedding...(e.g. when
+                    % one of the modalities are the labels for classification)
+                    X_init_cur = m{ld};
+                end
+                X_init = [X_init X_init_cur];
+            end
         catch e
             if strcmp(e.identifier, 'MATLAB:nomem')
                 warning(['Not enough memory to initialise with ' initX '! Initialising with PPCA instead...']);
+            else
+                e.getReport
             end
             initFunc = 'ppcaEmbed';
             X_init{1} = initFunc(m{1}, latentDimPerModel{1});

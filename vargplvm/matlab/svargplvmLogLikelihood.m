@@ -20,7 +20,12 @@ if ~isfield(model, 'dynamics') || isempty(model.dynamics)
     ll = f1(model);
     %ll = f2(model);
 else
-    ll = f2(model); 
+    ll = f2(model);
+    for i = 1:model.numModels
+        if isfield(model.comp{i}, 'KLweight')
+            assert(model.comp{i}.KLweight == 0.5); % not implemented yet for dynamics
+        end
+    end
 end
 
 
