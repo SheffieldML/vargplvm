@@ -7,7 +7,7 @@ function R = rng(givenSeed)
 
 DEFAULT_SEED = 1e4;
 
-if exist('rand', 'builtin')
+if exist('rng', 'builtin')
     if nargin == 1
         rng(givenSeed)
     else
