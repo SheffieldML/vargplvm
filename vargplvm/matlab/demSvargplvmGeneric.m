@@ -57,7 +57,7 @@ for i=1:M
 end
 t = linspace(0, 2*pi, size(Y, 1)+1)'; t = t(1:end-1, 1);
 timeStampsTraining = t(indTr,1); %timeStampsTest = t(indTs,1);
-clear('Y')
+clear('Y','Yall')
 
 
 for i=2:M

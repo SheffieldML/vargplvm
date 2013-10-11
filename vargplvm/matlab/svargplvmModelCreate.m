@@ -76,7 +76,8 @@ if nargin > 1
     %-- Create the sub-models: Assume that for each dataset we have one model.
     % This can be changed later, as long as we find a reasonable way to
     % initialise the latent spaces.
-    for i=1:length(Ytr)
+    M = length(Ytr);
+    for i=1:M
         d{i} = size(Ytr{i},2);
         %---- Here put some code to assign X to the global common X which must
         % be created by doing pca in the concatenation of Y's...After this
@@ -88,6 +89,8 @@ if nargin > 1
         model{i}.X = X_init; %%%%%%%
         model{i} = vargplvmParamInit(model{i}, m{i}, model{i}.X);
         model{i}.X = X_init; %%%%%%%
+        var_mi = var(m{i}(:));
+        m{i} = []; % Save some memory
         
         if isfield(globalOpt, 'inputScales') && ~isempty(globalOpt.inputScales)
             inpScales = globalOpt.inputScales;
@@ -114,18 +117,20 @@ if nargin > 1
         end
         
         
-        % model{i}.beta=1/(0.01*var(m{i}(:)));
+        % model{i}.beta=1/(0.01*var_mi);
         % NEW!!!!!
-        if var(m{i}(:)) < 1e-8
+        if var_mi < 1e-8
             warning(['Variance in model ' num2str(i) ' was too small. Setting beta to 1e+7'])
             model{i}.beta = 1e+7;
         else
-            model{i}.beta = 1/((1/globalOpt.initSNR * var(m{i}(:))));
+            model{i}.beta = 1/((1/globalOpt.initSNR * var_mi));
         end
         %        model{i}.beta = 1/((1/globalOpt.initSNR * var(model{i}.m(:)))); %%%%%%%%
         
         %prunedModelInit{i} = vargplvmPruneModel(model{i});
         %disp(model{i}.vardist.covars)
+        
+        Ytr{i} = []; % Save some memory
     end
 end
 

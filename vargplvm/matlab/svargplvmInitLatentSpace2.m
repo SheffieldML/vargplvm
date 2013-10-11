@@ -58,8 +58,11 @@ for i=1:length(Ytr)
             m{i}(:, j) = m{i}(:, j)/scale(j);
         end
     end
-    
-    mAll = [mAll m{i}]; % Concatenation (doesn't work if different sizes)
+    clear('bias')
+    clear('scale')
+    if strcmp(initLatent,'concatenated')
+        mAll = [mAll m{i}]; % Concatenation (doesn't work if different sizes)
+    end
 end
 
 
@@ -121,7 +124,6 @@ else
         fprintf(['# Initialising the latent space with ' initX ' after concatenating modalities in Q = %d ...\n'], latentDim)
         X_init = initFunc(mAll, latentDim);
     elseif strcmp(initLatent, 'custom')
-        clear mAll
         % Like pca initialisation but favour the first model compared to the
         % second
         % assert(length(Ytr)==2, 'Custom initialisation only for 2 submodels!')
