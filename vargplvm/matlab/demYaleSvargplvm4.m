@@ -276,6 +276,7 @@ end
 %modelInit = model;%%%TEMP
 
 %--  Unify models into a structure
+svargplvm_init
 model = svargplvmModelCreate(model);
 model.dataSetNames = dataSetNames;
 model.experimentNo = experimentNo;
