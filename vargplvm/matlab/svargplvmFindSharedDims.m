@@ -1,4 +1,4 @@
-function [sharedDims, privateDims] = svargplvmFindSharedDims(model, thresh, printOut)
+function [sharedDims, privateDims] = svargplvmFindSharedDims(model, thresh, printOut, modalities)
 % SVARGPLVMFINDSHAREDDIMS Find automatically the shared/private dimensions
 % of the segmented latent space, based on some threshold
 % DESC  Find automatically the shared/private dimensions of the segmented
@@ -14,12 +14,16 @@ function [sharedDims, privateDims] = svargplvmFindSharedDims(model, thresh, prin
 if nargin < 3 || isempty(printOut), printOut = false; end
 if nargin < 2 || isempty(thresh), thresh = 0.005; end
 
-if length(model.comp) ~= 2
-    error('method not implemented yet for > 2 submodels!')
+if nargin < 4
+    if length(model.comp) ~= 2
+        error('method not implemented yet for > 2 submodels!')
+    end
+    obsMod = 1; % one of the involved sub-models (the one for which we have the data)
+    infMod = setdiff(1:2, obsMod);
+else
+    obsMod = modalities{1};
+    infMod = modalities{2};
 end
-
-obsMod = 1; % one of the involved sub-models (the one for which we have the data)
-infMod = setdiff(1:2, obsMod);
 
 if isfield(model.comp{obsMod}.kern, 'comp')
     s1 = model.comp{obsMod}.kern.comp{1}.inputScales;

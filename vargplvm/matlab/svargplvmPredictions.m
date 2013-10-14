@@ -32,7 +32,8 @@
 % generate.
 if ~exist('numberOfNN', 'var'), numberOfNN = 1; end
 if ~exist('saveAllNN', 'var'), saveAllNN = 0; end
-
+if ~exist('infMethod','var'), infMethod = 1; end
+if ~exist('displayTestOpt', 'var'), displayTestOpt=false; end
 % TODO:
 % Here replace model.comp{i}.m with model.comp{i}.mOrig if DgtN is
 % active...
@@ -44,7 +45,7 @@ if testOnTraining
     testInd = perm(1:numberTestPoints);
 else
     numberTestPoints = size(Yts{1},1); % 10;
-    perm = randperm(size(Yts{obsMod},1));
+    %perm = randperm(size(Yts{obsMod},1));
     %testInd = perm(1:numberTestPoints);
     if ~exist('testInd')
         testInd = 1:size(Yts{1},1); %%%%  
@@ -107,10 +108,9 @@ for i=1:length(testInd)
             vardistx = vardistCreate(model.comp{obsMod}.vardist.means(mini(i),:), model.q, 'gaussian');
             vardistx.covars = model.comp{obsMod}.vardist.covars(mini(i),:);
             model.comp{obsMod}.vardistx = vardistx;
-            display=0; %%%
             iters = globalOpt.reconstrIters;
             % Find p(X_* | Y_*) which is approximated by q(X_*)
-            [x_star, varx_star, modelUpdated] = vargplvmOptimisePoint(model.comp{obsMod}, vardistx, y_star, display, iters);%%%
+            [x_star, varx_star, modelUpdated] = vargplvmOptimisePoint(model.comp{obsMod}, vardistx, y_star, displayTestOpt, iters);%%%
             x_star_all(i,:) = x_star;
             varx_star_all(i,:) = varx_star;
         end
@@ -132,7 +132,6 @@ for i=1:length(testInd)
     % Find p(y_*|x_*) for every x_* found from the NN
    % fprintf('# Predicting from the NN of X_* ');
     for k=1:numberOfNN
-        infMethod = 5;
         switch infMethod
             case 0
                 % This is the most reliable method (use varx_star in the

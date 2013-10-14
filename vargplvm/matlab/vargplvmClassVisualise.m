@@ -41,6 +41,7 @@ switch call
       % This should be changed to a model specific visualisation.
       visualiseInfo.latentPos(visualiseInfo.dim1) = x;
       visualiseInfo.latentPos(visualiseInfo.dim2) = y;
+      %fprintf('[x y] = [%d %d]\n',x,y)%%%%%%%%%%5
       set(visualiseInfo.latentHandle, 'xdata', x, 'ydata', y);
       fhandle = str2func([visualiseInfo.model.type 'PosteriorMeanVarPar']);
       %[mu, varsigma] = fhandle(visualiseInfo.model,visualiseInfo.latentPos); %%%
