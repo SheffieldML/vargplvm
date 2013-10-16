@@ -34,4 +34,8 @@ else
     vardistx = model.vardistx;
     vardistx = vardistExpandParam(vardistx, x);
 end
-f = - vargplvmPointLogLikelihood(model, vardistx, y);
+if isfield(model, 'DgtN_test') && model.DgtN_test
+    f = - vargplvmPointLogLikelihoodFast(model, vardistx, y);
+else
+    f = - vargplvmPointLogLikelihood(model, vardistx, y);
+end

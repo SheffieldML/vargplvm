@@ -31,10 +31,19 @@ if size(xvec, 1) > size(xvec, 2)
 else
   transpose = false;
 end
-f = - vargplvmPointLogLikelihood(model, x, y);
+
+if isfield(model, 'DgtN_test') && model.DgtN_test
+    f = - vargplvmPointLogLikelihoodFast(model, x, y);
+else
+    f = - vargplvmPointLogLikelihood(model, x, y);
+end
 
 if nargout > 1
-  g = - vargplvmPointLogLikeGradient(model, x, y);
+  if isfield(model, 'DgtN_test') && model.DgtN_test
+    g = - vargplvmPointLogLikeGradientFast(model, x, y);
+  else
+    g = - vargplvmPointLogLikeGradient(model, x, y);
+  end
 end
 if transpose
   g = g';

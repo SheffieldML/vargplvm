@@ -140,8 +140,6 @@ else
    TrPP = sum(sum(P .* P));
 end 
 
-
-
 % LL1 TERM: This only takes into account the dimensions (m) from the training
 % data (no test data at all here), where (m) is the set of dimensions
 % which are missing in the test data.
@@ -152,7 +150,7 @@ if ~isempty(indexMissing)
    
    % Precompute again the parts that contain Y
    TrYY = sum(sum(mOrig(:,indexMissing) .* mOrig(:,indexMissing)));
-   
+
    ll1 = -0.5*(dmis*(-(model.N-model.k)*log(model.beta) ...
 				  + model.logDetAt) ...
 	      - (TrPP ...

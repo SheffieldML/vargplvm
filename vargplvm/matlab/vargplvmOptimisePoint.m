@@ -130,6 +130,46 @@ else
     x = vardistExtractParam(vardistx);
 end
 
+if isfield(model, 'DgtN') && model.DgtN
+    % Perform precomputations which will result in faster execution. This
+    % happens in two stages:
+    % a) Precomputing constants only once here, instead in every call of
+    % the objective and grad
+    % b) Replace model.m with a reduced rank representation, since it only
+    % appears in the expression model.m * model.m'. This is the same tricks
+    % used in vargplvmCreate for DgtN flag.
+    if isfield(model, 'dynamics') && ~isempty(model.dynamics)
+        error('The fast optimise utility is not tested for dynamics!')
+    end
+    model.DgtN_test = true;
+    mOrig = model.m;
+    model.testPrecomp.indexMissing = find(isnan(y(1,:)));
+    indexPresent = setdiff(1:model.d, model.testPrecomp.indexMissing );
+    y = y(:,indexPresent);   
+    P = model.P1 * (model.Psi1' * model.m(:,model.testPrecomp.indexMissing));
+    model.testPrecomp.TrPP = sum(sum(P .* P));
+    model.testPrecomp.TrYY = sum(sum(model.m(:,model.testPrecomp.indexMissing) .* model.m(:,model.testPrecomp.indexMissing)));
+    y = y - repmat(model.bias(indexPresent),size(y,1),1);
+    y = y./repmat(model.scale(indexPresent),size(y,1),1);
+    mPres = model.m(:, indexPresent);
+    mPres = [mPres; y];    
+    YYT = mPres * mPres'; % NxN
+    [U S V]=svd(YYT);
+    model.testPrecomp.mReduced=U*sqrt(abs(S));
+    model.testPrecomp.TrYY2 = sum(diag(YYT)); % scalar
+    
+    % For grads
+    mPresGrad = [y; model.m(:, indexPresent)];
+    YYT = mPresGrad * mPresGrad'; % NxN
+    [U S V]=svd(YYT);
+    model.testPrecomp.mReducedGrad=U*sqrt(abs(S));
+    model.testPrecomp.mY = mPresGrad*y';
+    model.m = []; % Less overhead in passing arguments (pass by value)
+else
+    model.DgtN_test = false;
+end
+
+
 if strcmp(func2str(optim), 'optimiMinimize')
     % Carl Rasmussen's minimize function
     x = optim('vargplvmPointObjectiveGradient', x, options, model, y);
@@ -163,4 +203,8 @@ X = vardistx.means;
 varX = vardistx.covars;
 
 
-
+if isfield(model, 'DgtN_test') && model.DgtN_test
+    model = rmfield(model, 'testPrecomp');
+    model = rmfield(model, 'DgtN_test');
+    model.m = mOrig;
+end

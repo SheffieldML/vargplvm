@@ -1,4 +1,4 @@
-% SVARGPLVMPREDICTIONS This script implements the predictions for a classification task
+% SVARGPLVMPREDICTIONS This script implements the predictions for MRD
 %
 % SEEALSO : demClassification, demClassification3, demClassificationGeneral, svargplvmPredictions2, svargplvmPredictions3
 %
@@ -40,9 +40,15 @@ if ~exist('displayTestOpt', 'var'), displayTestOpt=false; end
 
 
 if testOnTraining
-    numberTestPoints = 10; % Change to whatever you like
-    perm = randperm(model.N);
-    testInd = perm(1:numberTestPoints);
+    if ~exist('numberTestPoints', 'var')
+        numberTestPoints = 10; % Change to whatever you like
+    end
+    if numberTestPoints == model.N
+        testInd = 1:model.N;
+    else
+        perm = randperm(model.N);
+        testInd = perm(1:numberTestPoints);
+    end
 else
     numberTestPoints = size(Yts{1},1); % 10;
     %perm = randperm(size(Yts{obsMod},1));

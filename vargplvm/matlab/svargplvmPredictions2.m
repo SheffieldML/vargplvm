@@ -7,8 +7,7 @@
 % VARGPLVM
 
 %%%--- Script: svargplvmPredictions2 %%%%-
-%%% This script is like svargplvmPredictions with a few additions (it
-%%% should replace svargplvmPRedictions)
+%%% This script is like svargplvmPredictions with a few additions 
 if ~exist('testOnTraining')
     testOnTraining=0;
 end

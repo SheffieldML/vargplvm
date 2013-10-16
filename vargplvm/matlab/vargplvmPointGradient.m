@@ -34,4 +34,9 @@ else
     vardistx = model.vardistx;
     vardistx = vardistExpandParam(vardistx, x);
 end
-g = - vargplvmPointLogLikeGradient(model, vardistx, y);
+
+if isfield(model, 'DgtN_test') && model.DgtN_test
+    g = - vargplvmPointLogLikeGradientFast(model, vardistx, y);
+else
+    g = - vargplvmPointLogLikeGradient(model, vardistx, y);
+end
