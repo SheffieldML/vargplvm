@@ -182,7 +182,7 @@ for trialNo = 1:totalTrials
     obsMod = 1; % one of the involved sub-models (the one for which we have the data)
     infMod = setdiff(1:2, obsMod);
 
-    sharedDims = svargplvmFindSharedDims(model);
+    % sharedDims = svargplvmFindSharedDims(model);
 
     %---------------------------- PREDICTIONS ---------------
     if ~doPredictions
@@ -197,14 +197,32 @@ for trialNo = 1:totalTrials
     end
 
 
-    %--------------------%
-    svargplvmPredictions %---- Script returning: ZpredMuAll and mini(the indices for NN)
-    %--------------------%
+    [sharedDims, privateDims] = svargplvmFindSharedDims(model,[],[],{obsMod infMod});
 
+    
+    % svargplvmPredictions
+    [x_star_all, varx_star_all, mini] = vargplvmPredictLatent(model.comp{obsMod}, Yts{obsMod}, [], true, model.globalOpt.reconstrIters);
+    infMethod = 1; % Experiment with different inference methods as well (check svargplvmPredictionsFunc)
+    [Zpred, testInd, ~, ~, indNN] = ...
+        svargplvmPredictionsFunc(model, 0, Yts, x_star_all, varx_star_all, obsMod, infMod, [], 1, infMethod);
+    % Store into a matrix
+    ZpredMuAll = zeros(length(Zpred), size(Zpred{1},2));
+    for i = 1:length(Zpred)
+        ZpredMuAll(i,:) = Zpred{i};
+    end
 
     %--- For classification we are interested in labels
-    ZpredMuAll(ZpredMuAll > 0) = 1;
+    ZpredMuAll(ZpredMuAll >= 0) = 1;
     ZpredMuAll(ZpredMuAll < 0) = -1;
+    % This dataset should have exactly one label present, so if all zeros
+    % are returned take the maximum ind. as one (this in practise never
+    % happens)
+    tmpList = find(sum(ZpredMuAll,2) == -3);
+    for tt = 1:length(tmpList)
+        [~,tmpInd] = max(Zpred{tmpList(tt)});
+        ZpredMuAll(tmpList(tt),tmpInd) = 1;
+    end
+    
     NNpred = Ytr{infMod}(mini,:);
     realLabels = lblsTest(testInd,:);
 

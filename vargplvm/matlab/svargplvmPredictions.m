@@ -58,6 +58,10 @@ else
     end
 end
 
+if ~exist('sharedDims', 'var') || ~exist('privateDims', 'var')
+    [sharedDims, privateDims] = svargplvmFindSharedDims(model,[],[],{obsMod infMod});
+end
+
 % Here we'll store the predictions: it's a matrix N* x D_z, where N* is the
 % number of test points and D_z is the dimensionality of the z points
 ZpredMuAll = [];
