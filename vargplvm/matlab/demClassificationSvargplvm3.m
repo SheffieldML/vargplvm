@@ -203,7 +203,7 @@ for trialNo = 1:totalTrials
     % svargplvmPredictions
     [x_star_all, varx_star_all, mini] = vargplvmPredictLatent(model.comp{obsMod}, Yts{obsMod}, [], true, model.globalOpt.reconstrIters);
     infMethod = 1; % Experiment with different inference methods as well (check svargplvmPredictionsFunc)
-    [Zpred, testInd, ~, ~, indNN] = ...
+    [Zpred, testInd, XpredAll, varXpredAll, indNN] = ...
         svargplvmPredictionsFunc(model, 0, Yts, x_star_all, varx_star_all, obsMod, infMod, [], 1, infMethod);
     % Store into a matrix
     ZpredMuAll = zeros(length(Zpred), size(Zpred{1},2));

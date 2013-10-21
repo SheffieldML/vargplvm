@@ -9,6 +9,8 @@ function [sharedDims, privateDims] = svargplvmFindSharedDims(model, thresh, prin
 %
 % COPYRIGHT: Andreas C. Damianou, 2012, 2013
 %
+% MODIFICATIONS: Carl Henrik Ek, 2013
+%
 % VARGPLVM
 
 if nargin < 3 || isempty(printOut), printOut = false; end
@@ -47,8 +49,8 @@ retainedScales{obsMod} = find(s1 > thresh);
 retainedScales{infMod} = find(s2  > thresh);
 sharedDims = intersect(retainedScales{obsMod}, retainedScales{infMod});
 
-privateDims{1} = setdiff(retainedScales{1}, sharedDims);
-privateDims{2} = setdiff(retainedScales{2}, sharedDims);
+privateDims{obsMod} = setdiff(retainedScales{obsMod}, sharedDims);
+privateDims{infMod} = setdiff(retainedScales{infMod}, sharedDims);
 
 if printOut
     fprintf('# Shared dimensions:          [%s]\n', num2str(sharedDims))
