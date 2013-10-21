@@ -170,6 +170,9 @@ for i=1:length(testInd)
                 [x_starGP, x_starGPvar] = gpPosteriorMeanVar(modelGP2, x_cur(:,dimsObs));
                 x_cur(:, dimsInf) = x_starGP;
                 varx_star(:, dimsInf) = x_starGPvar;
+            case 6
+                % TODO
+                % Xz -> [Xy Xyz] % GPLVM
         end
         % Better to use varx_star when x_cur is just taken from x_star
         %ZpredMu(k,:) = vargplvmPosteriorMeanVar(model.comp{infMod}, x_cur);
