@@ -80,7 +80,13 @@ if(isfield(options,'scale2var1'))
     end
 end
 if(isfield(options, 'scaleVal'))
-    model.scale = repmat(options.scaleVal, 1, model.d);
+    if(length(options.scaleVal)==1)
+        model.scale = repmat(options.scaleVal, 1, model.d);
+    elseif(length(options.scaleVal)==model.d)
+        model.scale = options.scaleVal;
+    else
+        error('Dimension mismatch in scaleVal');
+    end
 end
 
 model.y = Y;
