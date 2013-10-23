@@ -17,6 +17,7 @@ function model = vargplvmCreate(q, d, Y, options)
 %
 % COPYRIGHT : Michalis K. Titsias and Neil D. Lawrence, 2009-2011
 % Modifications : Andreas C. Damianou, 2010-2011
+% Modifications : Carl Henrik Ek, 2013
 %
 % SEEALSO : vargplvmOptions
 
