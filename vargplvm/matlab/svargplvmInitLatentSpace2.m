@@ -111,9 +111,9 @@ else
             
         for i=1:length(Ytr)
             if iscell(latentDimPerModel)
-                X_init_cur = initFunc{i}(m{i},latentDimPerModel{i});
+                X_init_cur = initFunc{i}(m{i},latentDimPerModel{i}, options{i}.initFuncOptions{:});
             elseif isscalar(latentDimPerModel)
-                X_init_cur = initFunc{i}(m{i},latentDimPerModel);
+                X_init_cur = initFunc{i}(m{i},latentDimPerModel, options{i}.initFuncOptions{:});
             else
                 error('Unrecognised format for latentDimPerModel')
             end
@@ -122,7 +122,7 @@ else
     elseif strcmp(initLatent,'concatenated')
         initFunc = str2func([initX 'Embed']);
         fprintf(['# Initialising the latent space with ' initX ' after concatenating modalities in Q = %d ...\n'], latentDim)
-        X_init = initFunc(mAll, latentDim);
+        X_init = initFunc(mAll, latentDim, options{1}.initFuncOptions{:});
     elseif strcmp(initLatent, 'custom')
         % Like pca initialisation but favour the first model compared to the
         % second
@@ -156,7 +156,7 @@ else
              
             for ld = 1:length(latentDimPerModel)
                 if latentDimPerModel{ld} ~= 0
-                    X_init_cur = initFunc{ld}(m{ld},latentDimPerModel{ld});
+                    X_init_cur = initFunc{ld}(m{ld},latentDimPerModel{ld}, options{ld}.initFuncOptions{:});
                 else
                     % For some aplications, we do not want embedding...(e.g. when
                     % one of the modalities are the labels for classification)
@@ -170,9 +170,9 @@ else
             else
                 e.getReport
             end
-            initFunc = 'ppcaEmbed';
-            X_init{1} = initFunc(m{1}, latentDimPerModel{1});
-            X_init{2} = initFunc(m{2},latentDimPerModel{2});
+            initFunc = str2func('ppcaEmbed');
+            X_init{1} = initFunc(m{1}, latentDimPerModel{1}, options{1}.initFuncOptions{:});
+            X_init{2} = initFunc(m{2},latentDimPerModel{2}, options{1}.initFuncOptions{:});
             X_init = [X_init{1} X_init{2}];
         end
     else

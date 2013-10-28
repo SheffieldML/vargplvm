@@ -1,4 +1,4 @@
-function [X, varX, model] = vargplvmOptimisePoint(model, vardistx, y, display, iters)
+function [X, varX, model, grChek] = vargplvmOptimisePoint(model, vardistx, y, display, iters, varargin)
 
 % VARGPLVMOPTIMISEPOINT Optimise the postion of one or more latent points.
 % FORMAT
@@ -24,6 +24,8 @@ function [X, varX, model] = vargplvmOptimisePoint(model, vardistx, y, display, i
 % SEEALSO : vargplvmCreate, vargplvmOptimiseSequence, vargplvmPointObjective, vargplvmPointGradient
 
 % VARGPLVM
+
+grChek = [];
 
 if nargin < 5
     iters = 2000;
@@ -130,7 +132,7 @@ else
     x = vardistExtractParam(vardistx);
 end
 
-if isfield(model, 'DgtN') && model.DgtN
+if ~(isfield(model, 'dynamics') && ~isempty(model.dynamics))
     % Perform precomputations which will result in faster execution. This
     % happens in two stages:
     % a) Precomputing constants only once here, instead in every call of
@@ -138,11 +140,11 @@ if isfield(model, 'DgtN') && model.DgtN
     % b) Replace model.m with a reduced rank representation, since it only
     % appears in the expression model.m * model.m'. This is the same tricks
     % used in vargplvmCreate for DgtN flag.
-    if isfield(model, 'dynamics') && ~isempty(model.dynamics)
-        error('The fast optimise utility is not tested for dynamics!')
-    end
+    % TODO: Do the same for dynamics case
     model.DgtN_test = true;
-    mOrig = model.m;
+    if isfield(model, 'DgtN') && model.DgtN
+        mOrig = model.m;
+    end
     model.testPrecomp.indexMissing = find(isnan(y(1,:)));
     indexPresent = setdiff(1:model.d, model.testPrecomp.indexMissing );
     y = y(:,indexPresent);   
@@ -155,28 +157,55 @@ if isfield(model, 'DgtN') && model.DgtN
     mPres = [mPres; y];    
     YYT = mPres * mPres'; % NxN
     [U S V]=svd(YYT);
-    model.testPrecomp.mReduced=U*sqrt(abs(S));
+    if isfield(model, 'DgtN') && model.DgtN
+        model.testPrecomp.mReduced=U*sqrt(abs(S));
+    end
     model.testPrecomp.TrYY2 = sum(diag(YYT)); % scalar
     
     % For grads
     mPresGrad = [y; model.m(:, indexPresent)];
     YYT = mPresGrad * mPresGrad'; % NxN
     [U S V]=svd(YYT);
-    model.testPrecomp.mReducedGrad=U*sqrt(abs(S));
+    if isfield(model, 'DgtN') && model.DgtN
+        model.testPrecomp.mReducedGrad=U*sqrt(abs(S));
+    end
     model.testPrecomp.mY = mPresGrad*y';
-    model.m = []; % Less overhead in passing arguments (pass by value)
+    if isfield(model, 'DgtN') && model.DgtN
+        model.m = []; % Less overhead in passing arguments (pass by value)
+    end
 else
     model.DgtN_test = false;
 end
 
 
-if strcmp(func2str(optim), 'optimiMinimize')
-    % Carl Rasmussen's minimize function
-    x = optim('vargplvmPointObjectiveGradient', x, options, model, y);
-else
-    % NETLAB style optimization.
-    x = optim('vargplvmPointObjective', x,  options, ...
-        'vargplvmPointGradient', model, y);
+if length(varargin) == 2
+    if strcmp(varargin{1}, 'gradcheck')
+        assert(islogical(varargin{2}));
+        %options(9) = varargin{2};
+        doGradchek = varargin{2};
+        if doGradchek
+            [gradient, delta] = feval('gradchek', vardistExtractParam(vardistx), @vargplvmPointObjective, @vargplvmPointGradient, model, y);
+            deltaf = gradient - delta;
+            d=norm(deltaf - gradient)/norm(gradient + deltaf); %%
+            d1=norm(deltaf - gradient,1)/norm(gradient + deltaf,1); %%
+            grRatio = sum(abs(gradient ./ deltaf)) / length(deltaf);
+            fprintf(1,' Norm1 difference: %d\n Norm2 difference: %d\n Ratio: %d\n',d1,d, grRatio);
+            grChek = {delta, gradient, deltaf, d, d1};
+        else
+            grChek = [];
+        end
+    end
+end
+
+if iters > 0
+    if strcmp(func2str(optim), 'optimiMinimize')
+        % Carl Rasmussen's minimize function
+        x = optim('vargplvmPointObjectiveGradient', x, options, model, y);
+    else
+        % NETLAB style optimization.
+        x = optim('vargplvmPointObjective', x,  options, ...
+            'vargplvmPointGradient', model, y);
+    end
 end
 
 if isfield(model, 'dynamics') && ~isempty(model.dynamics)
@@ -202,9 +231,10 @@ end
 X = vardistx.means;
 varX = vardistx.covars;
 
-
 if isfield(model, 'DgtN_test') && model.DgtN_test
     model = rmfield(model, 'testPrecomp');
     model = rmfield(model, 'DgtN_test');
-    model.m = mOrig;
+    if isfield(model, 'DgtN') && model.DgtN
+        model.m = mOrig;
+    end
 end

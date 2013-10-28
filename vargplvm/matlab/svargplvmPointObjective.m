@@ -1,6 +1,6 @@
-function f = vargplvmPointObjective(x, model, y)
+function f = svargplvmPointObjective(x, model, y)
 
-% VARGPLVMPOINTOBJECTIVE Wrapper function for objective of a single point
+% SVARGPLVMPOINTOBJECTIVE Wrapper function for objective of a single point
 % (or multiple points) in latent space and the output location..
 % FORMAT
 % DESC provides a wrapper function for the negative log probability
@@ -13,9 +13,9 @@ function f = vargplvmPointObjective(x, model, y)
 % RETURN f : the negative of the log probability of the given data
 % point under the posterior distribution induced by the training data.
 %
-% SEEALSO : vargplvmCreate, vargplvmPointLogLikelihood, vargplvmOptimisePoint
+% SEEALSO : vargplvmPointObjective.m
 %
-% COPYRIGHT : Michalis K. Titsias and Neil D. Lawrence, 2009
+% COPYRIGHT : Andreas Damianou, 2013
 
 % VARGPLVM
 
@@ -35,8 +35,5 @@ else
     vardistx = model.vardistx;
     vardistx = vardistExpandParam(vardistx, x);
 end
-if isfield(model, 'DgtN_test') && model.DgtN_test
-    f = - vargplvmPointLogLikelihoodFast(model, vardistx, y);
-else
-    f = - vargplvmPointLogLikelihood(model, vardistx, y);
-end
+
+f = - svargplvmPointLogLikelihood(model, vardistx, y);

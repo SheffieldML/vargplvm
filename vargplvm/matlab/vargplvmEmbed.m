@@ -51,7 +51,7 @@ d = size(Y, 2);
 % demo using the variational inference method for the gplvm model
 model = vargplvmCreate(latentDim, d, Y, options);
 %
-model = vargplvmParamInit(model, model.m, model.X); 
+%model = vargplvmParamInit(model, model.m, model.X); 
 model = vargplvmModelInit(model, globalOpt);
 
 fprintf('#--- vargplvmEmbed from %d dims to %d dims (initSNR=%f)...\n',d,latentDim,vargplvmShowSNR(model, false));

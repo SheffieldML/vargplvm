@@ -156,6 +156,9 @@ if ~exist('globalOpt')
     defaults.optimiser = 'scg';
     defaults.saveModelDir = './';
     
+    % Possible options for the initX function of the models
+    defaults.initFuncOptions = {};
+    
     %% The final options structure will contain default values, apart for whatever
     % is already set as a variable
     fnames = fieldnames(defaults);

@@ -15,8 +15,8 @@ rand('seed', 1e5);
 % dynUsed=1;
 %
 % % Get the sequence numbers.
- [Y, lbls] = lvmLoadData('cmu35WalkJog'); %%%
- seq = cumsum(sum(lbls)) - [1:31]; %%%
+% [Y, lbls] = lvmLoadData('cmu35WalkJog'); %%%
+% seq = cumsum(sum(lbls)) - [1:31]; %%%
 
 dataSetName = 'cmu35gplvm';
 
@@ -38,6 +38,7 @@ fileName=['dem' capName 'Vargplvm' num2str(experimentNo)];
 [Y, lbls, Ytest, lblstest] = lvmLoadData(dataSetName);
 
 %---- Remove some sequences %%%%%%
+%{
 seqFrom=7;
 seqEnd=7;
 
@@ -51,6 +52,7 @@ Yend=seq(seqEnd);
 Y=Y(Yfrom:Yend,:);
 seq=seq(seqFrom:seqEnd);
 seq=seq - ones(1,length(seq)).*(Yfrom-1);
+%}
 %-----
 
 origBias = mean(Y);

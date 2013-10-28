@@ -3,8 +3,7 @@
 % VARGPLVM
 
 % Fix seeds
-randn('seed', 1e5);
-rand('seed', 1e5);
+rng(1e5, 'v4');
 
 dataSetName = 'usps';
 experimentNo = 1;
@@ -13,6 +12,7 @@ printDiagram = 1;
 % load data
 [YTrain, lblsTrain, YTest, lblsTest] = lvmLoadData(dataSetName);
 
+nClasses = size(lblsTrain,2);
 % Set up model
 options = vargplvmOptions('dtcvar');
 options.kern = {'rbfard2', 'white'};
@@ -23,48 +23,58 @@ options.optimiser = 'scg';
 latentDim = 10;
 d = size(YTrain, 2);
 
-iters = 1000;
-display = 1;
+capName = dataSetName;
+capName(1) = upper(capName(1));
+modelType = 'vargplvm'; % varmodel{1}.type;
+modelType(1) = upper(modelType(1));
+modelFile = ['dem' capName modelType num2str(experimentNo) '.mat'];
 
-% create a separate vargplvm for each digit
-for i=1:10
-    %
-    Y = YTrain(lblsTrain(:,i)==1,:);
- 
-    model = vargplvmCreate(latentDim, d, Y, options);
-    %
-    model = vargplvmParamInit(model, model.m, model.X); 
-
-    model = vargplvmOptimise(model, display, iters);
+if exist(modelFile, 'file') % Training data exists, just load it.
+    load(modelFile);
+else % Do the training:
+    iters = 1000;
+    display = 1;
     
-    varmodel{i} = model;
-    % 
-end  
+    varmodel = cell(nClasses,1);
+    % create a separate vargplvm for each digit
+    for i=1:nClasses
+        %
+        Y = YTrain(lblsTrain(:,i)==1,:);
+        
+        model = vargplvmCreate(latentDim, d, Y, options);
+        %
+        model = vargplvmParamInit(model, model.m, model.X);
+        
+        model = vargplvmOptimise(model, display, iters);
+        
+        varmodel{i} = model;
+        %
+    end
+end
 
 iters = 100;
 display = 0;
 
-capName = dataSetName;
-capName(1) = upper(capName(1));
-modelType = varmodel{1}.type;
-modelType(1) = upper(modelType(1));
-save(['dem' capName modelType num2str(experimentNo) '.mat'], 'varmodel');
+save(modelFile, 'varmodel');
 
 % measure performance on test data 
-indexPresent = 1:size(YTest,2);
+prob = zeros(size(YTest,1),nClasses);
 TestError = 0;
-for n=1:size(YTest,1)
-    %
-    % compute the approximate class conditional density for each digit
-    for i=1:10
-       prob(n,i) = vargplvmProbabilityCompute(varmodel{i}, YTest(n,:), indexPresent);
-    end
-    [maxP C] = max(prob(n,:));
-    if lblsTest(n,C) == 0
-        TestError = TestError + 1; 
-    end
-    %
-end
 
+% New and faster way: give the whole test matrix at once, rather than using
+% a for loop through each test element. This is almost 10 times faster then
+% the old way (using 2 Matlab workers on a 4-core machine).
+
+% Compute the approximate class conditional density for each digit
+tic
+for i=1:nClasses
+    sprintf('--------\nComputing test probability for class=%d\n', i);
+    prob(:,i) = vargplvmProbabilityCompute(varmodel{i}, YTest, 0, iters);
+end
+[maxP C] = max(prob,[],2);
+for n=1:size(YTest,1)
+    TestError = TestError + ~lblsTest(n,C(n));
+end
+fprintf('TestError=%d,\tTime=%fseconds.\n', TestError, toc);
 %
 save(['dem' capName modelType num2str(experimentNo) '.mat'], 'varmodel', 'prob', 'TestError');

@@ -5,13 +5,12 @@ function model = vargplvmModelInit(model, globalOpt)
 % SEEALSO: vargplvmCreate
 % VARGPLVM
 
-if globalOpt.DgtN
-    model.mOrig = model.m;
-    
-    model = vargplvmParamInit(model, model.mOrig, model.X);
-else
-    model = vargplvmParamInit(model, model.m, model.X);
-end
+%if globalOpt.DgtN
+   % model.mOrig = model.m;
+%    model = vargplvmParamInit(model, model.mOrig, model.X);
+%else
+    model = vargplvmParamInit(model, model.y, model.X);
+%end
 
 % Lengthscales
 if strcmp(model.kern.type, 'rbfardjit')

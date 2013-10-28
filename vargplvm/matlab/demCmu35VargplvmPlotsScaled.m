@@ -83,13 +83,19 @@ YtestNn = origYtest(startInd:end, presentInd);
 
 YtestGplvm(startInd:end, missingInd) = NaN;
 indexMissingData = startInd:size(YtestGplvm);
-% In case only barmu and lambda are loaded from the results then the next step is necessary to find
-% the predictive dencity Ypred.
-[x, varx, modelUpdated] = vargplvmDynamicsUpdateModelTestVar(model, barmu, lambda, YtestGplvm);
-Testmeans = x(indexMissingData, :);
-Testcovars = varx(indexMissingData, :);
-[mu, sigma] = vargplvmPosteriorMeanVar(modelUpdated, Testmeans, Testcovars);
-Ypred = mu;
+
+if exist('barmu', 'var') && ~exist('Ypred', 'var')
+    % In case only barmu and lambda are loaded from the results then the next step is necessary to find
+    % the predictive dencity Ypred.
+    [x, varx, modelUpdated] = vargplvmDynamicsUpdateModelTestVar(model, barmu, lambda, YtestGplvm);
+    Testmeans = x(indexMissingData, :);
+    Testcovars = varx(indexMissingData, :);
+    [mu, sigma] = vargplvmPosteriorMeanVar(modelUpdated, Testmeans, Testcovars);
+    Ypred = mu;
+else
+    model = vargplvmRestorePrunedModel(prunedModel, Y);
+    %modelUpdated = vargplvmRestorePrunedModel(prunedModelUpdated, [Y; YtrueTest(startInd:end, :)]); % ?
+end
 
 
 %%

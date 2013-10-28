@@ -44,7 +44,11 @@ for i=1:length(Ytr)
     %options.scaleVal = mean(std(Ytr));
     
     % options{i}.scaleVal = sqrt(var(Ytr{i}(:))); %%% ??
-    options{i}.scale2var1 = globalOpt.scale2var1;
+    if iscell(globalOpt.scale2var1)
+        options{i}.scale2var1 = globalOpt.scale2var1{i};
+    else
+        options{i}.scale2var1 = globalOpt.scale2var1;
+    end
    
     %%%%%
     if ~isempty(labelsTrain)
@@ -55,4 +59,9 @@ for i=1:length(Ytr)
     
     options{i}.KLweight = globalOpt.KLweight;
 
+    if length(globalOpt.initFuncOptions) > 0 && iscell(globalOpt.initFuncOptions{1})
+        options{i}.initFuncOptions = globalOpt.initFuncOptions{i};
+    else
+        options{i}.initFuncOptions = globalOpt.initFuncOptions;
+    end
 end

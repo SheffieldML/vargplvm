@@ -69,7 +69,7 @@ if nargin < 8 || isempty(testInd)
     if testOnTraining
         testInd = 1:model.N;
     else
-        testInd = 1:size(Yts{obsMod},1);
+        testInd = 1:size(Yts{obsMod(1)},1);
     end
 end
 if nargin < 9 || isempty(numberOfNN), numberOfNN = 1; end
@@ -79,6 +79,16 @@ if nargin < 10 || isempty(infMethod), infMethod = 1; end
 % TODO:
 % Here replace model.comp{i}.m with model.comp{i}.mOrig if DgtN is
 % active...
+
+for i=1:model.numModels
+    if strcmp(model.comp{i}.kern.type, 'rbfardjit')
+        if isfield(model.comp{i}.kern, 'comp')
+            assert(sum(abs(model.comp{i}.kern.inputScales - model.comp{i}.kern.comp{1}.inputScales)) == 0);
+        else
+            model.comp{i}.kern.comp{1}.inputScales = model.comp{i}.kern.inputScales;
+        end
+    end
+end
 
 [sharedDims, privateDims] = svargplvmFindSharedDims(model,[],[],{obsMod infMod});
 
@@ -132,7 +142,8 @@ for i=1:length(testInd)
     ZpredMu = zeros(length(ind), size(model.comp{infMod}.y,2));
     %ZpredSigma = zeros(length(ind), size(model.comp{infMod}.y,2));
       
-    
+    allPrivObs = cell2mat(privateDims(obsMod(:)));
+                    
     % Find p(y_*|x_*) for every x_* found from the NN
    % fprintf('# Predicting from the NN of X_* ');
     for k=1:numberOfNN
@@ -142,20 +153,27 @@ for i=1:length(testInd)
                 % predictions)
                 x_cur = x_star;
             case 1
+                % Replace the private dims of the inf. model with the NN
                 x_cur = model.X(ind(k),:);
-                x_cur([sharedDims privateDims{obsMod}]) = x_star([sharedDims privateDims{obsMod}]);
+                %x_cur([sharedDims privateDims{obsMod}]) = x_star([sharedDims privateDims{obsMod}]);
+                x_cur([sharedDims allPrivObs]) = x_star([sharedDims allPrivObs]);
             case 2
+                % Replace the private dims of the inf. model with the NN
+                % ones AS WELL AS the private of the observed model
                 x_cur = model.X(ind(k),:);
                 x_cur(sharedDims) = x_star(sharedDims); %%% OPTIONAL!!!
             case 3
                 %---- Method 3: Combination of predicted x_star and training NN X
                 % according to lengthscales (for the shared dims)
                  x_cur = model.X(ind(k),:);
-                 s1 = model.comp{obsMod}.kern.comp{1}.inputScales / max(model.comp{obsMod}.kern.comp{1}.inputScales);
+                 s1 = model.comp{obsMod(1)}.kern.comp{1}.inputScales / max(model.comp{obsMod(1)}.kern.comp{1}.inputScales);
+                 for jj=2:length(obsMod)
+                    s1 = (s1 + model.comp{obsMod(jj)}.kern.comp{1}.inputScales / max(model.comp{obsMod(jj)}.kern.comp{1}.inputScales)) / length(obsMod);
+                 end
                  xcurOrig  = x_cur(sharedDims);
                  s1new = s1/sum(s1);
                  x_cur(sharedDims) = s1new(sharedDims).*x_star(sharedDims) + (1-s1new(sharedDims)).*xcurOrig;
-                 x_cur(privateDims{obsMod}) = x_star(privateDims{obsMod});
+                 x_cur(allPrivObs) = x_star(allPrivObs);
                 %----
             case 4
                 x_cur(sharedDims) = x_star(sharedDims);
@@ -165,7 +183,7 @@ for i=1:length(testInd)
                 % [Xy Xyz] -> Xz, assuming that we do inference for the
                 % modality z.
                 x_cur = x_star;
-                dimsObs = sort([privateDims{obsMod}, sharedDims]);
+                dimsObs = sort([privateDims{obsMod}, sharedDims]); % TODO if obsMod has > 1 modalities
                 dimsInf = privateDims{infMod};
                 [x_starGP, x_starGPvar] = gpPosteriorMeanVar(modelGP2, x_cur(:,dimsObs));
                 x_cur(:, dimsInf) = x_starGP;

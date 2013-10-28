@@ -4,12 +4,12 @@ function [sharedDims, privateDims] = svargplvmFindSharedDims(model, thresh, prin
 % DESC  Find automatically the shared/private dimensions of the segmented
 % latent space, based on some given threshold for the value of the ARD
 % weights
-%
+% 
+% EXAMPLE: [sharedDims, privateDims] = svargplvmFindSharedDims(model,[],[],{[1 3] 2});
+% 
 % SEEALSO : svargplvmOptimiseModel, svargplvmShowScales
 %
 % COPYRIGHT: Andreas C. Damianou, 2012, 2013
-%
-% MODIFICATIONS: Carl Henrik Ek, 2013
 %
 % VARGPLVM
 
@@ -27,33 +27,46 @@ else
     infMod = modalities{2};
 end
 
-if isfield(model.comp{obsMod}.kern, 'comp')
-    s1 = model.comp{obsMod}.kern.comp{1}.inputScales;
-else
-    s1 = model.comp{obsMod}.kern.inputScales;
+for i=1:length(obsMod)
+    if isfield(model.comp{obsMod(i)}.kern, 'comp')
+        sObs{i} = model.comp{obsMod(i)}.kern.comp{1}.inputScales;
+    else
+        sObs{i} = model.comp{obsMod(i)}.kern.inputScales;
+    end
 end
+
 if isfield(model.comp{infMod}.kern, 'comp')
-    s2 = model.comp{infMod}.kern.comp{1}.inputScales;
+    sInf = model.comp{infMod}.kern.comp{1}.inputScales;
 else
-    s2 = model.comp{infMod}.kern.inputScales;
+    sInf = model.comp{infMod}.kern.inputScales;
 end
 
 % Normalise values between 0 and 1
-s1 = s1 / max(s1);
-s2 = s2 / max(s2);
+for i=1:length(sObs)
+    sObs{i} = sObs{i} / max(sObs{i});
+end
+sInf = sInf / max(sInf);
 
 %  thresh = max(model.comp{obsMod}.kern.comp{1}.inputScales) * 0.001;
 
-retainedScales{obsMod} = find(s1 > thresh);
+for i=1:length(sObs)
+    retainedScales{obsMod(i)} = find(sObs{i} > thresh);
+end
 %thresh = max(model.comp{infMod}.kern.comp{1}.inputScales) * 0.001;
-retainedScales{infMod} = find(s2  > thresh);
-sharedDims = intersect(retainedScales{obsMod}, retainedScales{infMod});
+retainedScales{infMod} = find(sInf  > thresh);
 
-privateDims{obsMod} = setdiff(retainedScales{obsMod}, sharedDims);
-privateDims{infMod} = setdiff(retainedScales{infMod}, sharedDims);
+sharedDims = intersect(retainedScales{obsMod(1)}, retainedScales{infMod});
+for i=2:length(obsMod)
+    sharedDims = intersect(sharedDims, retainedScales{obsMod(i)});
+end
+
+for i=1:length(retainedScales)
+    privateDims{i} = setdiff(retainedScales{i}, sharedDims);
+end
 
 if printOut
     fprintf('# Shared dimensions:          [%s]\n', num2str(sharedDims))
-    fprintf('# Private dimensions model 1: [%s]\n', num2str(privateDims{1}))
-    fprintf('# Private dimensions model 2: [%s]\n', num2str(privateDims{2}))
+    for i=1:length(retainedScales)
+        fprintf('# Private dimensions model %d: [%s]\n', i, num2str(privateDims{i}))
+    end
 end
