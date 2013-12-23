@@ -11,7 +11,7 @@ function SNR = svargplvmSNR(model)
 
 
 for i=1:model.numModels
-    if model.comp{i}.DgtN
+    if model.comp{i}.DgtN && isfield(model.comp{i}, 'mOrig') && ~isempty(model.comp{i}.mOrig)
         varData = var(model.comp{i}.mOrig(:));
     else
         varData = var(model.comp{i}.m(:));

@@ -172,6 +172,8 @@ if dynUsed
     vardist2.covars = model.vardist.covars(end-Nstar+1:end,:);
     vardist2.nParams = 2*prod(size(vardist2.means));
     vardist2.numData = size(vardist2.means,1);
+    % !!!!!! What about vardist2.transforms????????????
+    
     pointPsi0 = kernVardistPsi0Compute(model.kern, vardist2);
     pointPsi1 = kernVardistPsi1Compute(model.kern, vardist2, model.X_u);
     pointPsi2 = kernVardistPsi2Compute(model.kern, vardist2, model.X_u);

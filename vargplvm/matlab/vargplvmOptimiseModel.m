@@ -53,8 +53,8 @@ while ~isempty(globalOpt.initVardistIters(i:end)) || ~isempty(globalOpt.itNo(i:e
     % do not learn beta for few iterations for intitilization
     if  ~isempty(globalOpt.initVardistIters(i:end)) && globalOpt.initVardistIters(i)
         model.initVardist = 1; model.learnSigmaf = 0;
-        fprintf(1,'# Intitiliazing the variational distribution...\n');
-        model = vargplvmOptimise(model, display, globalOpt.initVardistIters); % Default: 20
+        fprintf(1,'# Intitiliazing the variational distribution for %d iterations...\n', globalOpt.initVardistIters(i));
+        model = vargplvmOptimise(model, display, globalOpt.initVardistIters(i)); % Default: 20
         model.initVardistIters = model.initVardistIters + globalOpt.initVardistIters(i);
         if saveModel
             fprintf('# Saving model after optimising var.distr for %d iterations...\n\n', globalOpt.initVardistIters(i))

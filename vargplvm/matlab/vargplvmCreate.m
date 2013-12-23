@@ -426,6 +426,11 @@ end
 % mode (by fixing SNR) or not.
 model.initVardist = 0;
 
+if isfield(options, 'fixVardist') && options.fixVardist
+    model.fixParamIndices = 1:2*model.N*model.q;
+    model.vardist.fixed = true;
+end
+    
 
 %{
 %  if isstruct(options.back)

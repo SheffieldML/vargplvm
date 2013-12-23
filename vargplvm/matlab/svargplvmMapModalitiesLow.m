@@ -4,6 +4,14 @@ if nargin < 4
     modalityMappingsAll = cell(1,length(Y));
 end
 
+if isscalar(balanceModalityDim) && ~iscell(balanceModalityDim)
+    tmp = balanceModalityDim;
+    balanceModalityDim = cell(1, length(Y));
+    for i=1:length(Y)
+        balanceModalityDim{i} = tmp;
+    end
+end
+
 if sum(cell2mat(balanceModalityDim)) > 0
     maxDval = -Inf;
     % Find maximum dimensionality

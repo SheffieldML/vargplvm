@@ -1,7 +1,7 @@
 function [ZpredMuAll, testInd, XpredAll, varXpredAll, indNN] = ...
     svargplvmPredictionsFunc( ...
-        model, testOnTraining, Yts, x_star_all, varx_star_all, ...
-        obsMod, infMod, testInd, numberOfNN, infMethod)
+        model, testOnTraining, x_star_all, varx_star_all, ...
+        obsMod, infMod, testInd, numberOfNN, infMethod, privSharedDims, nnToKeep)
 
 % SVARGPLVMPREDICTIONSFUNC Identical to svargplvmPredictions but in
 % function form
@@ -9,17 +9,16 @@ function [ZpredMuAll, testInd, XpredAll, varXpredAll, indNN] = ...
 % FORMAT: 
 %function [ZpredMuAll, testInd, XpredAll, varXpredAll] = ...
 %    svargplvmPredictionsFunc( ...
-%        model, testOnTraining, Yts, x_star_all, varx_star_all,
-%        obsMod, infMod, testInd, numberOfNN, infMethod)
+%        model, testOnTraining, x_star_all, varx_star_all,
+%        obsMod, infMod, testInd, numberOfNN, infMethod, privSharedDims, nnToKeep)
 % 
 % ARG model: The svargplvm model
 % ARG testOnTraining: true or false, whether to attempt reconstruction on
-% training data or predict test data (Yts must be given)
-% ARG Yts: If testOnTraining is false, then predict Yts{infMod} given
-% Yts{obsMod} of this given cell array Yts
+% training data or predict test data
 % ARG x_star_all:
 % ARG varx_star_all: 
-% ARG obsMod: Yts{infMod} given Yts{obsMod}
+% ARG obsMod: Yts{infMod} given Yts{obsMod} (Yts is the test set, not given
+% as input to this function)
 % ARG infMod: Yts{infMod} given Yts{obsMod} 
 % ARG testInd: Alternatively to the above, give the indices to
 % reconstruct/predict
@@ -27,8 +26,9 @@ function [ZpredMuAll, testInd, XpredAll, varXpredAll, indNN] = ...
 % generate per single test output y*
 % ARG infMethod: a number 0-5, different inference methods to find z*|x*
 % given x*|y*
-% ARG displayTestOpt: display optimisation of test points or not
-%
+% ARG privSharedDims: optional private/shared dimensions of modalities
+% ARG nnToKeep: Which NN indice to keep (useful when testing on training
+% data). Can be a single index (scalar) or set of indexes (vector)
 %
 % SEEALSO : demSvargplvmGeneric, demClassification, demClassification3,
 % demClassificationGeneral
@@ -59,21 +59,28 @@ function [ZpredMuAll, testInd, XpredAll, varXpredAll, indNN] = ...
 
 if nargin < 1 || isempty(model), error('At least one argument needed!'); end
 if nargin < 2 || isempty(testOnTraining), testOnTraining = false; end
-if ~testOnTraining && (nargin < 3 || isempty(Yts)),  error('Yts needed if not testing on training data!'); end
-if ~testOnTraining && (nargin < 5 || isempty(x_star_all) || isempty(varx_star_all))
+if ~testOnTraining && (nargin < 4 || isempty(x_star_all) || isempty(varx_star_all))
     error('Missing latent predictions! Use svargplvmPredictLatent first!');
 end
-if nargin < 6 || isempty(obsMod), obsMod = 1; end
-if nargin < 7 || isempty(infMod), infMod = 2; end
-if nargin < 8 || isempty(testInd)
+if nargin < 5 || isempty(obsMod), obsMod = 1; end
+if nargin < 6 || isempty(infMod), infMod = 2; end
+if nargin < 7 || isempty(testInd)
     if testOnTraining
         testInd = 1:model.N;
     else
-        testInd = 1:size(Yts{obsMod(1)},1);
+        testInd = 1:size(x_star_all,1);
     end
 end
-if nargin < 9 || isempty(numberOfNN), numberOfNN = 1; end
-if nargin < 10 || isempty(infMethod), infMethod = 1; end
+if nargin < 8 || isempty(numberOfNN)
+    if nargin < 11 || isempty(nnToKeep)
+        numberOfNN = 1; 
+    else
+        numberOfNN = max(nnToKeep);
+    end
+end
+if nargin < 9 || isempty(infMethod), infMethod = 1; end
+if nargin < 10, privSharedDims = {}; end
+if nargin < 11 || isempty(nnToKeep), nnToKeep = 1; end
 
 
 % TODO:
@@ -90,7 +97,12 @@ for i=1:model.numModels
     end
 end
 
-[sharedDims, privateDims] = svargplvmFindSharedDims(model,[],[],{obsMod infMod});
+if isempty(privSharedDims)
+    [sharedDims, privateDims] = svargplvmFindSharedDims(model,[],[],{obsMod infMod});
+else
+    sharedDims = privSharedDims{1};
+    privateDims = privSharedDims{2};
+end
 
 
 % Here we'll store the latent points corresponding to the test outputs. If
@@ -111,7 +123,7 @@ end
 ZpredMuAll = cell(1, length(testInd));
 
 if nargout > 4
-    indNN = NaN(1,length(testInd));
+    indNN = NaN(length(testInd), length(nnToKeep));
 end
 
 pb = myProgressBar(length(testInd), min(length(testInd),20));
@@ -119,8 +131,8 @@ for i=1:length(testInd)
     pb = myProgressBar(pb,i);
     curInd = testInd(i);
     if testOnTraining
-        x_star = model.comp{obsMod}.vardist.means(curInd,:);
-        varx_star = model.comp{obsMod}.vardist.covars(curInd,:);
+        x_star = model.vardist.means(curInd,:);
+        varx_star = model.vardist.covars(curInd,:);
     else
         x_star = x_star_all(i,:);
         varx_star = varx_star_all(i,:);
@@ -134,7 +146,7 @@ for i=1:length(testInd)
     [ind, ~] = nn_class(model.X(:,sharedDims), x_star(:,sharedDims), numberOfNN, 'euclidean');
     
     if nargout > 4
-        indNN(i) = ind(1);
+        indNN(i, :) = ind(nnToKeep);
     end
     
     % Initialise: These matrices hold the numberOfNN predictions for one
@@ -198,7 +210,7 @@ for i=1:length(testInd)
     end
     
     % Here we will only hold the nearest neighbours found for all test points.
-    ZpredMuAll{i} = ZpredMu;
+    ZpredMuAll{i} = ZpredMu(nnToKeep, :);
     
     if nargout > 2
         XpredAll(i,:) = x_cur;

@@ -153,12 +153,13 @@ end
 % amended with the appropriate partial derivatives. gInd must be passed,
 % in that case, as an argument to the function which calculates the
 % derivatives for the reparametrized quantities.
+gIndRep=[];
 if isfield(model, 'fixInducing') & model.fixInducing
     if learnInducing
         gIndRep = gInd;
     end
-else
-    gIndRep=[];
+%else
+%    gIndRep=[];
 end
 
 

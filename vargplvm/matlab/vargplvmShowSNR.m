@@ -10,7 +10,7 @@ end
 %%
 
 
-if isfield(model, 'mOrig')
+if isfield(model, 'mOrig') && ~isempty(model.mOrig)
     varY = var(model.mOrig(:));
 else
     varY = var(model.m(:));

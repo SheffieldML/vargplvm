@@ -10,7 +10,7 @@ function scales = svargplvmShowScales(model, printPlots, modalities)
 
 
 if nargin < 2 || isempty(printPlots)
-    printPlots = true;
+    printPlots = 2;
 end
 
 if nargin < 3 || isempty(modalities)

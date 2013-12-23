@@ -8,7 +8,11 @@ function g = vargplvmParamPriorGradients(model)
 % COPYRIGHT: Andreas C. Damianou, 2013
 % VARGPLVM
 
-g = zeros(1, model.nParams);
+if isfield(model, 'numParams')
+    g = zeros(1, max(model.nParams, model.numParams));
+else
+    g = zeros(1, model.nParams);
+end
 if ~isfield(model, 'paramPriors')
     return
 else

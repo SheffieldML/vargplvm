@@ -145,7 +145,13 @@ end
 % just calling vargplvmExtractParam and then ignoring the parameter indices
 % that are shared for all models (because we want these parameters to be
 % included only once).
+rmVardist = false;
 for i = 1:model.numModels
+    if ~isfield(model.comp{i}, 'vardist') % For memory efficiency
+        model.comp{i}.vardist = model.vardist;
+        rmVardist = true;
+    end
+
     if returnNames
         [params_i,names_i] = vargplvmExtractParam(model.comp{i});
     else
@@ -166,5 +172,9 @@ for i = 1:model.numModels
             names_i = names_i(model.vardist.nParams+1:end);
         end
         names = [names names_i];
+    end
+    
+    if rmVardist
+        model.comp{i} = rmfield(model.comp{i}, 'vardist');
     end
 end

@@ -43,7 +43,10 @@ end
 
 if ~isfield(options, 'initSNR') && isfield(options, 'beta')
     globalOpt.betaInit = options.beta;
+else
+    globalOpt.initSNR = options.initSNR;
 end
+globalOpt.indPoints = options.numActive;
 
 latentDim = dims;
 d = size(Y, 2);
@@ -75,6 +78,11 @@ if dynUsed
 end
 
 % Optimise the model.
+model.globalOpt = globalOpt;
+modelInitVardist = vargplvmOptimiseModel(model, 0,0, {initVardistIters, []}, display);
+model = vargplvmOptimiseModel(modelInitVardist, 0,0, {[], iters}, display);
+
+%{
 fprintf('  # vargplvmEmbed: Optimising var. distr. for %d iters...\n',initVardistIters);
 if initVardistIters > 0
     model.initVardist = 1; model.learnSigmaf = false;
@@ -86,6 +94,8 @@ if iters > 0
     fprintf('\n  # vargplvmEmbed: Optimising for %d iters...\n',iters);
     model = vargplvmOptimise(model, display, iters);
 end
+%}
+
 X = model.vardist.means;
 sigma2 = model.vardist.covars;
 W = vargplvmScales('get', model);
