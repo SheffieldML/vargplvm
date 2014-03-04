@@ -10,6 +10,8 @@ function(dataset, dataDir = system.file("extdata",package="vargplvm"))
   switch (EXPR = dataset, 
           oil = {
             dataSetName <- paste(dataDir, "/3Class.mat", sep = "")
-            data <-readMat(dataSetName)})
+            data <-readMat(dataSetName)},
+          mESC = {dataSetName <- paste(dataDir, "/mESC.mat", sep = "")
+                  data <-readMat(dataSetName)})
   return(data)
 }
