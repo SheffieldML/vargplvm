@@ -1,0 +1,2 @@
+useDynLib(vargplvm)
+exportPattern("^[[:alpha:]]+")

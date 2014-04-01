@@ -1,0 +1,11 @@
+Package: vargplvm
+Type: Package
+Title: What the package does (short line)
+Version: 1.0.1
+Date: 2012-05-24
+Author: Who wrote it
+Maintainer: Who to complain to <yourfault@somewhere.net>
+Description: More about what it does (maybe more than one line)
+Depends: R.matlab, gptk
+License: What license is it under?
+Packaged: 2012-07-05 01:00:42 UTC; jhao2
