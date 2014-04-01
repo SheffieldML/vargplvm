@@ -148,6 +148,10 @@ if ~(isfield(model, 'dynamics') && ~isempty(model.dynamics))
     model.testPrecomp.indexMissing = find(isnan(y(1,:)));
     indexPresent = setdiff(1:model.d, model.testPrecomp.indexMissing );
     y = y(:,indexPresent);   
+    % This assumes that model.m is set to model.mOrig prior to calling this
+    % function (vargplvmOptimisePoint), in case model.m is the reduced rank
+    % matrix instead of model.mOrig. So, if you get an error here, probably
+    % you forgot to set model.m = model.mOrig outside of this function.
     P = model.P1 * (model.Psi1' * model.m(:,model.testPrecomp.indexMissing));
     model.testPrecomp.TrPP = sum(sum(P .* P));
     model.testPrecomp.TrYY = sum(sum(model.m(:,model.testPrecomp.indexMissing) .* model.m(:,model.testPrecomp.indexMissing)));

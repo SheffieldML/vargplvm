@@ -1,4 +1,4 @@
-function warnings = svargplvmCheckSNR(SNR, errLimit, warLimit)
+function warnings = svargplvmCheckSNR(SNR, errLimit, warLimit, throwError)
 % SVARGPLVMCHECKSNR Check Signal to Noise Ratio after
 % optimisation, to ensure that the trivial local minimum
 % of learning only noise is avoided.
@@ -17,6 +17,7 @@ function warnings = svargplvmCheckSNR(SNR, errLimit, warLimit)
 %
 % VARGPLVM
 
+if nargin < 4 || isempty(throwError), throwError = true; end 
 if nargin < 3 || isempty(warLimit), warLimit = 10; end
 if nargin < 2 || isempty(errLimit), errLimit = 2; end
 if nargin < 1, error('Not enough arguments given'); end
@@ -43,7 +44,9 @@ if ~isempty(errors)
     for j=1:length(SNR)
         fprintf('# SNR%d = %.6f\n', j, SNR{j})
     end
-    error(errMsg);
+    if throwError
+        error(errMsg);
+    end
 else
     for i = 1:length(SNR)
         if ~isempty(SNR{i}) && SNR{i} <= warLimit

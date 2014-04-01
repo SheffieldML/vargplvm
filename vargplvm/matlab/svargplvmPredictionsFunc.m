@@ -1,7 +1,7 @@
 function [ZpredMuAll, testInd, XpredAll, varXpredAll, indNN] = ...
     svargplvmPredictionsFunc( ...
         model, testOnTraining, x_star_all, varx_star_all, ...
-        obsMod, infMod, testInd, numberOfNN, infMethod, privSharedDims, nnToKeep)
+        obsMod, infMod, testInd, numberOfNN, infMethod, privSharedDims, nnToKeep, modelGP)
 
 % SVARGPLVMPREDICTIONSFUNC Identical to svargplvmPredictions but in
 % function form
@@ -81,7 +81,7 @@ end
 if nargin < 9 || isempty(infMethod), infMethod = 1; end
 if nargin < 10, privSharedDims = {}; end
 if nargin < 11 || isempty(nnToKeep), nnToKeep = 1; end
-
+if nargin < 12, modelGP = []; end
 
 % TODO:
 % Here replace model.comp{i}.m with model.comp{i}.mOrig if DgtN is
@@ -193,11 +193,11 @@ for i=1:length(testInd)
             case 5
                 % This assumes that there's a GP model which maps 
                 % [Xy Xyz] -> Xz, assuming that we do inference for the
-                % modality z.
+                % modality z
                 x_cur = x_star;
-                dimsObs = sort([privateDims{obsMod}, sharedDims]); % TODO if obsMod has > 1 modalities
+                dimsObs = sort(unique([allPrivObs, sharedDims])); % TODO if obsMod has > 1 modalities
                 dimsInf = privateDims{infMod};
-                [x_starGP, x_starGPvar] = gpPosteriorMeanVar(modelGP2, x_cur(:,dimsObs));
+                [x_starGP, x_starGPvar] = gpPosteriorMeanVar(modelGP, x_cur(:,dimsObs));
                 x_cur(:, dimsInf) = x_starGP;
                 varx_star(:, dimsInf) = x_starGPvar;
             case 6

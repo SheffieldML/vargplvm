@@ -23,7 +23,9 @@ function [x_star_all, varx_star_all, mini] = ...
 % ARG mini: The indices of the points in the test set for which the test
 % latent points are initialised with, ie x*(i,:) will be initialised with
 % Xtrain(mini(i), :). If this vector is not given then this vector is
-% computed here in the default way.
+% computed here in the default way. Alternatively, if mini is a cell array
+% of length 2, then mini{1} represents the initial x* and mini{2}
+% represents their initial associated variances.
 %
 % SEEALSO : vargplvmPredictLatent
 %
@@ -64,9 +66,14 @@ if batchMode
             [~, mini(i)] = min(dst);
         end
     end
-    model.mini = mini;
-    vardistx = vardistCreate(model.vardist.means(mini, :), model.q, 'gaussian');
-    vardistx.covars = model.vardist.covars(mini, :);
+    if iscell(mini)
+        vardistx = vardistCreate(mini{1}, model.q, 'gaussian');
+        vardistx.covars = mini{2};
+    else
+        model.mini = mini;
+        vardistx = vardistCreate(model.vardist.means(mini, :), model.q, 'gaussian');
+        vardistx.covars = model.vardist.covars(mini, :);
+    end
     model.vardistx = vardistx;
     [x_star_all, varx_star_all] = svargplvmOptimisePoint(model, vardistx, Yts, true, iters);
 else
@@ -88,9 +95,14 @@ else
             dst = dist2(y_star, tmpYtr);
             [~, mini(i)] = min(dst);
         end
-        model.mini = mini(i);
-        vardistx = vardistCreate(model.vardist.means(mini(i),:), model.q, 'gaussian');
-        vardistx.covars = model.vardist.covars(mini(i),:);
+        if iscell(mini)
+            vardistx = vardistCreate(mini{1}(i,:), model.q, 'gaussian');
+            vardistx.covars = mini{2}(i,:);
+        else
+            model.mini = mini(i);
+            vardistx = vardistCreate(model.vardist.means(mini(i),:), model.q, 'gaussian');
+            vardistx.covars = model.vardist.covars(mini(i),:);
+        end
         model.vardistx = vardistx;
         yts_cur = cell(1, length(Yts));
         for jj = obsMod

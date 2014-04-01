@@ -91,5 +91,9 @@ if iters > 0
     
     % Check if SNR of the optimised model is reasonable (ortherwise a
     % bad local minimum might have been found)
-    svargplvmCheckSNR({vargplvmShowSNR(model)});
+    if isfield(model, 'throwSNRError')
+        svargplvmCheckSNR({vargplvmShowSNR(model)}, [], [], model.throwSNRError);
+    else
+        svargplvmCheckSNR({vargplvmShowSNR(model)});
+    end
 end

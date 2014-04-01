@@ -1,4 +1,5 @@
 function [X, sigma2, W, model] = fgplvmEmbed(Y, dims, varargin)
+% varargin is: {options, initVardistIters, iters, initSNR, display}
 % e.g. Y = sin(1:0.05:10)' * rand(1,10); Y = Y + randn(size(Y)).*0.1;
 
 iters = 200;
@@ -10,13 +11,15 @@ options.numActive = min(100, size(Y,1));
 options.optimiser = 'scg';
     
 if nargin > 3
-    options2 = varargin{1};
-    options.numActive = options2.numActive;
-    initSNR = options2.initSNR;
+    if ~isempty(varargin{1})
+        options2 = varargin{1};
+        options.numActive = options2.numActive;
+        initSNR = options2.initSNR;
+    end
     if length(varargin)>1 && ~isempty(varargin{2}), initVardistIters = varargin{2}; end
     if length(varargin)>2 && ~isempty(varargin{3}), iters = varargin{3}; end
-    if length(varargin)>3 && ~isempty(varargin{3}), initSNR = varargin{4}; end
-    if length(varargin)>4 && ~isempty(varargin{4}), display = varargin{5}; end
+    if length(varargin)>3 && ~isempty(varargin{4}), initSNR = varargin{4}; end
+    if length(varargin)>4 && ~isempty(varargin{5}), display = varargin{5}; end
 end
 
 latentDim = dims;

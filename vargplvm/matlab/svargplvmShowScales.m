@@ -1,4 +1,4 @@
-function scales = svargplvmShowScales(model, printPlots, modalities)
+function scales = svargplvmShowScales(model, printPlots, modalities, dims, thresh, normaliseScales)
 
 % SVARGPLVMSHOWSCALES Show the scales of a svargplvmModel graphically
 %
@@ -19,22 +19,42 @@ else
     printPlots = true;
 end
 
+if nargin < 4 || isempty(dims)
+    dims = 1:model.q;
+end
+
+if nargin < 5 || isempty(thresh)
+    thresh = -Inf;
+end
+
+if nargin < 6 || isempty(normaliseScales)
+    normaliseScales = false;
+end
+
 totalModels = length(modalities);
 
 if printPlots
     for i=1:length(model.comp)
         if strcmp(model.comp{i}.kern.type, 'rbfardjit')
-            scales{i} = model.comp{i}.kern.inputScales;
+            scales{i} = model.comp{i}.kern.inputScales(dims);
         else
-            scales{i} = model.comp{i}.kern.comp{1}.inputScales;
+            scales{i} = model.comp{i}.kern.comp{1}.inputScales(dims);
         end
     end
-    if totalModels == 2
+    if totalModels == 2 || normaliseScales
         origScales = scales;
+        for k = 1:totalModels
+            scales{modalities(k)}=scales{modalities(k)}./max(scales{modalities(k)});
+        end
+    end
+    for k=1:totalModels
+       scales{modalities(k)}(scales{modalities(k)}<thresh) = 0;
+    end
+    if totalModels == 2
         maxScales1 = max(scales{modalities(1)});
         maxScales2 = max(scales{modalities(2)});
-        scales{modalities(1)} = scales{modalities(1)}./maxScales1;
-        scales{modalities(2)} = scales{modalities(2)}./maxScales2;
+        %scales{modalities(1)} = scales{modalities(1)}./maxScales1;
+        %scales{modalities(2)} = scales{modalities(2)}./maxScales2;
         x=1:size(scales{modalities(1)},2); 
         K=0.5; 
         bar1=bar(x, scales{modalities(1)}, 'FaceColor', 'b', 'EdgeColor', 'b'); 
@@ -55,14 +75,15 @@ else
     for i=1:length(model.comp)
         if strcmp(model.comp{i}.kern.type, 'rbfardjit')
             fprintf('# Scales of model %d: ', i)
-            fprintf('%.4f  ',model.comp{i}.kern.inputScales);
+            fprintf('%.4f  ',model.comp{i}.kern.inputScales(dims));
             fprintf('\n');
-            scales{i} = model.comp{i}.kern.inputScales;
+            scales{i} = model.comp{i}.kern.inputScales(dims);
         else
             fprintf('# Scales of model %d: ', i)
-            fprintf('%.4f  ',model.comp{i}.kern.comp{1}.inputScales);
+            fprintf('%.4f  ',model.comp{i}.kern.comp{1}.inputScales(dims));
             fprintf('\n');
-            scales{i} = model.comp{i}.kern.comp{1}.inputScales;
+            scales{i} = model.comp{i}.kern.comp{1}.inputScales(dims);
         end
+        scales{i}(scales{i}<thresh) = 0;
     end
 end
