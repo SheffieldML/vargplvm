@@ -10,8 +10,6 @@ dataSetName = 'brendan';
 experimentNo = 3;
 printDiagram = 1;
 
-
-if 1
 % load data
 [Y, lbls] = lvmLoadData(dataSetName);
 
@@ -19,46 +17,55 @@ if 1
 Ntr = 1000; 
 perm = randperm(size(Y,1)); 
 Ytr = Y(perm(1:Ntr),:);      %lblsTr = lbls(perm(1:Ntr),:);
-Yts = Y(perm(Ntr+1:end),:);  %lblsTs = lbls(perm(Ntr+1:end),:);
+YtsOriginal = Y(perm(Ntr+1:end),:);  %lblsTs = lbls(perm(Ntr+1:end),:);
 
 % Set up model
 options = vargplvmOptions('dtcvar');
-options.kern = {'rbfard2', 'white'};
+options.kern = 'rbfardjit'; %{'rbfard2', 'white'};
 options.numActive = 50; 
-options.scale2var1 = 1; % scale data to have variance 1
-%options.tieParam = 'tied';  
+options.initSNR = 100;
+%options.scale2var1 = 1; % scale data to have variance 1
 
-options.optimiser = 'scg';
-latentDim = 30;
-d = size(Y, 2);
+options.optimiser = 'scg2';
+latentDim = 25;
 
+model = vargplvmCreate(latentDim, size(Ytr, 2), Ytr, options);
+model = vargplvmParamInit(model, model.m, model.X, options); 
+model.vardist.covars = 0.5*ones(size(model.vardist.covars)) + 0.001*randn(size(model.vardist.covars));
 
-model = vargplvmCreate(latentDim, d, Ytr, options);
-%
-model = vargplvmParamInit(model, model.m, model.X); 
-
-iters = 3;
+iters = 1200;
 display = 1;
 
+fprintf('# Initialising the variational distribution for 800 iterations...\n')
+model.initVardist = 1; model.learnSigmaf = 0; model.learnBeta = 0;
+model = vargplvmOptimise(model, display, 800);
+modelInit = model;
+
+fprintf(['# Optimising the model for ' num2str(iters) ' iterations...\n'])
+model.initVardist = 0; model.learnSigmaf = 1; model.learnBeta = 1;
 model = vargplvmOptimise(model, display, iters);
 
-iters = 1;
-display = 1;
-end
+%% Visualise the results real-time
+% lvmVisualise(model, lbls, 'imageVisualise', 'imageModify', [20 28], 1, 0);
 
-%%
+
+%% PREDICTIONS (reconstruction of test outputs)
+testIters = 200;
 
 % 50% missing outputs from the each test point
 numIndPresent = round(0.5*model.d);
 indexP = [];
 Init = [];
-Testmeans = []; 
-Testcovars = [];
-Varmu = [];
+Varmu = zeros(size(Yts));
 Varsigma = [];
-YtsOriginal = Yts; %%%NEW
+mini = zeros(1, size(Yts,1));
+Yts = YtsOriginal;
+
+fprintf(['\n\n# Test phase: each point optimised for ' num2str(testIters) ' iterations...\n'])
+
 % patrial reconstruction of test points
 for i=1:size(Yts,1)
+    fprintf(['\n\n# Test point # ' num2str(i) '...\n\n'])
     %
     % randomly choose which outputs are present
     permi = randperm(model.d);
@@ -69,19 +76,16 @@ for i=1:size(Yts,1)
     % initialize the latent point using the nearest neighbour 
     % from he training data
     dst = dist2(Yts(i,indexPresent), Ytr(:,indexPresent));
-    [mind, mini] = min(dst);
+    [mind, mini(i)] = min(dst);
     
-    Init(i,:) = model.vardist.means(mini,:);
     % create the variational distribtion for the test latent point
-    vardistx = vardistCreate(model.vardist.means(mini,:), model.q, 'gaussian');
+    vardistx = vardistCreate(model.vardist.means(mini(i),:), model.q, 'gaussian');
     vardistx.covars = 0.2*ones(size(vardistx.covars));
    
     % optimize mean and vars of the latent point 
     model.vardistx = vardistx;
-%    [x, varx] = vargplvmOptimisePoint(model, vardistx, Yts(i, indexPresent), indexPresent, display, iters); %old
-     [x, varx] = vargplvmOptimisePoint(model, vardistx, Yts(i, :), display, iters); %
-    Testmeans(i,:) = x;
-    Testcovars(i,:) = varx;
+%   [x, varx] = vargplvmOptimisePoint(model, vardistx, Yts(i, indexPresent), indexPresent, display, testIters); %old
+    [x, varx] = vargplvmOptimisePoint(model, vardistx, Yts(i, :), display, testIters); %
     
     % reconstruct the missing outputs  
     [mu, sigma] = vargplvmPosteriorMeanVar(model, x, varx);
@@ -91,11 +95,26 @@ for i=1:size(Yts,1)
 end
 
 
-capName = dataSetName;;
+capName = dataSetName;
 capName(1) = upper(capName(1));
 modelType = model.type;
 modelType(1) = upper(modelType(1));
 save(['dem' capName modelType num2str(experimentNo) '.mat'], 'model', 'perm', 'indexP', 'Varmu', 'Varsigma');
 
     
-
+%%
+close all;
+showReconstruction = 1:5:size(Yts,1);
+for i = showReconstruction
+    subplot(1,4,1);
+    imagesc(reshape(Yts(i,:), 20,28)'); colormap('gray'); title('Given')
+    subplot(1,4,2);
+    imagesc(reshape(YtsOriginal(i,:), 20,28)');  colormap('gray'); title('Original')
+    subplot(1,4,3);
+    imagesc(reshape(Varmu(i,:), 20, 28)');  colormap('gray');  title('Predicted')
+    subplot(1,4,4);
+    imagesc(reshape(model.y(mini(i),:), 20, 28)');  colormap('gray');  title('NN')
+    fprintf(1, '# Press any key to continue...')
+    pause
+    fprintf(1, '\n')
+end

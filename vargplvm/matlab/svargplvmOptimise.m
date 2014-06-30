@@ -30,6 +30,13 @@ end
 
 options = optOptions;
 params = modelExtractParam(model);
+
+if isfield(model, 'throwSNRError') && model.throwSNRError
+    throwSNRError = true;
+else
+    throwSNRError = false;
+end
+
 if length(varargin) == 2
     if strcmp(varargin{1}, 'gradcheck')
         assert(islogical(varargin{2}));
@@ -87,5 +94,5 @@ if iters > 0
         params = optim('svargplvmObjective', params,  options,  'svargplvmGradient', model);
     end
     model = svargplvmExpandParam(model, params);
-   % svargplvmCheckSNR(svargplvmSNR(model));
+    svargplvmCheckSNR(svargplvmSNR(model), [], [], throwSNRError);
 end

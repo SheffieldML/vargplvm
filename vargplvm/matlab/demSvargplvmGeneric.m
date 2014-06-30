@@ -2,6 +2,8 @@
 %
 % COPYRIGHT: Andreas C. Damianou, 2012
 %
+% SEEALO: MRDEmbed.m
+%
 % VARGPLVM
 
 %------
@@ -20,12 +22,12 @@ latentDimPerModel = 4;
 init_X = 'separately';
 initVardistIters = 200;
 itNo = 200;
-demSvargplvm2
+demSvargplvmGeneric
 %}
 
-% Fix seeds
-randn('seed', 1e5);
-rand('seed', 1e5);
+% % Fix seeds
+% randn('seed', 1e5);
+% rand('seed', 1e5);
 
 if ~exist('Yall', 'var')
     error('# This demo requires that a cell-array Yall is a priori created. This array should contain one dataset per cell.')
@@ -44,10 +46,16 @@ globalOpt.indPoints = min(globalOpt.indPoints, size(Yall{1},1));
 for i=1:M
     Y = Yall{i};
     dims{i} = size(Y,2);
-    Nall{i} = size(Y,1);
+    if i == 1
+        Nall = size(Y,1);
+    else
+        if size(Y,1) ~= Nall
+            error('The number of observations in each dataset must be the same!');
+        end
+    end
     indTr = globalOpt.indTr;
     if indTr == -1
-        indTr = 1:Nall{i};
+        indTr = 1:Nall;
     end
     if ~exist('Yts')
         indTs = setdiff(1:size(Y,1), indTr);
@@ -55,22 +63,14 @@ for i=1:M
     end
     Ytr{i} = Y(indTr,:);
 end
-t = linspace(0, 2*pi, size(Y, 1)+1)'; t = t(1:end-1, 1);
-timeStampsTraining = t(indTr,1); %timeStampsTest = t(indTs,1);
 clear('Y','Yall')
-
-
-for i=2:M
-    if Nall{i} ~= Nall{i-1}
-        error('The number of observations in each dataset must be the same!');
-    end
-end
-clear('Nall');
 
 %--- Create model
 options = svargplvmOptions(Ytr, globalOpt);
 
 if ~isempty(globalOpt.dynamicsConstrainType)
+    t = linspace(0, 2*pi, Nall+1)'; t = t(1:end-1, 1);
+    timeStampsTraining = t(indTr,1); %timeStampsTest = t(indTs,1);
     optionsDyn.type = 'vargpTime';
     optionsDyn.inverseWidth=30;
     optionsDyn.initX = globalOpt.initX;

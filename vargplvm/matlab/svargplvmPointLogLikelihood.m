@@ -123,6 +123,7 @@ for i=model.testModalities
     if isfield(model.comp{i}, 'DgtN') && model.comp{i}.DgtN
         model.comp{i}.P = model.comp{i}.P1 * (model.comp{i}.Psi1' * model.comp{i}.testPrecomp.mReduced);
     else
+        % y is already normalised from svargplvmOptimisePoint
         model.comp{i}.P = model.comp{i}.P1 * (model.comp{i}.Psi1' *  [model.comp{i}.m(:, indexPresent{i}); y{i}]);
     end
     model.comp{i}.TrPP = sum(sum(model.comp{i}.P .* model.comp{i}.P));

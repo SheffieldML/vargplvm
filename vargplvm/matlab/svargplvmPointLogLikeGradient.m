@@ -1,5 +1,5 @@
 function [g, model] = svargplvmPointLogLikeGradient(model, vardistx, y)
-% SVARGPLVMPOINTLOGLIKEGRADIENT Log-likelihood gradient for of some points of the GP-LVM.
+% SVARGPLVMPOINTLOGLIKEGRADIENT Log-likelihood gradient for of some points of the MRD.
 % FORMAT
 % DESC returns the gradient of the log likelihood with respect to
 % the latent positions, where the log likelihood is conditioned on
@@ -13,10 +13,9 @@ function [g, model] = svargplvmPointLogLikeGradient(model, vardistx, y)
 % RETURN g : the gradient of the log likelihood, conditioned on the
 % training data, with respect to the latent position.
 %
-% SEEALSO : vargplvmPointLogLikelihood, vargplvmOptimisePoint, vagplvmSequenceLogLikeGradient
+% SEEALSO : svargplvmPointLogLikelihood, svargplvmOptimisePoint
 %
-% COPYRIGHT : Michalis K. Titsias and Neil D. Lawrence, 2009, 2011
-% COPYRIGHT : Andreas C. Damianou, 2011
+% COPYRIGHT : Andreas C. Damianou, 2013
 % VARGPLVM
 
 

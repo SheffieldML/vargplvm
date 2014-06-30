@@ -160,8 +160,8 @@ if ~(isfield(model, 'dynamics') && ~isempty(model.dynamics))
     mPres = model.m(:, indexPresent);
     mPres = [mPres; y];    
     YYT = mPres * mPres'; % NxN
-    [U S V]=svd(YYT);
     if isfield(model, 'DgtN') && model.DgtN
+        [U S V]=svd(YYT);
         model.testPrecomp.mReduced=U*sqrt(abs(S));
     end
     model.testPrecomp.TrYY2 = sum(diag(YYT)); % scalar
@@ -169,8 +169,8 @@ if ~(isfield(model, 'dynamics') && ~isempty(model.dynamics))
     % For grads
     mPresGrad = [y; model.m(:, indexPresent)];
     YYT = mPresGrad * mPresGrad'; % NxN
-    [U S V]=svd(YYT);
     if isfield(model, 'DgtN') && model.DgtN
+        [U S V]=svd(YYT);
         model.testPrecomp.mReducedGrad=U*sqrt(abs(S));
     end
     model.testPrecomp.mY = mPresGrad*y';

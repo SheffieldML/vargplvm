@@ -22,7 +22,7 @@ function [ll, model] = vargplvmPointLogLikelihood(model, vardistx, y)
 
 
 % !!!!!! this function can become faster with precomputations stored in the
-% structure model !!!!! 
+% structure model (e.g. for ll1 term) !!!!! 
 
 
 % compute firstly the lower bound that corresponds to the missing indices

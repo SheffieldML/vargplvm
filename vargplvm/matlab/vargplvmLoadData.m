@@ -63,7 +63,7 @@ if searchLocally
     % are kept
     try
         [Y, lbls, Ytest, lblstest]= loadLocalData(dataset, localDatasetsDirectorySmall,dirSep);
-        fprintf('# The requested dataset was found in the local directory (for the small files).\n');
+        fprintf(['# The requested dataset was found in the local directory:\n' localDatasetsDirectorySmall '\n']);
         Y = checkField(Y, field);
         return
     catch
@@ -74,7 +74,7 @@ if searchLocally
     % large datasets are kept
     try
         [Y, lbls, Ytest, lblstest]=loadLocalData(dataset, localDatasetsDirectoryLarge,dirSep);
-        fprintf('# The requested dataset was found in the local directory (for the large files).\n');
+        fprintf(['# The requested dataset was found in the local directory:\n' localDatasetsDirectoryLarge '\n']);
         Y = checkField(Y, field);
         return
     catch
