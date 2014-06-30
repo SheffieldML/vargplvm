@@ -23,6 +23,8 @@ L2_distance ---- Isomap ---- GPmat ---- vargplvm
 Getting started:
  - Please check vargplvm/html/index.html for a short overview of this package.
  - Check vargplvm/matlab/vargplvm_README.txt for Bayesian GP-LVM and VGPDS.
+ - Check vargplvm/matlab/vargplvmEmbed.m for the closest to using vargplvm as a black-box.
  - Check vargplv/matlab/demosDynamics.m for introductory demonstrations for VGPDS.
  - Check vargplvm/matlab/svargplvm_README.txt for an overview of MRD
  - Check vargplvm/matlab/MRDtutorial.m for introductory demonstrations for MRD.
+ - Check vargplvm/matlab/MRDEmbed.m and demSvargplvmGeneric.m for the closest to using MRD as a black-box.
