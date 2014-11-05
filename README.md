@@ -3,6 +3,9 @@ vargplvm
 
 This repository contains both MATLAB and R code for implementing the Bayesian GP-LVM. The MATLAB code is in the subdirectory vargplvm, the R code in vargplvmR.
 
+For a quick description check:
+http://htmlpreview.github.io/?https://github.com/SheffieldML/vargplvm/blob/master/vargplvm/html/index.html
+
 Bayesian GP-LVM
 ===============
 
