@@ -1,5 +1,5 @@
 % DEMUSPSVARGPLVM1 Demonstrate variational GPLVM on USPS data. 
-
+% Copyright: Michalis Titsias, Neil Lawrence, Andreas Damianou, 2010 - 2014
 % VARGPLVM
 
 % Fix seeds
@@ -39,6 +39,7 @@ else % Do the training:
     % create a separate vargplvm for each digit
     for i=1:nClasses
         %
+        fprintf('\n\n# Training for Class # %d\n\n',i)
         Y = YTrain(lblsTrain(:,i)==1,:);
         
         model = vargplvmCreate(latentDim, d, Y, options);
@@ -78,3 +79,44 @@ end
 fprintf('TestError=%d,\tTime=%fseconds.\n', TestError, toc);
 %
 save(['dem' capName modelType num2str(experimentNo) '.mat'], 'varmodel', 'prob', 'TestError');
+
+
+%% Nearest Neighbour baseline
+dists = dist2(YTrain,YTest);
+[~,positions] = min(dists);
+Ypred_NN = lblsTrain(positions,:);
+NNError = 0;
+for n=1:size(YTest,1)
+    pp = find(Ypred_NN(n,:));
+    NNError = NNError + ~lblsTest(n, pp);
+end
+
+%% Training of logistic regression classifier
+labelsTrain = transformLabels(lblsTrain)';
+labelsTest = transformLabels(lblsTest)';
+Nstar = size(YTest,1);
+
+for i=1:nClasses
+    fprintf('\n # LogReg training for class # %d\n', i)
+    lb = zeros(size(YTrain,1),1);
+    lb(labelsTrain == i) = 1;
+    B{i} = glmfit(YTrain, lb,'binomial','logit'); % Logistic regression
+end
+
+% Prediction of each binary classifier
+Ypred_logReg = zeros(size(lblsTest));
+for i=1:nClasses
+    Ypred_logReg(:,i) = glmval(B{i},YTest,'logit')';
+end
+
+% Replace predictions with maximum probability (ie, make a decision)
+[~,ind]=max(Ypred_logReg');
+LogRegError = 0;
+for i=1:size(YTest,1)
+    LogRegError = LogRegError + (ind(i) ~= labelsTest(i));
+end
+
+% Print all results
+fprintf('Var-GPLVM = %d (%f %%) \n', TestError, TestError*100/Nstar);
+fprintf('NN        = %d mistakes (%f %% misclassified) \n', NNError, NNError*100/Nstar);
+fprintf('Log. Reg. = %d mistakes (%f %% misclassified) \n', LogRegError, LogRegError*100/Nstar);

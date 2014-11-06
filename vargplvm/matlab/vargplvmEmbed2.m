@@ -67,7 +67,7 @@ if dynUsed
         optionsDyn.inverseWidth=30;
         optionsDyn.initX = model.X;%options.initX;
     end
-    
+    if ~isfield(optionsDyn, 'initX'), optionsDyn.initX = model.X; end
     % Fill in with default values whatever is not already set
     optionsDyn = vargplvmOptionsDyn(optionsDyn, model.X);
     optionsDyn.initX = options.initX;

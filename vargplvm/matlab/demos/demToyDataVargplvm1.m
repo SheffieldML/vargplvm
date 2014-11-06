@@ -75,7 +75,7 @@ modelInit = model;
 
 %---------- OPTIMISATION ------
 % do not learn beta for few iterations for intitilization
-model.learnBeta = 0;
+model.initVardist = 1;
 display = 1;
 fprintf(1,'# Intitiliazing the model (fixed beta) %d iterations...\n',300);
 model = vargplvmOptimise(model, display, 300);

@@ -41,6 +41,15 @@ for i=1:length(paramPriors)
                     end
                 end
             end
+        case 'dynamicsWhiteKernelVariance'
+            set_param = [];
+            paramChainRule = [];
+            for cc = 1:length(model.dynamics.kern.comp)
+                if strcmp(model.dynamics.kern.comp{cc}.type, 'white')
+                    set_param = [set_param model.dynamics.kern.comp{cc}.variance];
+                    paramChainRule = [paramChainRule transformedParamChainRule(model.dynamics.kern.comp{cc}.transforms.type, model.dynamics.kern.comp{cc}.transforms.index, set_param)];
+                end
+            end
     end
     cur_grad = priorGradient(paramPriors{i}.prior, set_param).*paramChainRule;
     if isfield(paramPriors{i}.prior, 'scale')

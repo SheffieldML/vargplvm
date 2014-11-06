@@ -5,6 +5,7 @@
 % VARGPLVM
 
 if ~exist('globalOpt')
+    % calls 'defaults_svargplvm.m'
     defaults = util_optCreate({'optionsType', 'svargplvm'}); 
     
     %% The final options structure will contain default values, apart for whatever

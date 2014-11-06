@@ -3,7 +3,7 @@ function model = svargplvmModelCreate(arg1, globalOpt, options, optionsDyn)
 % SVARGPLVMMODELCREATE Creates a shared VARGPLVM model from a set of VARGPLVM models
 % FORMAT
 % DESC Creates a shared VARGPLVM model from a set of VARGPLVM models
-% ARG m odel: a cell structure of VARGPLVM models
+% ARG model: a cell structure of VARGPLVM models
 % RETURN model : the svargplvm model created
 %
 % SEEALSO : vargplvmCreate

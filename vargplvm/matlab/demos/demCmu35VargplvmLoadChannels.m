@@ -7,8 +7,10 @@ function channels = demCmu35VargplvmLoadChannels(Ytest, skel)
 
 
 % playSkel(Ytest, startInd)
-    skel = acclaimReadSkel('35.asf');
-    [tmpchan, skel] = acclaimLoadChannels('35_01.amc', skel);
+    if nargin < 2 || isempty(skel)
+        skel = acclaimReadSkel('35.asf');
+        [tmpchan, skel] = acclaimLoadChannels('35_01.amc', skel);
+    end
     
     %left indices
     xyzInd = [2];

@@ -1,12 +1,15 @@
-function [Y, bias, scale] = scaleData(Y, scaleMethod, scaleVal)
+function [Y, bias, scale] = scaleData(Y, scaleMethod, scaleVal, bias)
 % SCALEDATA Scale and center data
 % VARGPLVM
 
+if nargin < 4, bias = []; end
 if nargin < 3, scaleVal = [];   end
 if nargin < 2, scaleMethod = []; end
 
 d = size(Y,2);
-bias = mean(Y);
+if isempty(bias)
+    bias = mean(Y);
+end
 
 % Remove bias
 m = Y;
@@ -19,7 +22,7 @@ end
 scale = ones(1, d);
 
 if ~isempty(scaleMethod) && scaleMethod ~= 0
-    if ~isempty(scaleVal) && scaleVal
+    if ~isempty(scaleVal) 
         warning('Both scale2var1 and scaleVal set for GP');
     end
     if(scaleMethod == 1) % Scale to variance 1
@@ -31,8 +34,13 @@ if ~isempty(scaleMethod) && scaleMethod ~= 0
     end
     scale(find(scale==0)) = 1;
 end
-if ~isempty(scaleVal) && scaleVal
-    scale = repmat(scaleVal, 1, d);
+
+if isscalar(scaleVal)
+    if scaleVal
+        scale = repmat(scaleVal, 1, d);
+    end
+elseif ~isempty(scaleVal) && ~sum(scaleVal==0)
+    scale = scaleVal;
 end
 
 % Apply scale

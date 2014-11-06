@@ -36,6 +36,7 @@ else
   returnNames = false;
 end 
 
+
 if isfield(model, 'dynamics') & ~isempty(model.dynamics)
     % [VariationalParameters(reparam)   dynKernelParameters]
     if returnNames
@@ -48,10 +49,8 @@ if isfield(model, 'dynamics') & ~isempty(model.dynamics)
 else
     % Variational parameters 
     if returnNames
-        %[varParams, varNames] = vardistExtractParam(model.vardist);
         [varParams, varNames] = modelExtractParam(model.vardist);
-        %names = varNames{:}; %%% ORIGINAL
-        names = varNames; %%% NEW
+        names = varNames;
     else
         %varParams = vardistExtractParam(model.vardist);
         varParams = modelExtractParam(model.vardist);
@@ -115,6 +114,14 @@ if model.optimiseBeta
      end
      names = {names{:}, betaParamNames{:}};
    end
+end
+
+% Make fixed indices to have an asterisk
+if returnNames && isfield(model, 'fixParamIndices')
+    for i = 1:length(model.fixParamIndices)
+        j = model.fixParamIndices(i);
+        names{j} = [names{j} '*'];
+    end
 end
 
 

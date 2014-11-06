@@ -299,6 +299,11 @@ To summarize, in the full model we can select:
     q(X)), because there is abstraction, i.e. the vargplvm models don't "know" that they
     are optimised within a svargplvm rather than within a vargplvm framework.
 
+    !! Check vargplvm_README.txt to see the exact structure of the "model"
+    used there. That will be helpful, since MRD is essentially a model
+    where every model.comp{i} element is a modality represented by a whole
+    vargplvm (Bayesian GP-LVM) model.
+
 
     * FUNCTIONS, FILES, DEPENDENCIES:
     _______________________________________________________________________

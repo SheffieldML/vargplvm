@@ -18,7 +18,11 @@ logProb = zeros(nTestSamples,1);
 %     if display, fprintf('vargplvmProbabilityCompute.m: line 17 -- Starting up MatLab pool for parallel computing.'); end
 %     matlabpool
 % end
-nWorkers = matlabpool('size');
+try
+    nWorkers = matlabpool('size');
+catch e
+    nWorkers = 1;
+end
 if nWorkers==0 % If matlabpool has not started, don't try to use it.
     nWorkers = 1;
 end

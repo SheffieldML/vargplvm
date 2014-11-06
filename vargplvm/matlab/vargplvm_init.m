@@ -18,6 +18,12 @@ defaults.fixInd = 0;
 defaults.dynamicKern = {'rbf', 'white', 'bias'};
 defaults.mappingKern = 'rbfardjit'; % {'rbfard2', 'bias', 'white'};
 defaults.reconstrIters = 1000;
+% Leave empty {} for no dynamics.
+% Other options are: 
+% 'time': temporal dynamics, based on input t
+% 'labels': provided labels
+% 'data': autoencoder
+defaults.dynamicsConstrainType = {};
 % 0.1 gives around 0.5 init.covars. 1.3 biases towards 0.
 defaults.vardistCovarsMult=1.3;
 defaults.dataSetSplit = 'everyTwo';

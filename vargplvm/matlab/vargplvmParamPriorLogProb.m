@@ -44,10 +44,19 @@ for i=1:length(paramPriors)
                     
                 end
             end
+        case 'dynamicsWhiteKernelVariance'
+            for cc = 1:length(model.dynamics.kern.comp)
+                if strcmp(model.dynamics.kern.comp{cc}.type, 'white')
+                    set_param = model.dynamics.kern.comp{cc}.variance;
+                end
+            end
     end
     curF = priorLogProb(paramPriors{i}.prior, set_param);
     if isfield(paramPriors{i}.prior, 'scale')
         curF = curF*paramPriors{i}.prior.scale;
     end
+    %if isfield(paramPriors{i}.prior, 'log_scale')
+    %    curF = curF+paramPriors{i}.prior.log_scale;
+    %end
     f = f + curF;
 end

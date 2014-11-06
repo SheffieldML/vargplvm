@@ -71,7 +71,7 @@ defaults{end+1} = 'initStaticSNR'; defaults{end+1} = 25;
 % If true, then if also initWithStatic ~=1, we initialise the model.beta
 % and model.kern based on the initialised static model.
 defaults{end+1} = 'initWithStaticAll'; defaults{end+1} = false;
-% Leave empty [] for no dynamics.
+% Leave empty {} for no dynamics.
 % Other options are: 'time', 'labels', 'data'
 defaults{end+1} = 'dynamicsConstrainType'; defaults{end+1} = {};
 % If set to fals, then the dynamics kernel is not initialised with

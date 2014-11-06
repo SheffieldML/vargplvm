@@ -5,8 +5,12 @@ function [X, sigma2, W, model] = fgplvmEmbed(Y, dims, varargin)
 iters = 200;
 initSNR = 100;
 display = 1;
-
-options = fgplvmOptions('fitc');
+if nargin > 3 && length(varargin)>5 && ~isempty(varargin{6})
+    approx = varargin{6};
+else
+    approx = 'fitc';
+end
+options = fgplvmOptions(approx);
 options.numActive = min(100, size(Y,1));
 options.optimiser = 'scg';
     
@@ -16,6 +20,7 @@ if nargin > 3
         options.numActive = options2.numActive;
         initSNR = options2.initSNR;
     end
+    % initVardistIters is not used..
     if length(varargin)>1 && ~isempty(varargin{2}), initVardistIters = varargin{2}; end
     if length(varargin)>2 && ~isempty(varargin{3}), iters = varargin{3}; end
     if length(varargin)>3 && ~isempty(varargin{4}), initSNR = varargin{4}; end
