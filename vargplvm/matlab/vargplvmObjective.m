@@ -20,3 +20,4 @@ function f = vargplvmObjective(params, model)
 
 model = modelExpandParam(model, params);
 f = - vargplvmLogLikelihood(model);
+

@@ -45,7 +45,8 @@ catch e
     pool_open = 0;
 end
 if pool_open && ~isempty(parallel) && size(Yts,1) > 3 && ~batchMode
-    parallel = true;
+    parallel = parallel;
+    warning('Parallel predictions!')
 else
     parallel = false;
 end
@@ -78,47 +79,101 @@ if batchMode
     [x_star_all, varx_star_all] = vargplvmOptimisePoint(model, vardistx, y_star, true, iters);
 else
     if parallel
-        %.. TODO
-        x_star_all = zeros(length(testInd), model.q);
-        varx_star_all = zeros(length(testInd), model.q);
+        x_star_allCell = cell(length(testInd), 1);
+        varx_star_allCell = cell(length(testInd), 1);
         if ~initQxGiven &&  ~miniGiven
             mini = NaN(1,length(testInd));
         end
-        pb = myProgressBar(length(testInd), min(length(testInd),20));
-        YYts = cell(length(testInd),1);
-        initQxMeans = cell(length(testInd),1);
-        initQxCovars = cell(length(testInd),1);
         for i=1:length(testInd)
-            curInd = testInd(i);
-            YYts{i} = Yts(curInd,:);
-            initQxMeans{i} = initQx.means(i,:);
-            initQxCovars{i} = initQx.covars(i,:);
+             curInd = testInd(i);
+             YYts{i} = Yts(curInd,:);
+             if initQxGiven
+                initQxMeans{i} = initQx.means(i,:);
+                initQxCovars{i} = initQx.covars(i,:);
+             else
+                 initQxMeans{i} = [];
+                 initQxCovars{i} = [];
+             end
+             miniCell{i} = mini(i);
+        end
+         Ytr = model.y;
+        pb = myProgressBar(length(testInd), min(length(testInd),20));
+        for i=1:length(testInd)
+            pbb{i} = pb;
         end
         parfor i=1:length(testInd)
-            pb = myProgressBar(pb,i);
-            %curInd = testInd(i);
-            y_star = YYts{i};
-            modelTmp = model;
+            pbb{i} = myProgressBar(pbb{i},i);
+            y_star =YYts{i};
             if ~initQxGiven
                 if ~miniGiven
-                    dst = dist2(y_star, model.y);
-                    [~, mini(i)] = min(dst);
+                    dst = dist2(y_star, Ytr);
+                    [~, miniCur] = min(dst);
+                    miniCell{i} = miniCur;
+                else
+                    miniCur = miniCell{i};
                 end
-                modelTmp.mini = mini(i);
-                vardistx = vardistCreate(modelTmp.vardist.means(mini(i),:), modelTmp.q, 'gaussian');
-                vardistx.covars = modelTmp.vardist.covars(mini(i),:);
+                modelCur = model;
+                modelCur.mini = miniCur;
+                vardistx = vardistCreate(modelCur.vardist.means(miniCur,:), modelCur.q, 'gaussian');
+                vardistx.covars = modelCur.vardist.covars(miniCur,:);
             else
-                vardistx = vardistCreate(initQxMeans{i}, modelTmp.q, 'gaussian');
+                vardistx = vardistCreate(initQxMeans{i}, modelCur.q, 'gaussian');
                 vardistx.covars = initQxCovars{i};
             end
-            modelTmp.vardistx = vardistx;
+            modelCur.vardistx = vardistx;
             
             % Find p(X_* | Y_*) which is approximated by q(X_*)
-            [x_star, varx_star] = vargplvmOptimisePoint(modelTmp, vardistx, y_star, displayTestOpt, iters);
-            x_star_all(i,:) = x_star;
-            varx_star_all(i,:) = varx_star;
+            [x_star, varx_star] = vargplvmOptimisePoint(modelCur, vardistx, y_star, displayTestOpt, iters);
+            x_star_allCell{i} = x_star;
+            varx_star_allCell{i} = varx_star;
         end
-        fprintf(1, '\n');     
+        for i=1:length(testInd)
+            x_star_all(i,:) = x_star_allCell{i};
+            varx_star_all(i,:) = varx_star_allCell{i};
+            mini(i) = miniCell{i};
+        end
+        fprintf(1, '\n');
+%         %.. TODO
+%         x_star_all = zeros(length(testInd), model.q);
+%         varx_star_all = zeros(length(testInd), model.q);
+%         if ~initQxGiven &&  ~miniGiven
+%             mini = NaN(1,length(testInd));
+%         end
+%         pb = myProgressBar(length(testInd), min(length(testInd),20));
+%         YYts = cell(length(testInd),1);
+%         initQxMeans = cell(length(testInd),1);
+%         initQxCovars = cell(length(testInd),1);
+%         for i=1:length(testInd)
+%             curInd = testInd(i);
+%             YYts{i} = Yts(curInd,:);
+%             initQxMeans{i} = initQx.means(i,:);
+%             initQxCovars{i} = initQx.covars(i,:);
+%         end
+%         parfor i=1:length(testInd)
+%             pb = myProgressBar(pb,i);
+%             %curInd = testInd(i);
+%             y_star = YYts{i};
+%             modelTmp = model;
+%             if ~initQxGiven
+%                 if ~miniGiven
+%                     dst = dist2(y_star, model.y);
+%                     [~, mini(i)] = min(dst);
+%                 end
+%                 modelTmp.mini = mini(i);
+%                 vardistx = vardistCreate(modelTmp.vardist.means(mini(i),:), modelTmp.q, 'gaussian');
+%                 vardistx.covars = modelTmp.vardist.covars(mini(i),:);
+%             else
+%                 vardistx = vardistCreate(initQxMeans{i}, modelTmp.q, 'gaussian');
+%                 vardistx.covars = initQxCovars{i};
+%             end
+%             modelTmp.vardistx = vardistx;
+%             
+%             % Find p(X_* | Y_*) which is approximated by q(X_*)
+%             [x_star, varx_star] = vargplvmOptimisePoint(modelTmp, vardistx, y_star, displayTestOpt, iters);
+%             x_star_all(i,:) = x_star;
+%             varx_star_all(i,:) = varx_star;
+%         end
+%         fprintf(1, '\n');     
     else
         x_star_all = zeros(length(testInd), model.q);
         varx_star_all = zeros(length(testInd), model.q);

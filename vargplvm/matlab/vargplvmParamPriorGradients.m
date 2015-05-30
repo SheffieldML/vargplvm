@@ -1,4 +1,4 @@
-function g = vargplvmParamPriorGradients(model)
+function g = vargplvmParamPriorGradients(model, gs)
 % VARGPLVMPARAMPRIORGRADIENTS Gradients of any priors put on parameters of
 % a vargplvm model
 % DESC Gradients of any priors put on parameters of
@@ -8,10 +8,15 @@ function g = vargplvmParamPriorGradients(model)
 % COPYRIGHT: Andreas C. Damianou, 2013
 % VARGPLVM
 
-if isfield(model, 'numParams')
-    g = zeros(1, max(model.nParams, model.numParams));
+if nargin < 2
+    if isfield(model, 'numParams')
+        g = zeros(1, max(model.nParams, model.numParams));
+    else
+        % This should be the correct one
+        g = zeros(1, model.nParams);
+    end
 else
-    g = zeros(1, model.nParams);
+    g = zeros(1, gs);
 end
 if ~isfield(model, 'paramPriors')
     return

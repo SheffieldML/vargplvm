@@ -61,10 +61,12 @@ if 0
     imshow(im,[0 180]), colormap('gray') % Def: [0 120];
     axis equal
     axis tight
+    axis off %%
     %   text(30,4,'Morphing','HorizontalAlignment','center','VerticalAlignment','top','FontSize',10);
     %'BackgroundColor',[.9 .9 .9], 'FontSize',6);
     %title('Morphing')
-    path = ['../../vargplvm/matlab/Results/diagrams/Yale6Sets/morphingNEWangle/' curNum];
+    %path = ['../../vargplvm/matlab/Results/diagrams/Yale6Sets/morphingNEWangle/' curNum];
+    path = ['/home/andreas/Dropbox/_PhD/Software/github/private/vargplvm/matlab/livMachines/' curNum];
     print( tempH, '-depsc', [path '.eps']) %%%%%%%%%%%
     % print( tempH, '-djpeg100', [path curNum, '.jpeg']) %%%%%%%%%%%
     %imwrite( im, './Results/diagrams/Yale1Face/lightInterp/foo.jpg') %%%%%%%%%%%
@@ -75,6 +77,5 @@ if 0
     TEMPimNumber = TEMPimNumber +1;
     save('TEMPimNumber.mat', 'TEMPimNumber');
     clear TEMPimNumber
-   
 %
 end

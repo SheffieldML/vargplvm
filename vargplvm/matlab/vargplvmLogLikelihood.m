@@ -100,3 +100,22 @@ ll = 2*((1 - fw)*ll + fw * KLdiv);
 
 % If there's a prior on some parameters, add the contribution
 ll = ll + vargplvmParamPriorLogProb(model);
+
+
+
+%--- Trick from PILCO v0.9 (Deisenroth et al.) to prevent very low SNR
+% See vargplvmGradient for info about the params.
+if isfield(model, 'SNRpenalty') && ~isempty(model.SNRpenalty) && model.SNRpenalty.flag
+    p   = model.SNRpenalty.p;  % Default: 15
+    snr = model.SNRpenalty.snr; % Default: 1000
+    if isfield(model, 'mOrig')
+        lsf = log(std(model.mOrig(:)));
+    else
+        lsf = log(std(model.m(:)));
+    end
+    lsn = log(sqrt(1/model.beta));
+    % Original (PILCO) implementation didn't have 2* factor. But there they
+    % apply the penalty also to the white term. Not 100% sure that the 2*
+    % factor is the correct, but seems to work for the gradients...
+    ll = ll - 2*sum(((lsf - lsn)/log(snr)).^p);
+end

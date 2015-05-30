@@ -64,7 +64,9 @@ if strcmp(optionsDyn.type, 'vargpTime')
         end
         
         % The following is related to the expected number of zero-crossings.
-        kern.comp{1}.inverseWidth = invWidth./(((max(t)-min(t))).^2);
+        if kern.inputDimension == 1
+            kern.comp{1}.inverseWidth = invWidth./(((max(t)-min(t))).^2);
+        end
         kern.comp{1}.variance = 1;
         
         optionsDyn.kern = kern;

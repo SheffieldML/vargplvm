@@ -92,6 +92,26 @@ if optionsDyn.regularizeMeans
     end
 end
 
+% The initial covariances we aim for, via calibrating the reparametrised
+% covariances and measuring their median
+if ~isfield(optionsDyn, 'initCovarMedian') || isempty(optionsDyn.initCovarMedian)
+    initCovarMedian = 0.18;
+else
+    initCovarMedian = optionsDyn.initCovarMedian;
+end
+% The lowest acceptable value of the above
+if ~isfield(optionsDyn, 'initCovarMedianLowest') || isempty(optionsDyn.initCovarMedianLowest)
+    initCovarMedianLowest = initCovarMedian/1.8;
+else
+    initCovarMedianLowest = optionsDyn.initCovarMedianLowest;
+end
+% The highest acceptable value of the above
+if ~isfield(optionsDyn, 'initCovarMedianHighest') || isempty(optionsDyn.initCovarMedianHighest)
+    initCovarMedianHighest = initCovarMedian/0.3;
+else
+    initCovarMedianHighest = optionsDyn.initCovarMedianHighest;
+end
+
 
 %model.X = X;
 
@@ -128,25 +148,25 @@ if isfield(optionsDyn, 'vardistCovars') && ~isempty(optionsDyn.vardistCovars)
 else % Try to automatically find a satisfactory value for the initial reparametrized
      % covariances (lambda) so that the median of the real covariances is
      % as close as possible to an ideal value, eg 0.18
-    fprintf(1, '# Finding an initial value for the reparametrized covariance...')
+    fprintf(1, '# Finding an initial value for the reparametrized covariance, aiming at median(S)=%.2f...',initCovarMedian)
     % Try an initial calibration in the default search region of the
     % parameters
-    [bestVdc, bestMed] = calibrateLambda(model, 0.05, 0.05, 3);
-    if bestMed < 0.1 || bestMed > 0.6
+    [bestVdc, bestMed] = calibrateLambda(model, 0.05, 0.05, 3, initCovarMedian);
+    if bestMed < initCovarMedianLowest || bestMed > initCovarMedianHighest
         % The above search failed. Try some other intervals for the search
         % parameter.
         fprintf(1, '.')
-        [bestVdcNew, bestMedNew] = calibrateLambda(model, 0.0008 , 0.05, 0.05);
-        if abs(bestMedNew - 0.18) < abs(bestMed - 0.18)
+        [bestVdcNew, bestMedNew] = calibrateLambda(model, 0.0008 , 0.05, 0.05, initCovarMedian);
+        if abs(bestMedNew - initCovarMedian) < abs(bestMed - initCovarMedian)
             bestMed = bestMedNew;
             bestVdc = bestVdcNew;
         end
     end
-    if bestMed < 0.1 || bestMed > 0.6
+    if bestMed < initCovarMedianLowest || bestMed > initCovarMedianHighest
         % Repeat as above for a different interval.
         fprintf(1, '.')
-        [bestVdcNew, bestMedNew] = calibrateLambda(model, 3, 0.05, 6.5);
-        if abs(bestMedNew - 0.18) < abs(bestMed - 0.18)
+        [bestVdcNew, bestMedNew] = calibrateLambda(model, 3, 0.05, 6.5, initCovarMedian);
+        if abs(bestMedNew - initCovarMedian) < abs(bestMed - initCovarMedian)
             bestMed = bestMedNew;
             bestVdc = bestVdcNew;
         end
@@ -244,14 +264,14 @@ model = vargplvmExpandParam(model, params);
 med = median(model.vardist.covars(:));
 minC = min(model.vardist.covars(:));
 maxC = max(model.vardist.covars(:));
-if med < 0.1 || med > 0.6
+if med < initCovarMedianLowest || med > initCovarMedianHighest
    warning('!!! [Min Median Max] value of variational covariances is [%1.2f %1.2f %1.2f].\n', minC, med, maxC);
 else
     fprintf('# [Min Median Max] value of variational covariances is [%1.2f %1.2f %1.2f].\n', minC, med, maxC);
 end
 end
 
-function [bestVdc, bestMed] = calibrateLambda(model, from, step, to)
+function [bestVdc, bestMed] = calibrateLambda(model, from, step, to, initCovarMedian)
     if nargin < 2 || isempty(from)
         from = 0.05;
     end
@@ -261,6 +281,9 @@ function [bestVdc, bestMed] = calibrateLambda(model, from, step, to)
     if nargin < 4 || isempty(to)
         to = 3;
     end
+    if nargin < 5 || isempty(initCovarMedian)
+        initCovarMedian = 0.18;
+    end
     
     bestVdc = 0.05; bestDiff = 1000;
     for vdc = [from:step:to]
@@ -269,8 +292,8 @@ function [bestVdc, bestMed] = calibrateLambda(model, from, step, to)
         model.dynamics.vardist.covars = vdc * ones(size(model.dynamics.vardist.covars));
         modelNew = vargplvmDynamicsUpdateStats(model);
         med = median(modelNew.vardist.covars(:));
-        curDiff = abs(med - 0.18);
-        if (curDiff) < bestDiff % "Ideal" median is 0.18
+        curDiff = abs(med - initCovarMedian);
+        if (curDiff) < bestDiff % "Ideal" median is initCovarMedian
             bestVdc = vdc;
             bestDiff = curDiff;
             bestMed = med;

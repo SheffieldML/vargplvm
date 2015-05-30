@@ -1,4 +1,4 @@
-function scales = svargplvmShowScales(model, printPlots, modalities, dims, thresh, normaliseScales)
+function scales = svargplvmShowScales(model, printPlots, modalities, dims, thresh, normaliseScales, customLeg, logScales)
 
 % SVARGPLVMSHOWSCALES Show the scales of a svargplvmModel graphically
 %
@@ -31,6 +31,14 @@ if nargin < 6 || isempty(normaliseScales)
     normaliseScales = false;
 end
 
+if nargin < 7
+    customLeg = {}; % Custom legend
+end
+
+if nargin < 8 || isempty(logScales)
+    logScales = false;
+end
+
 totalModels = length(modalities);
 
 if printPlots
@@ -41,7 +49,18 @@ if printPlots
             scales{i} = model.comp{i}.kern.comp{1}.inputScales(dims);
         end
     end
-    if totalModels == 2 || normaliseScales
+    if logScales
+        origScales = scales;
+        for k=1:totalModels
+            scales{modalities(k)} = scales{modalities(k)}./max(scales{modalities(k)});
+            scales{modalities(k)} = log(scales{modalities(k)});%logN(scales{modalities(k)},1.01);
+            a=0; b=1; % Scale data between a and b
+            X=scales{modalities(k)};
+            X = (X-min(min(X))).*(b-a)./(max(max(X))-min(min(X))) + a;
+            scales{modalities(k)}=X;
+        end
+    end
+    if (totalModels == 2 || normaliseScales) && ~logScales
         origScales = scales;
         for k = 1:totalModels
             scales{modalities(k)}=scales{modalities(k)}./max(scales{modalities(k)});
@@ -63,13 +82,30 @@ if printPlots
         bar2=bar(x, scales{modalities(2)}, 'FaceColor', 'r', 'EdgeColor', 'r');
         set(bar2,'BarWidth',K/2); 
         hold off; 
-        legend(['scales1 (x ' num2str(maxScales1) ')'],['scales2 (x ' num2str(maxScales2) ')'])
+        if isempty(customLeg)
+            legend(['scales1 (x ' num2str(maxScales1) ')'],['scales2 (x ' num2str(maxScales2) ')'])
+        else
+            legend(customLeg);
+        end
         scales = origScales;
     else
-        for i=1:totalModels
-            if totalModels > 1, subplot(1,totalModels, i) ; end
-            bar(scales{modalities(i)}); title(['Modality ' num2str(modalities(i))])
-        end
+        % Too many models. Plot one at a time
+        %if totalModels > 10 && exist('hsvargplvmShowScales','file')
+             %mm.layer{1} = model;
+             %mm.H=1;
+             %mm.layer{1}.M = totalModels;
+             %hsvargplvmShowScales(mm);
+        %else
+            for i=1:totalModels
+                if totalModels > 10
+                    pause
+                    %figure;
+                elseif totalModels > 1
+                    subplot(1,totalModels, i) ; 
+                end
+                bar(scales{modalities(i)}); title(['Modality ' num2str(modalities(i))])
+            end
+        %end
     end
 else
     for i=1:length(model.comp)
@@ -87,3 +123,7 @@ else
         scales{i}(scales{i}<thresh) = 0;
     end
 end
+
+
+function y=logN(x,N)
+y = log(x)/log(N);

@@ -1,4 +1,4 @@
-function warnings = svargplvmCheckSNR(SNR, errLimit, warLimit, throwError)
+function [warnings,errors] = svargplvmCheckSNR(SNR, errLimit, warLimit, throwError,displ)
 % SVARGPLVMCHECKSNR Check Signal to Noise Ratio after
 % optimisation, to ensure that the trivial local minimum
 % of learning only noise is avoided.
@@ -17,6 +17,7 @@ function warnings = svargplvmCheckSNR(SNR, errLimit, warLimit, throwError)
 %
 % VARGPLVM
 
+if nargin < 5 || isempty(displ), displ = true; end
 if nargin < 4 || isempty(throwError), throwError = true; end 
 if nargin < 3 || isempty(warLimit), warLimit = 10; end
 if nargin < 2 || isempty(errLimit), errLimit = 2; end
@@ -41,8 +42,10 @@ if ~isempty(errors)
     errMsg = 'Error! Low SNR in modalities: ';
     errMsg = [errMsg num2str(errors)];
     errMsg = [errMsg errStr];
-    for j=1:length(SNR)
-        fprintf('# SNR%d = %.6f\n', j, SNR{j})
+    if displ
+        for j=1:length(SNR)
+            fprintf('# SNR%d = %.6f\n', j, SNR{j})
+        end
     end
     if throwError
         error(errMsg);
@@ -55,7 +58,7 @@ else
     end
 end
 
-if ~isempty(warnings)
+if ~isempty(warnings) && displ
     warMsg = 'WARNING! Low SNR in modalities: ';
     warMsg = [warMsg num2str(warnings)];
     warMsg = [warMsg warStr];

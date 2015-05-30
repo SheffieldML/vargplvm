@@ -54,9 +54,9 @@ options(3) = 0.1*options(3);
 
 if display
     options(1) = 1;
-    if length(params) <= 100
-        options(9) = 1;
-    end
+ %   if length(params) <= 100
+ %       options(9) = 1;
+ %   end
 end
 options(14) = iters;
 

@@ -1,4 +1,4 @@
-function model = svargplvmRestorePrunedModel(model, Ytr, onlyData, options)
+function model = svargplvmRestorePrunedModel(model, Ytr, onlyData, options, parallel)
 % SVARGPLVMRESTOREPRUNEDMODEL Restore a pruned shared var-GPLVM model.
 % FORMAT
 % DESC restores a svargplvm model which has been pruned and it brings it in
@@ -16,13 +16,24 @@ function model = svargplvmRestorePrunedModel(model, Ytr, onlyData, options)
 
 % VARGPLVM
 
-if nargin <3
+if nargin <3 || isempty(onlyData)
     onlyData = 0;
 end
 
 if nargin <4
     options = [];
 end
+
+if nargin < 5 || isempty(parallel)
+    parallel = false;
+end
+
+try
+    pool_open = matlabpool('size')>0;
+catch e
+    pool_open = 0;
+end
+if ~pool_open, parallel = false; end
 
 if isfield(model, 'globalOpt')
    if ~iscell(model.globalOpt.balanceModalityDim)
@@ -36,8 +47,31 @@ if isfield(model, 'globalOpt')
    end
 end
 
-for i=1:model.numModels
-    model.comp{i}.vardist = model.vardist;
-    model.comp{i} = vargplvmRestorePrunedModel(model.comp{i},Ytr{i}, onlyData, options);
-end
 
+
+if parallel
+    modelVardist = model.vardist;
+    comp = cell(1,length(model.comp));
+    for i=1:model.numModels
+        comp{i} = model.comp{i};
+    end
+    parfor i=1:model.numModels
+        comp{i}.vardist = modelVardist;
+        comp{i} = vargplvmRestorePrunedModel(comp{i},Ytr{i}, onlyData, options);
+    end
+    for i=1:model.numModels
+        model.comp{i} = comp{i};
+    end
+    clear 'comp';
+else
+    if model.numModels > 3 && ~parallel
+        pb = myProgressBar(model.numModels, model.numModels);
+    end
+    for i=1:model.numModels
+        model.comp{i}.vardist = model.vardist;
+        model.comp{i} = vargplvmRestorePrunedModel(model.comp{i},Ytr{i}, onlyData, options);
+        if model.numModels > 3
+            pb = myProgressBar(pb,i);
+        end
+    end
+end

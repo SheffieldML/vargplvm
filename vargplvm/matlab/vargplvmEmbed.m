@@ -12,6 +12,14 @@ function [X, sigma2, W, model, modelInitVardist] = vargplvmEmbed(Y, dims, vararg
 % varargin (even if empty values are given, ie
 % [..]=vargplvmEmbed(Y, dims, [],[],[],[],[]);
 
+if nargin < 1
+    fprintf('  Usage:\n')
+    fprintf('  [X, sigma2, W, model, modelInitVardist] = vargplvmEmbed(Y, dims, varargin)\n')
+    fprintf('  varargin = {options, initIters, iters, display, optionsDyn}\n');
+    return
+end
+
+
 vargplvm_init;
 
 initVardistIters = 15;

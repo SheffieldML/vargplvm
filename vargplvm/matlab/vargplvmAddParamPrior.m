@@ -1,15 +1,17 @@
 function model = vargplvmAddParamPrior(model, paramName, priorName, varargin)
 % VARGPLVMADDPARAMPRIOR Add a prior in one of the parameters of the given
 % vargplvm model
+%
 % DESC Add a prior in one of the parameters of the model.  This prior will
-% NOT be optimised (ie fixed parameters).
+%      NOT be optimised (ie fixed parameters).
+%
 % ARG model: The model for which we want to add a prior
 % ARG paramName: The name of the parameter(s) for which the prior will be
-% added (a regexp will match the given name)
+%                added (a regexp will match the given name)
 % ARG priorName: The prior to be used. Make sure that the function
-% [priorName 'priorParamInit'] exists.
+%                [priorName 'priorParamInit'] exists.
 % ARG varargin: Any arguments needed for the specific constructor of the
-% prior are going to be pased
+%               prior are going to be pased
 % 
 % EXAMPLE: 
 % % Add a prior on the noise parameter to encourage high SNR. High SNR is

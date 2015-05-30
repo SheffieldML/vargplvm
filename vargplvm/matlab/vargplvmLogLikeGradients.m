@@ -119,17 +119,18 @@ if strcmp(model.kern.type, 'rbfardjit')
     end
 end
 
-%%% Compute Gradients with respect to X_u %%%
-gKX = kernGradX(model.kern, model.X_u, model.X_u);
-
-% The 2 accounts for the fact that covGrad is symmetric
-gKX = gKX*2;
-dgKX = kernDiagGradX(model.kern, model.X_u);
-for i = 1:model.k
-    gKX(i, :, i) = dgKX(i, :);
-end
 
 if learnInducing
+    %%% Compute Gradients with respect to X_u %%%
+    gKX = kernGradX(model.kern, model.X_u, model.X_u);
+    
+    % The 2 accounts for the fact that covGrad is symmetric
+    gKX = gKX*2;
+    dgKX = kernDiagGradX(model.kern, model.X_u);
+    for i = 1:model.k
+        gKX(i, :, i) = dgKX(i, :);
+    end
+
     % Allocate space for gX_u
     gX_u = zeros(model.k, model.q);
     % Compute portion associated with gK_u
@@ -366,7 +367,7 @@ g = [gVar gDynKern gParam];
 
 
 % If there are priors on parameters, add the contribution here
-g = g + vargplvmParamPriorGradients(model);
+g = g + vargplvmParamPriorGradients(model, length(g));
 
 % A 'dirty' trick to fix some parameters
 if isfield(model, 'fixParamIndices') && ~isempty(model.fixParamIndices)
@@ -388,6 +389,41 @@ end
 
 % delete afterwards
 %g = [gVarmeans2 gVarcovs2 (gX_u(:)'+ gInd2) (gKern3+gKern2) 0*gBeta];
+
+
+
+%--- Trick from PILCO v0.9 (Deisenroth et al.) to prevent very low SNR
+% To pass gradcheck you can also change vargplvmObjective accordingly.
+if isfield(model, 'SNRpenalty') && ~isempty(model.SNRpenalty) && model.SNRpenalty.flag
+    % Strength of penalty.
+    % Large p -> small bias
+    % Too small p -> Negative bias.
+    % For snr parameter = 1000, in PILCO p is set to 30.
+    % Might depend on the problem though. p can even take negative values
+    p   = model.SNRpenalty.p;  % Default: 15
+    snr = model.SNRpenalty.snr; % Default: 1000
+    if isfield(model, 'mOrig')
+        lsf = log(std(model.mOrig(:)));
+    else
+        lsf = log(std(model.m(:)));
+    end
+    lsn = log(sqrt(1/model.beta));
+    % Index for beta
+    sfi = length(g);
+    penalty = p*(lsf - lsn).^(p-1)/log(snr)^p;
+    if abs(penalty / norm(g(sfi))) > 0.01
+        warning(['SNR |penalty/df| is high (' sprintf('%8.4E',penalty/norm(g(sfi))) ')'])
+    end
+    g(sfi) = g(sfi) - penalty;
+end
+%---
+
+
+
+
+
+
+
 
 end
 

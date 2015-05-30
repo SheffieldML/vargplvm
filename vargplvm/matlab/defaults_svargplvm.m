@@ -46,6 +46,14 @@ defaults{end+1} = 'dynamicKern'; defaults{end+1} = {'rbf','white', 'bias'};
 defaults{end+1} = 'indTr'; defaults{end+1} = -1;
 %%%defaults{end+1} = 'backConstraints'; defaults{end+1} = 1; % Substituted with dynamicsConstrainType
 defaults{end+1} = 'vardistCovarsMult'; defaults{end+1} = 2;
+% The "ideal" initial variational covariances for the dynamics layer. Since
+% we do not have direct access to these covariances, we can only set the
+% reparametrised covariances (lambda) which result in different var.
+% covars. That's why we aim for a reasonable median.
+defaults{end+1} = 'dynamicsInitCovarMedian'; defaults{end+1} = 0.18;
+% The lowest and highest acceptable bounds for the above.
+defaults{end+1} = 'initCovarMedianLowest'; defaults{end+1} = [];
+defaults{end+1} = 'initCovarMedianHighest'; defaults{end+1} = [];
 defaults{end+1} = 'dataSetNames'; defaults{end+1} = {};
 defaults{end+1} = 'dataSetName'; defaults{end+1} = 'unknown';
 defaults{end+1} = 'mappingInitialisation'; defaults{end+1} = 0;

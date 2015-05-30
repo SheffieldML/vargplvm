@@ -66,20 +66,28 @@ end
 clear('Y','Yall')
 
 %--- Create model
-options = svargplvmOptions(Ytr, globalOpt);
+if ~exist('options','var')
+    options = svargplvmOptions(Ytr, globalOpt);
+else
+    warning('options field exists already!');
+end
 
 if ~isempty(globalOpt.dynamicsConstrainType)
-    t = linspace(0, 2*pi, Nall+1)'; t = t(1:end-1, 1);
-    timeStampsTraining = t(indTr,1); %timeStampsTest = t(indTs,1);
-    optionsDyn.type = 'vargpTime';
-    optionsDyn.inverseWidth=30;
-    optionsDyn.initX = globalOpt.initX;
-    optionsDyn.constrainType = globalOpt.dynamicsConstrainType;
-    if exist('timeStampsTraining', 'var')
-        optionsDyn.t = timeStampsTraining;
-    end
-    if exist('labelsTrain', 'var') && ~isempty(labelsTrain)
-        optionsDyn.labels = labelsTrain;
+    if exist('optionsDyn', 'var')
+        warning('optionsDyn field exists already!');
+    else
+        t = linspace(0, 2*pi, Nall+1)'; t = t(1:end-1, 1);
+        timeStampsTraining = t(indTr,1); %timeStampsTest = t(indTs,1);
+        optionsDyn.type = 'vargpTime';
+        optionsDyn.inverseWidth=30;
+        optionsDyn.initX = globalOpt.initX;
+        optionsDyn.constrainType = globalOpt.dynamicsConstrainType;
+        if exist('timeStampsTraining', 'var')
+            optionsDyn.t = timeStampsTraining;
+        end
+        if exist('labelsTrain', 'var') && ~isempty(labelsTrain)
+            optionsDyn.labels = labelsTrain;
+        end
     end
 else
     optionsDyn= [];

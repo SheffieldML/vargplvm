@@ -30,6 +30,7 @@ labelsTrainFull = transformLabels(lblsTrainFull);
 labelsTest = transformLabels(lblsTest);
 
 if isfield(globalOpt, 'normaliseData') && globalOpt.normaliseData
+    warning('normalising data independently!')
     YtrFull = utils_normaliseData(YtrFull);
     YtestFull = utils_normaliseData(YtestFull);
 end
@@ -201,10 +202,10 @@ for trialNo = 1:totalTrials
 
     
     % svargplvmPredictions
-    [x_star_all, varx_star_all, mini] = vargplvmPredictLatent(model.comp{obsMod}, Yts{obsMod}, [], true, model.globalOpt.reconstrIters);
+    [x_star_all, varx_star_all, mini] = vargplvmPredictLatent(model.comp{obsMod}, Yts{obsMod}, [], false, model.globalOpt.reconstrIters,0,[],[],1);
     infMethod = 1; % Experiment with different inference methods as well (check svargplvmPredictionsFunc)
     [Zpred, testInd, XpredAll, varXpredAll, indNN] = ...
-        svargplvmPredictionsFunc(model, 0, Yts, x_star_all, varx_star_all, obsMod, infMod, [], 1, infMethod);
+        svargplvmPredictionsFunc(model, 0, x_star_all, varx_star_all, obsMod, infMod, [], 1, infMethod);
     % Store into a matrix
     ZpredMuAll = zeros(length(Zpred), size(Zpred{1},2));
     for i = 1:length(Zpred)
@@ -254,8 +255,8 @@ for trialNo = 1:totalTrials
     predictions.Z = ZpredMuAll;
     predictions.X = XpredAll;
     predictions.varX = varXpredAll;
-    
-    save(['demOilSvargplvmPred' num2str(experimentNo) '.mat'], 'errors', 'predictions');
+    scales = svargplvmShowScales(model,0);
+    save(['demOilSvargplvmPred' num2str(experimentNo) '.mat'], 'errors', 'predictions','scales');
     
 %     
 %     

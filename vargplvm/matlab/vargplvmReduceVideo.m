@@ -31,13 +31,18 @@ elseif nargin > 5 || nargin < 3
 end
 
  if (factor1 > h-1 || factor2>w-1)
-     fprintf(1,'# No changes because factor1 and/or factor 2 > height/width\n');
+     warning('# No changes because factor1 and/or factor 2 > height/width');
+     Z = Yall; newHeight = h; newWidth = w;
      return 
+ elseif (factor1 <= 1 || factor2 <= 1)
+     warning('# No changes, because factor1 and/or factor2 <= 1');
+     Z = Yall; newHeight = h; newWidth = w;
+     return
  end
 
 for i=1:size(Yall,1)
     Y = Yall(i,:);
-    % lines
+    % rows
     zz = zeros(1,factor1);
     mask = [1 zz];
     mask = repmat(mask, 1, ceil(h/(factor1+1)));
@@ -55,6 +60,7 @@ for i=1:size(Yall,1)
     mask = mask(1:w*h);
     newWidth = floor(sum(mask)/h);
     Y(find(~mask)) = NaN;
+    
     Y = Y(find(~isnan(Y)));
     Z(i,:) = Y;
 end

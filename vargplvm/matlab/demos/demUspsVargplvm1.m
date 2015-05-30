@@ -51,12 +51,12 @@ else % Do the training:
         varmodel{i} = model;
         %
     end
+    save(modelFile, 'varmodel');
 end
 
 iters = 100;
 display = 0;
 
-save(modelFile, 'varmodel');
 
 % measure performance on test data 
 prob = zeros(size(YTest,1),nClasses);

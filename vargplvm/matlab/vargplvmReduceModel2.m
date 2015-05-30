@@ -19,7 +19,7 @@ function [mm, order] = vargplvmReduceModel2(model, P, dims)
 
 % VARGPLVM
 
-if nargin == 3
+if nargin == 3 || isempty(P)
     P = length(dims);
 end
 
@@ -79,7 +79,10 @@ else
   end
   %
 end
-
+mm.fixInducing = model.fixInducing;
+if isfield(model, 'inducingIndices')
+    mm.inducingIndices = model.inducingIndices;
+end
 
 %-----
 % This code segment is added so that the old parameters (the ones that

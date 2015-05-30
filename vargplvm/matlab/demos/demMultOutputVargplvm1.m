@@ -32,7 +32,7 @@ if ~exist('dataSetNames')    ,    dataSetNames = {'USecon','NYSE2Small'};    end
 if ~exist('invWidthMultDyn'),    invWidthMultDyn = 100;                     end
 if ~exist('invWidthMult'),       invWidthMult = 5;                     end
 if ~exist('initX'),     initX ='ppca';   end % That's for the dynamics initialisation
-if ~exist('initLatent'),     initLatent ='ppca';   end % That's for the whole latent space init.
+if ~exist('initLatent'),     initLatent ='ppcaConcatenate';   end % That's for the whole latent space init.
 if ~exist('dataToKeep'), dataToKeep = -1 ;end
 if ~exist('toyDataCreate'), toyDataCreate = 'vargplvm'; end
 if ~exist('doPredictions'), doPredictions = 0; end
@@ -71,10 +71,10 @@ end
 
 
 clear d
-%xyzankurAnim(Z_test, 3);
+%xyzankurAnim(Z, 3);
 
 numberOfDatasets = length(Y);
-initLatent = 'ppcaConcatenate';
+%initLatent = 'ppcaConcatenate';
 latentDimPerModel=1;
 numSubModels = numberOfDatasets;
 numSharedDims = 0;
@@ -233,6 +233,8 @@ elseif strcmp(initLatent, 'pca3')
         X_init{2} = initFunc(m{2},3);
         X_init = [X_init{1} X_init{2}];
     end
+elseif strcmp(initLatent, 'outputs')
+    X_init = mAll;
 end
 latentDim = size(X_init,2);
 
@@ -258,12 +260,12 @@ for i=1:numberOfDatasets
     inpScales = invWidthMult./(((max(model{i}.X)-min(model{i}.X))).^2); % Default 5
     
     %inpScales(:) = max(inpScales); % Optional!!!!!
-    
-    model{i}.kern.comp{1}.inputScales = inpScales;
-    
-    if strcmp(model{i}.kern.type, 'rbfardjit')
-        model{i}.kern.inputScales = model{i}.kern.comp{1}.inputScales;
+    if strcmp(model{i}.kern.type, 'cmpnd') && (strcmp(model{i}.kern.comp{1}.type, 'rbfard2') || strcmp(model{i}.kern.comp{1}.type, 'linard2'))
+        model{i}.kern.comp{1}.inputScales = inpScales;
+    elseif strcmp(model{i}.kern.type, 'rbfardjit')
+        model{i}.kern.inputScales = inpScales;
     end
+
     params = vargplvmExtractParam(model{i});
     model{i} = vargplvmExpandParam(model{i}, params);
     
@@ -357,7 +359,7 @@ for i=1:numberOfDatasets
     end
 %}
     
-    model{i}.beta=1/(0.01*var(model{i}.m(:)));
+    model{i}.beta=1/(0.01*var(model{i}.m(:))); % Initial SNR is set to 100
     prunedModelInit{i} = vargplvmPruneModel(model{i});
     %disp(model{i}.vardist.covars)
 end

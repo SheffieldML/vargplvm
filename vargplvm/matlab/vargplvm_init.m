@@ -64,6 +64,8 @@ defaults.learnDynKernelVariance = false;
 % emphasized
 defaults.KLweight = 0.5;
 
+defaults.optimiser = 'scg2';
+
 fnames = fieldnames(defaults);
  for i=1:length(fnames)
     if ~exist(fnames{i})

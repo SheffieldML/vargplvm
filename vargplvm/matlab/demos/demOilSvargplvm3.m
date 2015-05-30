@@ -52,6 +52,8 @@ for jj = 1:length(allDataToKeep)
         warning(['!! Problem with experiment' num2str(experimentNo)])
         getReport(e)
     end
+    %prunedModel = svargplvmPruneModel(model);
+    %save[];
     diary off
     keep('jj','allDataToKeep', 'experimentNo');
 end
@@ -59,12 +61,13 @@ end
 
 
 %%
-subsets = allDataToKeep;
-
+%subsets = allDataToKeep;
+subsets = [];
  
 svargplvmErrors = [];
 NNerrors = [];
 varianceAll = [];
+scalesAll = {};
 
 allExperiments = [6000:6012];
 for i=1:length(allExperiments)
@@ -73,10 +76,14 @@ for i=1:length(allExperiments)
         load(['demOilSvargplvmPred' num2str(curExp)])
         
         % fprintf('Exp: %d. ErrorGplvm:%.3f - ErrorGplvmLogs: %.3f\n',curExp, errors.gplvm, svargplvmErrors(i));
+        scalesAll{end+1} = scales;
         svargplvmErrors = [svargplvmErrors errors.gplvm];
         NNerrors = [NNerrors errors.NN];
         curVar = sum(sum(predictions.varX))/length(predictions.varX(:));
         varianceAll = [varianceAll curVar];
+        subsets = [subsets allDataToKeep(i)];
+    catch e
+        fprintf('%s\n',e.message)
     end
 end
 
@@ -92,3 +99,9 @@ set(gca,'FontSize',12)
 legend('MRD','NN','FontSize',12)
 xlabel('Number of training points','FontSize',12)
 ylabel('Accuracy %','FontSize',12)
+
+%{
+for i=1:length(scalesAll)
+    subplot(1,2,1); bar(scalesAll{i}{1}); subplot(1,2,2); bar(scalesAll{i}{2}); pause; 
+end
+%}

@@ -28,9 +28,9 @@ if ~exist('learnVariance'),     learnVariance =0;   end
 %if ~exist('vardistCovarsMult'),  vardistCovarsMult=1.3;                  end
 if ~exist('initX'),     initX ='ppca';   end
 if ~exist('doReconstr'),     doReconstr=1;   end
-
-
-
+if ~exist('optimiser', 'var'), optimiser = 'scg'; end
+if ~exist('testReoptimise', 'var'), testReoptimise = 0; end
+if ~exist('parallelVardist', 'var'), parallelVardist = false; end
 
 % Get the sequence numbers.
 [Y, lbls] = lvmLoadData('cmu35WalkJog');
@@ -102,7 +102,7 @@ options = vargplvmOptions('dtcvar');
 options.kern = baseKern;
 options.numActive = indPoints; % DEfault: 100
 
-options.optimiser = 'scg';
+options.optimiser = optimiser;
 
 d = size(Y, 2);
 fprintf(1,'# Creating the model...\n');
@@ -171,12 +171,18 @@ if dynUsed
     fprintf(1,'# Further calibration of the initial parameters...\n');
     model = vargplvmInitDynamics(model,optionsDyn);
 end
+
+if parallelVardist
+    model.vardist.parallel = true;
+end
+
+
 modelInit = model;
 
 
 % do not learn beta for few iterations for intitilization
 if fixedBetaIters > 0
-    model.learnBeta = 0;
+    model.learnBeta = 0; model.initVardist = 1; model.learnSigmaf = 0;
     display = 1;
     fprintf(1,'# Intitiliazing the model (fixed beta) %d iterations...\n',fixedBetaIters);
     model = vargplvmOptimise(model, display, fixedBetaIters);
@@ -192,7 +198,7 @@ end
 
 % Optimise the model.
 display = 1;
-model.learnBeta = 1;
+model.learnBeta = 1; model.initVardist = 0; model.learnSigmaf = 1;
 model.iters=0;
 
 for i=1:length(itNo)
@@ -216,6 +222,9 @@ end
 %prefix = 'scales';
 %saveAllOpenFigures(['Results/CMU/NEW/' num2str(experimentNo) '/'], prefix,1)
 
+if testReoptimise
+    model.dynamics.reoptimise=1;
+end
 
 % Reconstruction can also be done separately calling demCmu35vargplvmReconstructTaylor
 if doReconstr
@@ -229,3 +238,30 @@ if doReconstr
     %prefix = [num2str(experimentNo) '/'];
     %saveAllOpenFigures('Results/CMU/NEW/', prefix,1)
 end
+
+
+%% ----------- VISUALISATION
+%{
+clear;ca
+%load('/home/andreas/SoftwareNotDrpBox/oldMatFiles/vargplvm/2/demCmu35gplvmVargplvm33.mat');
+load('/home/andreas/Dropbox/_PhD/Software/github/private/vargplvm/matlab/private/priv/matFiles/Nips11/demCmu35gplvmVargplvm33.mat');
+baseDir = datasetsDirectory;
+dirSep = filesep;
+[Y1, lbls, Ytest, lblstest] = lvmLoadData('cmu35WalkJog', [], baseDir);
+skel = acclaimReadSkel([baseDir 'mocap' dirSep 'cmu' dirSep '35' dirSep '35.asf']);
+[tmpchan, skel] = acclaimLoadChannels([baseDir 'mocap' dirSep 'cmu' dirSep '35' dirSep '35_01.amc'], skel);
+
+
+[Y, lbls] = lvmLoadData('cmu35WalkJog');
+seq = cumsum(sum(lbls)) - [1:31];
+dataSetName = 'cmu35gplvm';
+% load data
+[Y, lbls, Ytest, lblstest] = lvmLoadData(dataSetName);
+channels = demCmu35VargplvmLoadChannels(Y, skel);
+
+modelTmp = model; 
+modelTmp.dynamics = [];
+lvmVisualise(modelTmp, [], 'skelVargplvmVisualise', 'skelVargplvmModify', channels, skel)
+figure; vargplvmShowScales(model)
+%}
+%------------------------
