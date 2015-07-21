@@ -29,7 +29,9 @@ numRows = p(1);
 numColumns = p(2);
 
 if numRows * numColumns < length(dims)
-    [numRows, numColumns]=numSubplots(length(dims));
+    [p, ~] = numSubplots(length(dims));
+    numRows = p(1);
+    numColumns = p(2);
 end
 
 if exist('tight_subplot', 'file') == 2
