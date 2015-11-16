@@ -122,10 +122,11 @@ L2_distance ---- Isomap ---- GPmat ---- vargplvm
 							/			/
 				Netlab ----------------
 
-Getting started:
+Getting started with the code:
+------------------------------
  - Please check vargplvm/html/index.html for a short overview of this package.
  - Check vargplvm/matlab/vargplvm_README.txt for Bayesian GP-LVM and VGPDS.
- - Check vargplvm/matlab/demosDynamics.m for introductory demonstrations for VGPDS.
+ - Check vargplvm/matlab/VGPDStutorial.m for introductory demonstrations for VGPDS (see demosDynamics.m for more).
  - Check vargplvm/matlab/svargplvm_README.txt for an overview of MRD
  - Check vargplvm/matlab/MRDtutorial.m for introductory demonstrations for MRD.
 
