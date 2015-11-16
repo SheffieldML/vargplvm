@@ -39,11 +39,11 @@ gpOptions <-
       if (options$approx == "ftc") {
         ## bog-standard kernel.
         ## R version of the kern field is a more structured than in MATLAB.
-        options$kern = list(type="cmpnd",comp=list("rbf", "bias", "white"))
+        options$kern = list(type="cmpnd",comp=list("rbfard2", "bias", "white"))
         options$numActive = 0
         options$beta = list()
       } else if (options$approx %in% c('fitc', 'pitc', 'dtc', 'dtcvar')) {
-        options$kern = list(type="cmpnd",comp=list("rbf", "bias", "white"))
+        options$kern = list(type="cmpnd",comp=list("rbfard2", "bias", "white"))
         options$numActive = 100
         options$beta = 1e+3
         ## Option to fix the inducing variables to other latent points.
@@ -58,11 +58,11 @@ gpOptions <-
       if (options$approx == "ftc") {
         ## bog-standard kernel.
         ## R version of the kern field is a more structured than in MATLAB.
-        options$kern <- c("rbf", "bias", "white")
+        options$kern <- c("rbfard2", "bias", "white")
         options$numActive <- 0
         options$beta <- NULL
       } else if (options$approx %in% c("fitc", "pitc", "dtc", "dtcvar")) {
-        options$kern <- c("rbf", "bias", "white")
+        options$kern <- c("rbfard2", "bias", "white")
         options$numActive <- 100
         options$beta <- 1e+3
         ## Option to fix the inducing variables to other latent points.
