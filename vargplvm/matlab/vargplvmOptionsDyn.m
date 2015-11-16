@@ -45,6 +45,9 @@ if strcmp(optionsDyn.type, 'vargpTime')
         t=optionsDyn.t;
     end
     
+    if ~isfield(optionsDyn, 'kernType') || isempty(optionsDyn.kernType)
+        optionsDyn.kernType = {'rbf','white', 'bias'};
+    end
     
     % A better way to initialize the  kernel hyperparameter,
     % especially lengthscale, should be to learn it by running few iterations of
@@ -54,7 +57,7 @@ if strcmp(optionsDyn.type, 'vargpTime')
     % initializations
     if  ~isfield(optionsDyn, 'kern') || isempty(optionsDyn.kern)
        % kern = kernCreate(t, {'rbf','white'});
-        kern = kernCreate(t, {'rbf','white', 'bias'});
+        kern = kernCreate(t, optionsDyn.kernType);
         kern.comp{2}.variance = 1e-3; % 1e-1
         
         if  isfield(optionsDyn, 'inverseWidth')

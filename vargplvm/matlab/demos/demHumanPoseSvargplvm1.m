@@ -33,7 +33,7 @@ if ~exist('mappingKern')   ,  mappingKern = {'rbfard2', 'white', 'bias'}; end
 
 
 % 0.1 gives around 0.5 init.covars. 1.3 biases towards 0.
-if ~exist('vardistCovarsMult'),  vardistCovarsMult=1.3;                  end
+if ~exist('vardistCovarsMult'),  vardistCovarsMult=[]; end %1.3; % EDIT from submission.
 % Set to empty value {} to work with toy data
 
 if ~exist('invWidthMultDyn'),    invWidthMultDyn = 100;                     end
@@ -48,6 +48,10 @@ if ~exist('initial_X'), initial_X = 'separately'; end % Other options: 'together
 % Which indices to use for training, rest for test
 if ~exist('indTr'), indTr = -1; end
 if ~exist('usePixels'), usePixels = false; end
+if ~exist('parallel', 'var'), parallel = false; end
+if ~exist('addBetaPrior','var'), addBetaPrior = false; end
+if ~exist('priorScale','var'), priorScale = 1; end
+if ~exist('useScaleVal','var'), useScaleVal = true; end
 
 demHumanPosePrepareData
 
@@ -136,7 +140,9 @@ for i=1:numberOfDatasets
     % scale = std(Ytr);
     % scale(find(scale==0)) = 1;
     %options.scaleVal = mean(std(Ytr));
-    options{i}.scaleVal = sqrt(var(Ytr{i}(:)));
+    if useScaleVal
+        options{i}.scaleVal = sqrt(var(Ytr{i}(:)));
+    end
     if dynUsed
         optionsDyn{i}.type = 'vargpTime';
         optionsDyn{i}.t=timeStampsTraining;
@@ -190,7 +196,7 @@ end
 
 
 
-
+embedFunc = str2func([initX 'Embed']);
 if strcmp(initial_X, 'separately')
     fprintf('# Initialising X by performing ppca in each observed (scaled) dataset separately and then concatenating...\n');
     %     X_init{1} = ppcaEmbed(m{1},latentDimPerModel);
@@ -198,8 +204,13 @@ if strcmp(initial_X, 'separately')
     if ~exist('latentDimPerModel') || length(latentDimPerModel)~=2
         latentDimPerModel = [7 3];
     end
-    X_init{1} = ppcaEmbed(m{1},latentDimPerModel(1));
-    X_init{2} = ppcaEmbed(m{2},latentDimPerModel(2));
+    if strcmp(initX, 'vargplvm')
+        X_init{1} = embedFunc(m{1},latentDimPerModel(1),[],120,30);
+        X_init{2} = embedFunc(m{2},latentDimPerModel(2),[],120,30);
+    else
+        X_init{1} = embedFunc(m{1},latentDimPerModel(1));
+        X_init{2} = embedFunc(m{2},latentDimPerModel(2));
+    end
     X_init = [X_init{1} X_init{2}];
     %
     %      [U,V] = pca(m{1},7);
@@ -210,7 +221,7 @@ if strcmp(initial_X, 'separately')
     
 else
     fprintf('# Initialising X by performing ppca in concatenated observed (scaled) data...\n');
-    X_init = ppcaEmbed([m{1} m{2}], latentDimPerModel*2);
+    X_init = embedFunc([m{1} m{2}], latentDimPerModel*2);
 end
 
 
@@ -335,17 +346,21 @@ fileToSave = ['dem' capName modelType num2str(experimentNo) '.mat'];
 fprintf('# Parallel computations w.r.t the submodels!\n');
 model.parallel = 1;
 model = svargplvmPropagateField(model,'parallel', 1);
-%
-fprintf('# Parallel computations w.r.t the datapoints!\n');
-model.vardist.parallel = 1;
-for i=1:model.numModels
-    model.comp{i}.vardist.parallel = 1;
-end
 %}
+if parallel
+    fprintf('# Parallel computations w.r.t the datapoints!\n');
+    model.vardist.parallel = 1;
+    for i=1:model.numModels
+        model.comp{i}.vardist.parallel = 1;
+    end
+end
+% %}
 
 % Force kernel computations
 params = svargplvmExtractParam(model);
 model = svargplvmExpandParam(model, params);
+
+
 
 %%
 
@@ -369,6 +384,28 @@ model.initVardist = 0; model.learnSigmaf=1;
 model = svargplvmPropagateField(model,'initVardist', model.initVardist);
 model = svargplvmPropagateField(model,'learnSigmaf', model.learnSigmaf);
 
+
+if addBetaPrior
+    %--- Config: where and what prior to add
+    meanSNR = 150;                       % Where I want the expected value of my inv gamma if it was on SNR
+    priorName = 'invgamma';              % What type of prior
+    scale = priorScale*model.N;    % 'strength' of prior.
+    %----
+    for i=1:length(model.comp)
+        if isfield(model.comp{i}, 'mOrig'), varData = var(model.comp{i}.mOrig(:));  else,  varData = var(model.comp{i}.m(:));  end
+        meanB = meanSNR./varData;
+        a=0.08;%1.0001; % Relatively large right-tail
+        b=meanB*(a+1); % Because mode = b/(a-1)
+        % Add the prior on parameter 'beta'. The prior is specified by its name
+        % (priorName) and its parameters ([a,b])
+        model.comp{i} = vargplvmAddParamPrior(model.comp{i}, 'beta', priorName, [a b]);
+        
+        % Add a scale to the prior ("strength") and save this version of the model.
+        model.comp{i}.paramPriors{1}.prior.scale = scale;
+    end
+    params = modelExtractParam(model);
+    model = modelExpandParam(model, params);
+end
 
 % Optimise the model.
 model.iters = 0;
@@ -416,7 +453,7 @@ end
 % Set to 1 to test on the training data itself, set to 0 to use the test
 % dataset.
 if ~exist('testOnTraining')
-    testOnTraining=1;
+    testOnTraining=0;
 end
 
 % 1 is for the HoG image features. 2 is for the pose features.

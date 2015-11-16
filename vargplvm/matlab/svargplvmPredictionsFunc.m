@@ -1,7 +1,7 @@
-function [ZpredMuAll, testInd, XpredAll, varXpredAll, indNN] = ...
+function [ZpredMuAll, testInd, XpredAll, varXpredAll, indNN, ZpredSigmaAll] = ...
     svargplvmPredictionsFunc( ...
         model, testOnTraining, x_star_all, varx_star_all, ...
-        obsMod, infMod, testInd, numberOfNN, infMethod, privSharedDims, nnToKeep, modelGP)
+        obsMod, infMod, testInd, numberOfNN, infMethod, privSharedDims, nnToKeep, modelGP, returnVar)
 
 % SVARGPLVMPREDICTIONSFUNC Identical to svargplvmPredictions but in
 % function form
@@ -29,6 +29,7 @@ function [ZpredMuAll, testInd, XpredAll, varXpredAll, indNN] = ...
 % ARG privSharedDims: optional private/shared dimensions of modalities
 % ARG nnToKeep: Which NN indice to keep (useful when testing on training
 % data). Can be a single index (scalar) or set of indexes (vector)
+% ARG returnVar:Whether to return the predictive variance (slower) or not
 %
 % SEEALSO : demSvargplvmGeneric, demClassification, demClassification3,
 % demClassificationGeneral
@@ -82,6 +83,7 @@ if nargin < 9 || isempty(infMethod), infMethod = 1; end
 if nargin < 10, privSharedDims = {}; end
 if nargin < 11 || isempty(nnToKeep), nnToKeep = 1; end
 if nargin < 12, modelGP = []; end
+if nargin < 13 ||isempty(returnVar), returnVar = false; end
 
 % TODO:
 % Here replace model.comp{i}.m with model.comp{i}.mOrig if DgtN is
@@ -152,7 +154,9 @@ for i=1:length(testInd)
     % Initialise: These matrices hold the numberOfNN predictions for one
     % point z, hence they are numb    erOfNN x D_z
     ZpredMu = zeros(length(ind), size(model.comp{infMod}.y,2));
-    %ZpredSigma = zeros(length(ind), size(model.comp{infMod}.y,2));
+    if returnVar
+        ZpredSigma = zeros(length(ind), size(model.comp{infMod}.y,2));
+    end
       
     allPrivObs = cell2mat(privateDims(obsMod(:)));
                     
@@ -206,11 +210,18 @@ for i=1:length(testInd)
         end
         % Better to use varx_star when x_cur is just taken from x_star
         %ZpredMu(k,:) = vargplvmPosteriorMeanVar(model.comp{infMod}, x_cur);
-        ZpredMu(k,:) = vargplvmPosteriorMeanVar(model.comp{infMod}, x_cur, varx_star);%, varx_star(i,:)); 
+        if returnVar
+            [ZpredMu(k,:) ZpredSigma(k,:)] = vargplvmPosteriorMeanVar(model.comp{infMod}, x_cur, varx_star);
+        else
+            ZpredMu(k,:) = vargplvmPosteriorMeanVar(model.comp{infMod}, x_cur, varx_star);%, varx_star(i,:)); 
+        end
     end
     
     % Here we will only hold the nearest neighbours found for all test points.
     ZpredMuAll{i} = ZpredMu(nnToKeep, :);
+    if returnVar
+        ZpredSigmaAll{i} = ZpredSigma(nnToKeep,:);
+    end
     
     if nargout > 2
         XpredAll(i,:) = x_cur;
