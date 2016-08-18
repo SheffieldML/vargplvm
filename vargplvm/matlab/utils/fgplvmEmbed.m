@@ -46,6 +46,12 @@ end
 
 fprintf('#--- fgplvmEmbed from %d dims to %d dims, K=%d...\n',d,latentDim,options.numActive);
 
+if initVardistIters > 0
+    model.optimiseBeta = 0;
+    fprintf('\n  # fgplvmEmbed: Initialising with fixed beta for %d iters...\n',initVardistIters);
+    model = fgplvmOptimise(model, display, initVardistIters);
+    model.optimiseBeta = 1;
+end
 
 if iters > 0
     fprintf('\n  # fgplvmEmbed: Optimising for %d iters...\n',iters);

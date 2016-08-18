@@ -7,7 +7,7 @@ function [X, sigma2, W, model, modelInitVardist] = vargplvmEmbed(Y, dims, vararg
 
 % [X, sigma2, W, model, modelInitVardist] = vargplvmEmbed(Y, dims, varargin)
 %
-% varargin = {options, initIters, iters, display, optionsDyn}
+% varargin = {options, initIters, iters, display, optionsDyn,t}
 % To do dynamical embedding, just call the function with all arguments in
 % varargin (even if empty values are given, ie
 % [..]=vargplvmEmbed(Y, dims, [],[],[],[],[]);
@@ -15,7 +15,7 @@ function [X, sigma2, W, model, modelInitVardist] = vargplvmEmbed(Y, dims, vararg
 if nargin < 1
     fprintf('  Usage:\n')
     fprintf('  [X, sigma2, W, model, modelInitVardist] = vargplvmEmbed(Y, dims, varargin)\n')
-    fprintf('  varargin = {options, initIters, iters, display, optionsDyn}\n');
+    fprintf('  varargin = {options, initIters, iters, display, optionsDyn, t}\n');
     return
 end
 
@@ -32,6 +32,7 @@ options.numActive = min(50,size(Y,1));
 options.optimiser = 'scg2';
 options.initSNR = 100;
 dynUsed = 0;
+t = [];
 optionsDyn = [];
 
 if nargin > 2
@@ -45,6 +46,9 @@ if nargin > 2
         dynUsed=1;
         if ~isempty(varargin{5})
             optionsDyn = varargin{5}; 
+        end
+        if ~isempty(varargin{6})
+            t = varargin{6};
         end
     end
 end
@@ -73,9 +77,15 @@ if dynUsed
     fprintf('  # Adding dynamics to the model...\n')
     if isempty(optionsDyn)
         optionsDyn.type = 'vargpTime';
-        optionsDyn.t=[];
-        optionsDyn.inverseWidth=30;
+        if isempty(t)
+            optionsDyn.t=[];
+        else
+            optionsDyn.t = t;
+        end
+        optionsDyn.inverseWidth=1;
         optionsDyn.initX = model.X;%options.initX;
+    elseif ~isfield(optionsDyn, 'initX') || isempty(optionsDyn.initX)
+        optionsDyn.initX = model.X;
     end
     
     % Fill in with default values whatever is not already set

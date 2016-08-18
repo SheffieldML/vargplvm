@@ -29,8 +29,8 @@ if ~exist('dynUsed'),  dynUsed = 1; end
 if ~exist('printDiagram'), printDiagram = 1; end
 if ~exist('experimentNo'), experimentNo = 404; end
 if ~exist('doPredictions'), doPredictions = 0; end
-if ~exist('itNo'), itNo = 2000; end
-if ~exist('initVardistIters'), initVardistIters = 180; end
+if ~exist('itNo'), itNo = 5000; end
+if ~exist('initVardistIters'), initVardistIters = 400; end
 if ~exist('dynamicKern')   ,     dynamicKern = {'rbf', 'white', 'bias'}; end
 if ~exist('vardistCovarsMult'), vardistCovarsMult = 2.5; end
 
@@ -41,6 +41,7 @@ fprintf(1,'# Preparing the dataset...\n');
 baseDir = datasetsDirectory;
 dirSep = filesep;
 [Ydat, timeStampsdat, wireless_x, wireless_y, storedMacs] = parseWirelessData([baseDir 'uw-floor.txt']);
+
 Ydat = (Ydat + 85)/15;
 lbls = 'connect';
 
@@ -57,10 +58,10 @@ timeStampsTest = timeStampsdat((dataToKeep+1):end);
 
 % Set up model
 options = vargplvmOptions('dtcvar');
-options.kern = {'rbfard2', 'bias', 'white'};
+options.kern = 'rbfardjit';%{'rbfard2', 'bias', 'white'};
 options.numActive = indPoints; % Default: 50
 
-options.optimiser = 'scg';
+options.optimiser = 'scg2';
 d = size(Y, 2);
 
 capName = dataSetName;

@@ -76,7 +76,11 @@ if ~isempty(globalOpt.dynamicsConstrainType)
     if exist('optionsDyn', 'var')
         warning('optionsDyn field exists already!');
     else
-        t = linspace(0, 2*pi, Nall+1)'; t = t(1:end-1, 1);
+        if exist('timeStampsTraining', 'var')
+            t = timeStampsTraining;
+        else
+            t = linspace(0, 2*pi, Nall+1)'; t = t(1:end-1, 1);
+        end
         timeStampsTraining = t(indTr,1); %timeStampsTest = t(indTs,1);
         optionsDyn.type = 'vargpTime';
         optionsDyn.inverseWidth=30;
