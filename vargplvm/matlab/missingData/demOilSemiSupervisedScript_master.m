@@ -12,8 +12,8 @@ saveDir = './results/semiSupervised_master/';
 %%
 for trial = allTrials
     % For each trial, try different number of observed outputs
-    for NtrObs = [10, 40, 70] %[10:10:160]
-        keep('saveDir','allTrials','id','trial','NtrObs','res');
+    for NtrObs = [10:10:160]
+        keep('saveDir','allTrials','trial','NtrObs','res');
         % Different trials should have different seeds
         curSeed = trial + 1000;
         randn('seed', curSeed);
