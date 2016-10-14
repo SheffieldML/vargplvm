@@ -68,7 +68,7 @@ ___________________________________________________________________________
 ################## 2. LATENT SPACE PRIORS #################################
 ___________________________________________________________________________
 
-In the implementation, every output modality sees the same latetn space.
+In the implementation, every output modality sees the same latent space.
 It's the separate ARD weights that define the segmentation. For all sorts
 of inference, these weights are automatically taken into account, so that
 there is no need for any "postprocessing" step where we look at the weights
