@@ -1,3 +1,4 @@
+```
 % SVARGPLVM_README
 % Copyright: Andreas C. Damianou, 2012, 2013
 % VARGPLVM
@@ -18,6 +19,8 @@
                               R E A D M E
 
 ___________________________________________________________________________
+```
+
 ############################# 1. GENERAL ##################################
 ___________________________________________________________________________
 
@@ -280,6 +283,7 @@ To summarize, in the full model we can select:
     * Details:
     The model is basically a collection of variational GPLVM models.
     e.g.
+```
     model = 
     
             comp: {[1x1 struct]  [1x1 struct]} % comp{i} is the vargplvm model i.
@@ -294,6 +298,7 @@ To summarize, in the full model we can select:
     experimentNo: 404
         dataType: 'fols'
      initVardist: 1
+```
 	 
     Each of the vargplvm submodels keeps an updated version of the shared elements (e.g.
     q(X)), because there is abstraction, i.e. the vargplvm models don't "know" that they
@@ -365,7 +370,7 @@ ___________________________________________________________________________
 
 
 
-
+```
 _____________________________ ChangeLog
 v. 1.0: First release. Last update: 1/4/2013
 
@@ -375,7 +380,7 @@ _____________________________ TODO
 The variational distribution q(X) should be changed so that it's included
 only once in the model structure, instead of existing in every sub-model
 in model.comp.
-
+```
 
 ___________________________________________________________________________
                                                                       ...
