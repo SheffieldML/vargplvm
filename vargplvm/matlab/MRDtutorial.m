@@ -42,6 +42,18 @@ initial_X = 'separately';
 demToySvargplvm1;
 
 %%
+%{
+%------- One-liner for the above:
+% Get some toy data
+Yall = util_createMRD_toy_data();
+% kernel to use
+baseKern = {{'linard2','white', 'bias'},{'linard2','white', 'bias'}}; 
+% Learn MRD with some arguments.
+[X,model] = MRDEmbed(Yall, 'initial_X','separately','latentDimPerModel',4,'baseKern',baseKern,'initVardistIters',200,'itNo',200);
+%}
+
+
+%%
 fprintf(1,['\n\n', ...
 '# b)   Example 2 of running the demo:\n', ...
 '*** Non-dynamical case, initialise X once for the outputs that are first\n', ...
