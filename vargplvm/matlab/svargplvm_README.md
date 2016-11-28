@@ -1,3 +1,4 @@
+```
 % SVARGPLVM_README
 % Copyright: Andreas C. Damianou, 2012, 2013
 % VARGPLVM
@@ -18,7 +19,9 @@
                               R E A D M E
 
 ___________________________________________________________________________
-############################# 1. GENERAL ##################################
+```
+
+## 1. GENERAL 
 ___________________________________________________________________________
 
 This is the implementation of a Manifold Relevance Determination model, or
@@ -65,10 +68,10 @@ that one first.
 
 
 ___________________________________________________________________________
-################## 2. LATENT SPACE PRIORS #################################
+## 2. LATENT SPACE PRIORS 
 ___________________________________________________________________________
 
-In the implementation, every output modality sees the same latetn space.
+In the implementation, every output modality sees the same latent space.
 It's the separate ARD weights that define the segmentation. For all sorts
 of inference, these weights are automatically taken into account, so that
 there is no need for any "postprocessing" step where we look at the weights
@@ -89,7 +92,7 @@ field "dynamicsConstrainType" as a cell array (see svargplvm_init.m).
 
 
 ___________________________________________________________________________
-################## 3. WHAT CAN THIS MODEL DO? #############################
+## 3. WHAT CAN THIS MODEL DO? 
 ___________________________________________________________________________
 Given a set of output spaces, Y^{(1)}, ..., Y_^{(M)}, the model comes up
 with an (approximate) posterior q(X) ~ p(X | Y^{(1)}, ..., Y^{(M)}) and
@@ -124,10 +127,10 @@ can be carried on as in the case c) described above.
 e) ...
 
 
-    * PREDICTIONS in detail
-    _______________________________________________________________________
-    A common prediction task would be to have the following scenario:
-    Assume we have 2 submodels in the svargplvm and after optimisation we end up
+* PREDICTIONS in detail
+_______________________________________________________________________
+A common prediction task would be to have the following scenario:
+Assume we have 2 submodels in the svargplvm and after optimisation we end up
     with 2 private latent subspaces and 1 shared. E.g., the one model corresponds
     to a "figure" dataset, and the other model corresponds to the accompanying
     "pose" dataset. As regards predictions, we could give a point in the observed
@@ -143,22 +146,21 @@ e) ...
 
 
 ___________________________________________________________________________
-################## 4. SOFTWARE DETAILS ####################################
+## 4. SOFTWARE DETAILS 
 ___________________________________________________________________________
 
 
 To summarize, in the full model we can select:
    
-    * PARAMETERS for the actual MODEL:
-    _______________________________________________________________________
-     - The number of output modalities, M.
-     - The prior distribution of the latent space, see section 2 above.
+* PARAMETERS for the actual MODEL:
+    - The number of output modalities, M.
+    - The prior distribution of the latent space, see section 2 above.
      - The mappings F^{(i)}, i=1:M between X and Y^{(i)} => 
                  kernel parameters and inducing points for each node
      - variational parameters for each node.
 
 
-    * OPTIMISATION:
+* OPTIMISATION:
     _______________________________________________________________________
     Given an initialised model (see below), the software runs a gradient-
     based optimiser which requires an objective function (see paper) and
@@ -174,7 +176,7 @@ To summarize, in the full model we can select:
           y_m = f_m(X) + \epsilon_m, \epsilon_m ~ N(0, \beta_m^{-1}I)
 
 
-    * PARALLELISM:
+* PARALLELISM:
     _______________________________________________________________________
     There is the option of parallelising the optimisation using the MATLAB
     parallel toolbox. The parallelism can be done in two ways (not recom-
@@ -204,7 +206,7 @@ To summarize, in the full model we can select:
     otherwise (and if N is relatively big) we can use the point-wise paral
 
 
-    * INITIALISATION:
+* INITIALISATION:
     _______________________________________________________________________
     The model is prone to "bad" local optima. Therefore, initialisation is
     important. Most of the initialisation options can be explored by
@@ -246,7 +248,7 @@ To summarize, in the full model we can select:
       svargplvm_init.m and demos).
 
 
-    * MODEL STRUCTURE AND FIELDS:
+* MODEL STRUCTURE AND FIELDS:
     _______________________________________________________________________
     The "model" structure holds all information for the model.
     There is a substructure model.comp which is a cell array, one cell per
@@ -280,6 +282,7 @@ To summarize, in the full model we can select:
     * Details:
     The model is basically a collection of variational GPLVM models.
     e.g.
+```
     model = 
     
             comp: {[1x1 struct]  [1x1 struct]} % comp{i} is the vargplvm model i.
@@ -294,18 +297,19 @@ To summarize, in the full model we can select:
     experimentNo: 404
         dataType: 'fols'
      initVardist: 1
+```
 	 
-    Each of the vargplvm submodels keeps an updated version of the shared elements (e.g.
-    q(X)), because there is abstraction, i.e. the vargplvm models don't "know" that they
-    are optimised within a svargplvm rather than within a vargplvm framework.
+Each of the vargplvm submodels keeps an updated version of the shared elements (e.g.
+q(X)), because there is abstraction, i.e. the vargplvm models don't "know" that they
+are optimised within a svargplvm rather than within a vargplvm framework.
 
-    !! Check vargplvm_README.txt to see the exact structure of the "model"
+!! Check vargplvm_README.txt to see the exact structure of the "model"
     used there. That will be helpful, since MRD is essentially a model
     where every model.comp{i} element is a modality represented by a whole
     vargplvm (Bayesian GP-LVM) model.
 
 
-    * FUNCTIONS, FILES, DEPENDENCIES:
+* FUNCTIONS, FILES, DEPENDENCIES:
     _______________________________________________________________________
     * Objective function: svargplvmLogLikelihood.m
     * Associated derivatives: svargplvmLogLikeGradients.m
@@ -317,7 +321,7 @@ To summarize, in the full model we can select:
 
     ...
 
-    * UTILITIES:
+* UTILITIES:
     _______________________________________________________________________
     There are a few files that are not vital for the method itself, but are
     useful utilities:
@@ -330,10 +334,10 @@ To summarize, in the full model we can select:
      - ...
 
 ___________________________________________________________________________
-################## 4. DEMOS / TUTORIALS ### ###############################
+## 4. DEMOS / TUTORIALS 
 ___________________________________________________________________________
     
-    * 4.1 Demos / Tutorials:
+* 4.1 Demos / Tutorials:
     _______________________________________________________________________
     There are plenty of demos, in the folder demos/. The demos start with
     the prefix "dem". Some of the demos are more well organised, some are
@@ -342,7 +346,7 @@ ___________________________________________________________________________
     run the tutorial MRDtutorial.m, which calls the various demos. Then
     you can experiment with the demos by tweaking them, etc.
 
-    * 4.2 Can I use MRD as a "black box"?
+* 4.2 Can I use MRD as a "black box"?
     _______________________________________________________________________
     Possibly, by taking one of the demos and replacing the data structure
     with your data structure and fixining the required numbers (e.g. if
@@ -365,7 +369,7 @@ ___________________________________________________________________________
 
 
 
-
+```
 _____________________________ ChangeLog
 v. 1.0: First release. Last update: 1/4/2013
 
@@ -375,12 +379,5 @@ _____________________________ TODO
 The variational distribution q(X) should be changed so that it's included
 only once in the model structure, instead of existing in every sub-model
 in model.comp.
+```
 
-
-___________________________________________________________________________
-                                                                      ...
-
-
-
-________________________________________________________________________
- 
