@@ -88,7 +88,7 @@ else
         if ~miniGiven
             tmpYtr = [];
             y_star = [];
-            for jj=1:obsMod
+            for jj=obsMod
                 y_star = [y_star Yts{jj}(i, :)];
                 tmpYtr = [tmpYtr model.comp{jj}.y];
             end
